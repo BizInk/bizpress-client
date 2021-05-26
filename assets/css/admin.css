@@ -1,0 +1,12 @@
+.notice.cx-notice.bizink-client-notice {
+	padding: 0 0 0 0;
+}
+.bizink-client-notice a {
+	display: flex;
+}
+.bizink-client-notice a:focus {
+	box-shadow: 0 0 0 0;
+}
+.bizink-client-notice img {
+	max-width: 100%;
+}

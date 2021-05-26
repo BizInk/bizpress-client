@@ -1,0 +1,19 @@
+{
+    "name": "codexpert/Bizink_Client",
+    "authors": [
+        {
+            "name": "codexpert",
+            "email": "hello@codexpert.io"
+        }
+    ],
+    "require": {
+        "codexpert/product": "dev-master",
+            "mukto90/ncrypt": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "codexpert\\Bizink_Client\\" : "src/"
+        },
+        "files": [ "functions/helpers.php", "functions/options.php" ]
+    }
+}
