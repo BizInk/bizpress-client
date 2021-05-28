@@ -94,6 +94,9 @@ class Front extends Base {
 		    	echo '<main class="main"><div class="section"><div class="container">';
 	    	}
 
+	    	echo '<main id="main" role="main">';
+	    	echo '<div class="container">';
+
 	    	$main_slug 		= explode('topic', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 
@@ -106,6 +109,8 @@ class Front extends Base {
 	        }
 	        
 	        echo cxbc_get_template( 'types', 'views', [ 'response' => $data ] );
+
+	        echo '</div></div>';
 
 	    	if(!function_exists('luca')) {
 	    		get_footer();
@@ -136,6 +141,9 @@ class Front extends Base {
 		    	echo '<main class="main"><div class="section"><div class="container">';
 	    	}
 
+	    	echo '<main id="main" role="main">';
+	    	echo '<div class="container">';
+
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
@@ -146,6 +154,8 @@ class Front extends Base {
 	        }
 
 	        echo cxbc_get_template( 'posts', 'views', [ 'response' => $data ] );
+
+	        echo '</div></div>';
 
 	    	if(!function_exists('luca')) {
 	    		get_footer();
@@ -175,6 +185,9 @@ class Front extends Base {
 		    	echo '<main class="main"><div class="section"><div class="container">';
 	    	}
 
+	    	echo '<main id="main" role="main">';
+	    	echo '<div class="container">';
+
 	        $data 			= bizink_get_single_content( 'content', $content );
 
 	        if( isset( $data->subscriptions_expiry ) ) {
@@ -182,6 +195,8 @@ class Front extends Base {
 	        }
 
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
+
+	        echo '</div></div>';
 
 	        if(!function_exists('luca')) {
 	    		get_footer();
