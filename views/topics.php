@@ -75,13 +75,13 @@ foreach ( $posts as $post ) {
 	echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
 	echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 
-	if ( $post_count == 4 ) {
-		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
-		echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
-	}
-	else {
-		echo "<div class='cxbc-post-title'><h4>{$post->title}<span><img class='cxbc-next-icon' src='{$next_icon}'></span></h4></div>";
-	}
+	// if ( $post_count == 4 ) {
+	// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
+	// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
+	// }
+	// else {
+	echo "<div class='cxbc-post-title'><h4>{$post->title}<span><img class='cxbc-next-icon' src='{$next_icon}'></span></h4></div>";
+	// }
 	echo "</div></a></div>";
 
 	if ( $post_count == 3 && count( $posts ) > 3 ) {

@@ -77,11 +77,11 @@
 .cxbc-posts-list-mid .cxbc-item-thumbnail {
 	height: 208px;
 }
-.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-item-thumbnail {
+/*.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-item-thumbnail {
 	width: 100px;
 	height: 100px;
 	border-radius: 50% !important;
-}
+}*/
 .cxbc-learn-more-btn {
 	background-color: #14428c;
 	padding: 4px 15px;
@@ -92,14 +92,14 @@
 	background-color: #0274be;
 	color: #fff; 
 }
-.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-single-post-content {
+/*.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-single-post-content {
 	text-align: center;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-}
-.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-single-post-content a {
+}*/
+/*.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-single-post-content a {
 	width: 100%;
 }
 .cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-single-post-content a.cxbc-learn-more-btn {
@@ -112,7 +112,7 @@
 .cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-post-title h4 span {
 }
 .cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-post-title h4 span img {
-}
+}*/
 .cxbc-item-thumbnail {
 	width: 100%;
 	height: 126px;
