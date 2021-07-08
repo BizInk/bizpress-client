@@ -19,6 +19,8 @@ $slug 		= get_permalink( $page_id );
 
 $taxonomy  	= 'type';
 
+
+
 echo "<div id='primary' class='cxbc-content-area content-area primary'>";
 echo "<div class='ast-article-single'>";
 echo "<div class='cxbc-types-list'>";

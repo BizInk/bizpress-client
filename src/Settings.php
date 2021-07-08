@@ -118,6 +118,25 @@ class Settings extends Base {
 							'default'   => __( 'Free resources to help you use Xero.', 'bizink-client' ),
 							'required'	=> true,
 						],
+						[
+	                        'id'		=> 'keydates',
+	                        'label'		=> __( 'Bizink Client KeyDates', 'bizink-client' ),
+	                        'type'		=> 'divider',
+	                    ],
+						'xero_title' => [
+							'id'      	=> 'keydates_title',
+							'label'     => __( 'KeyDates Title', 'bizink-client' ),
+							'type'      => 'text',
+							'default'   => __( 'KeyDates Resources', 'bizink-client' ),
+							'required'	=> true,
+						],
+						'xero_desc' => [
+							'id'      	=> 'keydates_desc',
+							'label'     => __( 'KeyDates Description', 'bizink-client' ),
+							'type'      => 'textarea',
+							'default'   => __( 'Free resources to help you use KeyDates.', 'bizink-client' ),
+							'required'	=> true,
+						],
 					]
 				],
 			],

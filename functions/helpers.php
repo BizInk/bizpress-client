@@ -153,7 +153,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $base_url 		= bizink_get_master_site_url();
+    $base_url 		= $post_type == 'keydates-content' ? apply_filters( 'bizink-keydates-url', 'url' )  : bizink_get_master_site_url();
 
     $taxonomy_topics = 'business-topics';
 	if ( 'business-content' == $post_type ) {
@@ -168,6 +168,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'email'         => $options['user_email'],
         'password'      => $options['user_password'],
     ];
+    $country 		= $post_type == 'keydates-content' ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.0/{$api_endpoint}",
         'per_page'      => $options['post_per_page'],
@@ -177,9 +178,11 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'post_type'     => $post_type,
         'slug'         	=> $slug,
         'term'         	=> $term,
+        'country' 		=> $country
     ], wp_slash( $base_url ) );
 
     $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );
+    
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
     return $data;
@@ -191,7 +194,8 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $base_url 		= bizink_get_master_site_url();
+    $isKeydate		= \DateTime::createFromFormat('F-Y', $slug) == false ? false : true;
+    $base_url 		= $isKeydate ? apply_filters( 'bizink-keydates-url', 'url' ) : bizink_get_master_site_url();
     
     $credentials    = [            
         'email'         => $options['user_email'],
@@ -248,3 +252,32 @@ function bizink_get_master_site_url() {
 	return 'https://bizinkcontent.com/';
 }
 endif;
+
+/**
+ * Reporting API
+ *
+ * @return url
+ * @author ace <ace@bizinkonline.com>
+ */
+if( ! function_exists( 'bizink_update_views' ) ) :
+function bizink_update_views($data) {
+
+	$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
+	$term_obj_list = get_the_terms( $data->post->ID, 'taxonomy' );
+	$terms_string = join(', ', wp_list_pluck($term_obj_list, 'name'));
+
+	$data = array('title' => $data->post->post_title, 'url' => $data->post->guid, 'type' => $data->post->post_type, 'country' => 'Coutry', 'taxanomy' => $terms_string);
+
+	// use key 'http' even if you send the request to https://...
+	$options = array(
+	    'http' => array(
+	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'method'  => 'POST',
+	        'content' => http_build_query($data)
+	    )
+	);
+	$context  = stream_context_create($options);
+	$result = file_get_contents($url, false, $context);
+}
+endif;
+

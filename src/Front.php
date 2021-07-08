@@ -79,7 +79,6 @@ class Front extends Base {
 		global $wp, $wp_query;
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
 
- 
 	    if ( $topic ) {
 	    	
 	    	if(!function_exists('luca')) {
@@ -98,6 +97,7 @@ class Front extends Base {
 	    	echo '<div class="container">';
 
 	    	$main_slug 		= explode('topic', $current_url );
+
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
@@ -189,6 +189,8 @@ class Front extends Base {
 	    	echo '<div class="container">';
 
 	        $data 			= bizink_get_single_content( 'content', $content );
+
+	        bizink_update_views($data);
 
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );

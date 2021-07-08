@@ -76,6 +76,19 @@ class Admin extends Base {
 			],
 			$wp_rewrite->rules
 		);
+
+		$keydates_page_id	= cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+		$keydates_post 		= get_post( $keydates_page_id ); 
+		$keydates_slug 		= $keydates_post->post_name;
+
+		$wp_rewrite->rules = array_merge(
+			[
+				"{$keydates_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
+				"{$keydates_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
+				"{$keydates_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
+			],
+			$wp_rewrite->rules
+		);
 	}
 
 	public function suscription_expiry_notice() {
