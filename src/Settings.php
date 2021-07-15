@@ -70,6 +70,23 @@ class Settings extends Base {
 							'type'      => 'password',
 							'desc'      => __( 'Your Bizink password.', 'bizink-client' ),
 							'required'	=> true,
+						],
+						'content_region' => [
+							'id'      => 'content_region',
+							'label'     => __( 'Content Region', 'bizink-client' ),
+							'type'      => 'select',
+							'options'   => [
+											''=>' - Choose a region - ',
+											'AUS'=>'Australia',
+											'CND'=>'Canada',
+											'NZ'=>'New Zealand',
+											'UK'=>'United Kingdom',
+											'USA'=>'United States of America',
+											'all'=>'All Regions'
+										   ],
+							'default'	=> '',
+							'desc'      => __( 'Select you content region.', 'bizink-client' ),
+							'required'	=> true,
 						]
 					]
 				],
@@ -87,14 +104,14 @@ class Settings extends Base {
 	                    ],
 						'business_title' => [
 							'id'      	=> 'business_title',
-							'label'     => __( 'Business Title', 'bizink-client' ),
+							'label'     => __( 'Business Lifecycle Title', 'bizink-client' ),
 							'type'      => 'text',
-							'default'   => __( 'Business Resources', 'bizink-client' ),
+							'default'   => __( 'Business Lifecycle', 'bizink-client' ),
 							'required'	=> true,
 						],
 						'business_desc' => [
 							'id'      	=> 'business_desc',
-							'label'     => __( 'Business Description', 'bizink-client' ),
+							'label'     => __( 'Business Lifecycle Description', 'bizink-client' ),
 							'type'      => 'textarea',
 							'default'   => __( 'Free resources to help you grow your business.', 'bizink-client' ),
 							'required'	=> true,
@@ -120,21 +137,21 @@ class Settings extends Base {
 						],
 						[
 	                        'id'		=> 'keydates',
-	                        'label'		=> __( 'Bizink Client KeyDates', 'bizink-client' ),
+	                        'label'		=> __( 'Bizink Client Key Dates', 'bizink-client' ),
 	                        'type'		=> 'divider',
 	                    ],
-						'xero_title' => [
+						'keydates_title' => [
 							'id'      	=> 'keydates_title',
-							'label'     => __( 'KeyDates Title', 'bizink-client' ),
+							'label'     => __( 'Key Dates Title', 'bizink-client' ),
 							'type'      => 'text',
-							'default'   => __( 'KeyDates Resources', 'bizink-client' ),
+							'default'   => __( 'Key Dates Resources', 'bizink-client' ),
 							'required'	=> true,
 						],
-						'xero_desc' => [
+						'keydates_desc' => [
 							'id'      	=> 'keydates_desc',
-							'label'     => __( 'KeyDates Description', 'bizink-client' ),
+							'label'     => __( 'Key Dates Description', 'bizink-client' ),
 							'type'      => 'textarea',
-							'default'   => __( 'Free resources to help you use KeyDates.', 'bizink-client' ),
+							'default'   => __( 'Free resources to help you use Key Dates.', 'bizink-client' ),
 							'required'	=> true,
 						],
 					]

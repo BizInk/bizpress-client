@@ -154,9 +154,12 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url 		= $post_type == 'keydates-content' ? apply_filters( 'bizink-keydates-url', 'url' )  : bizink_get_master_site_url();
+    $content_region = $options['content_region'];
+
+
 
     $taxonomy_topics = 'business-topics';
-	if ( 'business-content' == $post_type ) {
+	if ( 'business-lifecycle' == $post_type ) {
 		$taxonomy_topics = 'business-topics';
 	}
 	elseif ( 'xero-content' == $post_type ) {
@@ -178,7 +181,8 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'post_type'     => $post_type,
         'slug'         	=> $slug,
         'term'         	=> $term,
-        'country' 		=> $country
+        'country' 		=> $country,
+        'region'		=> $content_region
     ], wp_slash( $base_url ) );
 
     $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );

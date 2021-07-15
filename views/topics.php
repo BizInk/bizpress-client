@@ -19,7 +19,7 @@ $post_type 		= $response->post_type;
 $default_title 	= __( 'Business Resources', 'bizink-client' );
 $default_desc 	= __( 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus delectus officiis quae facere rerum exercitationem labore aperiam ducimus soluta debitis, magni aspernatur tempore omnis similique eum illo dolorum corrupti accusantium?', 'bizink-client' );
 
-if ( 'business-content' == $post_type ) {
+if ( 'business-lifecycle' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
 }
@@ -55,7 +55,7 @@ if ($post_type != 'keydates-content') {
 // cxbc_pri($response);
 
 $taxonomy_topics = 'business-topics';
-if ( 'business-content' == $post_type ) {
+if ( 'business-lifecycle' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
 }
 elseif ( 'xero-content' == $post_type ) {
