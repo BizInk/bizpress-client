@@ -27,12 +27,12 @@ elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
-elseif ( 'keydates-content' == $post_type ) {
+elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
 }
 
-if ($post_type != 'keydates-content') {
+if (strpos($post_type, 'keydates') === false) {
 
 	echo "<div class='cxbc-topics-list'>";
 	$topic_coun = 0;
@@ -61,7 +61,7 @@ if ( 'business-lifecycle' == $post_type ) {
 elseif ( 'xero-content' == $post_type ) {
 	$taxonomy_topics = 'xero-topics';
 }
-elseif ( 'keydates-content' == $post_type ) {
+elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
 }
 
@@ -72,7 +72,7 @@ $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $defaul
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
 
 
-if ($post_type != 'keydates-content') {
+if (strpos($post_type, 'keydates') === false) {
 
 	echo "<div class='cxbc-topics-heading'>";
 	echo "<h2>{$term_name}</h2>";

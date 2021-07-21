@@ -153,7 +153,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $base_url 		= $post_type == 'keydates-content' ? apply_filters( 'bizink-keydates-url', 'url' )  : bizink_get_master_site_url();
+    $base_url 		= bizink_get_master_site_url();
     $content_region = $options['content_region'];
 
 
@@ -171,7 +171,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'email'         => $options['user_email'],
         'password'      => $options['user_password'],
     ];
-    $country 		= $post_type == 'keydates-content' ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
+    $country 		= strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.0/{$api_endpoint}",
         'per_page'      => $options['post_per_page'],
@@ -184,6 +184,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'country' 		=> $country,
         'region'		=> $content_region
     ], wp_slash( $base_url ) );
+
 
     $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );
     
@@ -198,8 +199,8 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $isKeydate		= \DateTime::createFromFormat('F-Y', $slug) == false ? false : true;
-    $base_url 		= $isKeydate ? apply_filters( 'bizink-keydates-url', 'url' ) : bizink_get_master_site_url();
+    $base_url 		= bizink_get_master_site_url();
+    $keydate_country 		= apply_filters( 'bizink-keydates-country', 'country' );
     
     $credentials    = [            
         'email'         => $options['user_email'],
@@ -212,7 +213,9 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
         'slug'         	=> $slug,
+        'kd_region' 	=> strtolower($keydate_country)
     ], wp_slash( $base_url ) );
+
 
     $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );
     $body       = wp_remote_retrieve_body( $request );
