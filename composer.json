@@ -1,5 +1,8 @@
 {
-    "name": "codexpert/Bizink_Client",
+    "name": "bizink/bizink-client",
+    "keywords": ["wordpress", "theme"],
+  	"homepage": "bizinkonline.com",
+  	"type": "wordpress-plugin",
     "authors": [
         {
             "name": "codexpert",
@@ -8,7 +11,8 @@
     ],
     "require": {
         "codexpert/product": "dev-master",
-            "mukto90/ncrypt": "dev-master"
+            "mukto90/ncrypt": "dev-master",
+            "composer/installers": "v1.0.7"
     },
     "autoload": {
         "psr-4": {

@@ -270,10 +270,12 @@ if( ! function_exists( 'bizink_update_views' ) ) :
 function bizink_update_views($data) {
 
 	$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
-	$term_obj_list = get_the_terms( $data->post->ID, 'taxonomy' );
-	$terms_string = join(', ', wp_list_pluck($term_obj_list, 'name'));
 
-	$data = array('title' => $data->post->post_title, 'url' => $data->post->guid, 'type' => $data->post->post_type, 'country' => 'Coutry', 'taxanomy' => $terms_string);
+	$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
+	$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
+	$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
+
+	$data = array('title' => $data->post->post_title, 'url' => $data->post->guid, 'type' => $data->post->post_type, 'country' => $country, 'topics' => $topics, 'types' => $types);
 
 	// use key 'http' even if you send the request to https://...
 	$options = array(
