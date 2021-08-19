@@ -10,14 +10,6 @@
         }
     ],
     "require": {
-        "codexpert/product": "dev-master",
-            "mukto90/ncrypt": "dev-master",
             "composer/installers": "v1.0.7"
-    },
-    "autoload": {
-        "psr-4": {
-            "codexpert\\Bizink_Client\\" : "src/"
-        },
-        "files": [ "functions/helpers.php", "functions/options.php" ]
     }
 }
