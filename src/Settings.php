@@ -82,7 +82,7 @@ class Settings extends Base {
 											'NZ'=>'New Zealand',
 											'UK'=>'United Kingdom',
 											'USA'=>'United States of America',
-											'all'=>'All Regions'
+											'all'=>'Other'
 										   ],
 							'default'	=> '',
 							'desc'      => __( 'Select you content region.', 'bizink-client' ),
