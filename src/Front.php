@@ -221,7 +221,5 @@ class Front extends Base {
 	    	
 	        die;
 	    }
-
-	    return $body;
 	}
 }
