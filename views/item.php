@@ -15,7 +15,7 @@ if ( $response->status == 0 ) {
 extract( (array)$response->item );
 
 echo "<div class='cxbc-single-item cxbc-single-item-{$ID}'>";
-//echo "<img class='cxbc-item-thumbnail' src='{$thumbnail}'>";
+echo "<img class='cxbc-item-thumbnail' src='{$thumbnail}'>";
 echo "<h2 class='cxbc-item-title'>{$title}</h2>";
 $content = apply_filters( 'the_content', $content );
 echo $content ;

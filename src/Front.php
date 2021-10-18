@@ -71,7 +71,14 @@ class Front extends Base {
     	return $query_vars;
 	}
 
-	public function template_redirect() {
+	public function single_page_template($single_template) {
+
+        $single_template = get_stylesheet_directory() . '/page.php';
+
+	    return $single_template;
+	}
+
+	public function template_redirect($body) {
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
 		$content	= get_query_var( 'content');
@@ -214,5 +221,7 @@ class Front extends Base {
 	    	
 	        die;
 	    }
+
+	    return $body;
 	}
 }

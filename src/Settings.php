@@ -77,11 +77,11 @@ class Settings extends Base {
 							'type'      => 'select',
 							'options'   => [
 											''=>' - Choose a region - ',
-											'AUS'=>'Australia',
-											'CND'=>'Canada',
+											'AU'=>'Australia',
+											'CA'=>'Canada',
 											'NZ'=>'New Zealand',
-											'UK'=>'United Kingdom',
-											'USA'=>'United States of America',
+											'GB'=>'United Kingdom',
+											'US'=>'United States of America',
 											'all'=>'Other'
 										   ],
 							'default'	=> '',

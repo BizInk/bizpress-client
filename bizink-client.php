@@ -100,7 +100,8 @@ final class Plugin {
 			$front->action( 'admin_bar_menu', 'add_admin_bar', 70 );
 			$front->action( 'wp_head', 'head' );
 			$front->filter( 'query_vars', 'query_vars' );
-			$front->action( 'template_redirect', 'template_redirect' );
+			
+			$front->action( 'the_content', 'template_redirect' );
 
 			/**
 			 * Shortcode hooks
