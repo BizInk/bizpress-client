@@ -101,7 +101,7 @@ final class Plugin {
 			$front->action( 'wp_head', 'head' );
 			$front->filter( 'query_vars', 'query_vars' );
 			
-			$front->action( 'the_content', 'template_redirect' );
+			$front->action( 'template_redirect', 'template_redirect' );
 
 			/**
 			 * Shortcode hooks
