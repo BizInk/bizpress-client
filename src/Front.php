@@ -87,7 +87,6 @@ class Front extends Base {
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
 
 	    if ( $topic ) {
-	    	
 	    	if(!function_exists('luca')) {
 	    		get_header();
 	    	}
@@ -135,7 +134,6 @@ class Front extends Base {
 	    }
  
 	    if ( $type ) {
-	    	
 	    	if(!function_exists('luca')) {
 	    		get_header();
 	    	}
@@ -180,6 +178,11 @@ class Front extends Base {
 	    }
 
 	    if ( $content ) {
+	    	add_filter('body_class', function( $classes ){
+	    		$classes[] = 'bizink-page';
+	    		return $classes;
+	    	});
+	    	
 	    	if(!function_exists('luca')) {
 	    		get_header();
 	    	}
@@ -221,5 +224,18 @@ class Front extends Base {
 	    	
 	        die;
 	    }
+
+	    return $body;
+	}
+
+	public function body_class( $classes ){
+
+		global $post;
+
+		if ( has_shortcode( $post->post_content, 'bizink-content' ) ) {
+			$classes[] = 'bizink-page';
+		}
+
+		return $classes;
 	}
 }

@@ -26,6 +26,15 @@
 .cxbc-single-item .cxbc-item-thumbnail {
 	max-width: 100%;
 }
+.bizink-page .entry-title,
+.cxbc-single-item-heading {
+	/*width: 100%;*/
+	/*background: #c5cde5;*/
+	text-align: center;
+	/*color: #000;*/
+	padding: 60px;
+	/*font-size: 40px;*/
+}
 .cxbc-topics-list {
 	display: grid;
 	flex-direction: row;

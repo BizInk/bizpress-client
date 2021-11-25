@@ -23,7 +23,7 @@ if ( 'business-lifecycle' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
 }
-elseif ( 'xero-content' == $post_type ) {
+elseif ( 'xero-resources' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
@@ -58,7 +58,7 @@ $taxonomy_topics = 'business-topics';
 if ( 'business-lifecycle' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
 }
-elseif ( 'xero-content' == $post_type ) {
+elseif ( 'xero-resources' == $post_type ) {
 	$taxonomy_topics = 'xero-topics';
 }
 elseif (strpos($post_type, 'keydates') !== false) {

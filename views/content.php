@@ -15,16 +15,19 @@ if ( $response->status == 0 ) {
 $post = (array)$response->post;
 $thumbnail = $response->thumbnail;
 
-
 extract( $post );
 
-echo "<div id='primary' class='cxbc-content-area content-area primary'>";
-echo "<div class='ast-article-single'>";
-echo "<div class='cxbc-single-item cxbc-single-item-{$ID}'>";
-echo "<img class='cxbc-item-thumbnail' src='{$thumbnail}'>";
-echo "<h2 class='cxbc-item-title'>{$post_title}</h2>";
-$content = apply_filters( 'the_content', $post_content );
-echo $content ;
-echo "</div>";
-echo "</div>";
-echo "</div>";
+$type 		= ucwords( str_replace( [ '-', '_' ], [ ' ' ], $post_type ) );
+$content 	= apply_filters( 'the_content', $post_content );
+
+echo "
+<div id='primary' class='cxbc-content-area content-area primary'>
+	<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>
+	<div class='ast-article-single'>
+		<div class='cxbc-single-item cxbc-single-item-{$ID}'>
+			<img class='cxbc-item-thumbnail' src='{$thumbnail}'>
+			<h2 class='cxbc-item-title'>{$post_title}</h2>
+			{$content}
+		</div>
+	</div>
+</div>";
