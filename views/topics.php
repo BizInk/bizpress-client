@@ -109,10 +109,10 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "</div>";
 	echo "</div>";
 
-	if ( !empty( $posts ) ) {
-		$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
-		echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
-	}
+	// if ( !empty( $posts ) ) {
+	// 	$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
+	// 	echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
+	// }
 
 }
 else{
