@@ -114,6 +114,7 @@ if (strpos($post_type, 'keydates') === false) {
 		//echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
 	//}
 
+
 }
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
