@@ -19,6 +19,24 @@ $slug 		= get_permalink( $page_id );
 
 $taxonomy  	= 'type';
 
+if(!function_exists('luca')) {
+	get_header();
+}
+else{
+	get_template_part('templates/head');
+	do_action('luca/theme/before');
+	do_action('get_header');
+	echo '<div class="pageWrap">';
+	do_action('luca/theme/content/before');
+	if ( array_key_exists( 'bizink-client-luca-header' , $GLOBALS['wp_filter']) ) {
+		echo apply_filters( 'bizink-client-luca-header', $post_type );
+	}
+	echo '<main class="main"><div class="section">';
+	echo '<div class="container">';
+}
+
+echo '<main id="main" role="main">';
+echo '<div class="container">';
 
 
 echo "<div id='primary' class='cxbc-content-area content-area primary'>";
@@ -41,3 +59,18 @@ foreach ( $types as $type => $posts ) {
 echo "</div>";
 echo "</div>";
 echo "</div>";
+
+
+echo '</div></div>';
+
+if(!function_exists('luca')) {
+	get_footer();
+}
+else{
+	echo '</div></div></div>';
+    do_action('luca/theme/content/after');
+    echo '</div>';
+	do_action('get_footer');
+	wp_footer();
+	do_action('luca/theme/after');
+}

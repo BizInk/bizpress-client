@@ -87,20 +87,7 @@ class Front extends Base {
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
 
 	    if ( $topic ) {
-	    	if(!function_exists('luca')) {
-	    		get_header();
-	    	}
-	    	else{
-	    		get_template_part('templates/head');
-		    	do_action('luca/theme/before');
-		    	do_action('get_header');
-		    	echo '<div class="pageWrap">';
-		    	do_action('luca/theme/content/before');
-		    	echo '<main class="main"><div class="section"><div class="container">';
-	    	}
 
-	    	echo '<main id="main" role="main">';
-	    	echo '<div class="container">';
 
 	    	$main_slug 		= explode('topic', $current_url );
 
@@ -115,39 +102,11 @@ class Front extends Base {
 	        }
 	        
 	        echo cxbc_get_template( 'types', 'views', [ 'response' => $data ] );
-
-	        echo '</div></div>';
-
-	    	if(!function_exists('luca')) {
-	    		get_footer();
-	    	}
-	    	else{
-	    		echo '</div></div></div>';
-		        do_action('luca/theme/content/after');
-		        echo '</div>';
-		    	do_action('get_footer');
-		    	wp_footer();
-		    	do_action('luca/theme/after');
-	    	}
 	    	
 	        die;
 	    }
  
 	    if ( $type ) {
-	    	if(!function_exists('luca')) {
-	    		get_header();
-	    	}
-	    	else{
-	    		get_template_part('templates/head');
-		    	do_action('luca/theme/before');
-		    	do_action('get_header');
-		    	echo '<div class="pageWrap">';
-		    	do_action('luca/theme/content/before');
-		    	echo '<main class="main"><div class="section"><div class="container">';
-	    	}
-
-	    	echo '<main id="main" role="main">';
-	    	echo '<div class="container">';
 
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
@@ -160,20 +119,6 @@ class Front extends Base {
 
 	        echo cxbc_get_template( 'posts', 'views', [ 'response' => $data ] );
 
-	        echo '</div></div>';
-
-	    	if(!function_exists('luca')) {
-	    		get_footer();
-	    	}
-	    	else{
-	    		echo '</div></div></div>';
-		        do_action('luca/theme/content/after');
-		        echo '</div>';
-		    	do_action('get_footer');
-		    	wp_footer();
-		    	do_action('luca/theme/after');
-	    	}
-
 	        die;
 	    }
 
@@ -182,24 +127,9 @@ class Front extends Base {
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
 	    	});
+
+	    	$data  = bizink_get_single_content( 'content', $content );
 	    	
-	    	if(!function_exists('luca')) {
-	    		get_header();
-	    	}
-	    	else{
-	    		get_template_part('templates/head');
-		    	do_action('luca/theme/before');
-		    	do_action('get_header');
-		    	echo '<div class="pageWrap">';
-		    	do_action('luca/theme/content/before');
-		    	echo '<main class="main"><div class="section"><div class="container">';
-	    	}
-
-	    	echo '<main id="main" role="main">';
-	    	echo '<div class="container">';
-
-	        $data 			= bizink_get_single_content( 'content', $content );
-
 	        bizink_update_views($data);
 
 	        if( isset( $data->subscriptions_expiry ) ) {
@@ -207,20 +137,6 @@ class Front extends Base {
 	        }
 
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
-
-	        echo '</div></div>';
-
-	        if(!function_exists('luca')) {
-	    		get_footer();
-	    	}
-	    	else{
-	    		echo '</div></div></div>';
-		        do_action('luca/theme/content/after');
-		        echo '</div>';
-		    	do_action('get_footer');
-		    	wp_footer();
-		    	do_action('luca/theme/after');
-	    	}
 	    	
 	        die;
 	    }
