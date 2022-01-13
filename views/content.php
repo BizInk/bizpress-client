@@ -41,8 +41,11 @@ echo '<div class="container">';
 
 
 echo "
-<div id='primary' class='cxbc-content-area content-area primary'>
-	<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>
+<div id='primary' class='cxbc-content-area content-area primary'>";
+if(!function_exists('luca')) {
+	echo "<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>";
+}
+echo "
 	<div class='ast-article-single'>
 		<div class='cxbc-single-item cxbc-single-item-{$ID}'>
 			<img class='cxbc-item-thumbnail' src='{$thumbnail}'>
