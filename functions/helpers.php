@@ -162,9 +162,11 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	if ( 'business-lifecycle' == $post_type ) {
 		$taxonomy_topics = 'business-topics';
 	}
-	elseif ( 'xero-resources' == $post_type ) {
+	elseif ( 'xero-content' == $post_type ) {
 		$taxonomy_topics = 'xero-topics';
 	}
+
+
 
     $term 			= isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
     $credentials    = [            
@@ -185,10 +187,21 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'region'		=> $content_region
     ], wp_slash( $base_url ) );
 
-    $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );
+
+
+    $args = array(
+      'timeout' => 120,
+      'httpversion' => '1.1',
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+  	);
+
+    $request    = wp_remote_get( $url, $args );
     
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
+
     return $data;
 }
 endif;
@@ -215,10 +228,17 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'kd_region' 	=> strtolower($keydate_country)
     ], wp_slash( $base_url ) );
 
-    $request    = wp_remote_get( $url, [ 'timeout' => 120, 'httpversion' => '1.1' ] );
+    $args = array(
+      'timeout' => 120,
+      'httpversion' => '1.1',
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+  	);
+
+    $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
-
     return $data;
 }
 endif;

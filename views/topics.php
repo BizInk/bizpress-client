@@ -14,6 +14,7 @@ if ( $response->status == 0 ) {
 
 $topics 		= $response->topics;
 $posts 			= $response->posts;
+
 $post_type 		= $response->post_type;
 
 $default_title 	= __( 'Business Resources', 'bizink-client' );
@@ -23,7 +24,7 @@ if ( 'business-lifecycle' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
 }
-elseif ( 'xero-resources' == $post_type ) {
+elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
@@ -58,7 +59,7 @@ $taxonomy_topics = 'business-topics';
 if ( 'business-lifecycle' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
 }
-elseif ( 'xero-resources' == $post_type ) {
+elseif ( 'xero-content' == $post_type ) {
 	$taxonomy_topics = 'xero-topics';
 }
 elseif (strpos($post_type, 'keydates') !== false) {

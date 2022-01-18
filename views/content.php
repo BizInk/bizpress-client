@@ -45,10 +45,10 @@ echo "
 if(!function_exists('luca')) {
 	echo "<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>";
 }
+//<img class='cxbc-item-thumbnail' src='{$thumbnail}'>
 echo "
 	<div class='ast-article-single'>
 		<div class='cxbc-single-item cxbc-single-item-{$ID}'>
-			<img class='cxbc-item-thumbnail' src='{$thumbnail}'>
 			<h2 class='cxbc-item-title'>{$post_title}</h2>
 			{$content}
 		</div>
