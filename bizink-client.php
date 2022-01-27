@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Bizink Client
- * Description: Pulls content to the master site via REST API
+ * Plugin Name: BizPress
+ * Description: Bizink content for accountants.
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
- * Author URI: https://bizinkonline.com
+                    * Author URI: https://bizinkonline.com
  * Version: 1.0
  * Text Domain: bizink-client
  * Domain Path: /languages
