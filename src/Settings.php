@@ -159,6 +159,11 @@ class Settings extends Base {
 			],
 		];
 
+		if(function_exists('luca')) {
+			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);
+			unset($settings['sections']['bizink-client_basic']['fields']['user_password']);
+		}
+
 		new \codexpert\product\Settings( $settings );
 	}
 }

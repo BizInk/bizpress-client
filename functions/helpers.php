@@ -184,7 +184,8 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'slug'         	=> $slug,
         'term'         	=> $term,
         'country' 		=> $country,
-        'region'		=> $content_region
+        'region'		=> $content_region,
+        'luca'		=> function_exists('luca') ? true : false
     ], wp_slash( $base_url ) );
 
 
@@ -225,7 +226,8 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
         'slug'         	=> $slug,
-        'kd_region' 	=> strtolower($keydate_country)
+        'kd_region' 	=> strtolower($keydate_country),
+        'luca'		=> function_exists('luca') ? true : false
     ], wp_slash( $base_url ) );
 
     $args = array(
