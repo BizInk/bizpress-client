@@ -1,0 +1,15 @@
+{
+    "name": "bizink/bizpress",
+    "keywords": ["wordpress", "theme"],
+  	"homepage": "bizinkonline.com",
+  	"type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "codexpert",
+            "email": "hello@codexpert.io"
+        }
+    ],
+    "require": {
+            "composer/installers": "v1.0.7"
+    }
+}
