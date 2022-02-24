@@ -1,0 +1,22 @@
+{
+    "name": "codexpert/product",
+    "type": "library",
+    "description": "Product management for codexpert",
+    "keywords": ["product","codexpert"],
+    "homepage": "https://bitbucket.org/codexpertio/codexpert-product",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "codexpert",
+            "email": "hello@codexpert.io",
+            "homepage": "https://codexpert.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
