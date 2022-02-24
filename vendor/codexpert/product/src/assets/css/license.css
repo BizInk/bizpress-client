@@ -1,0 +1,228 @@
+.notice.cx-notice {
+    padding: 20px;
+}
+.notice.cx-notice .cx-notice-inner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.notice.cx-notice .cx-notice-icon {
+    font-size: 20px;
+}
+.notice.cx-notice .cx-notice-content {
+    padding: 0 20px;
+}
+.notice.cx-notice p {
+    padding: 0;
+    margin: 0;
+}
+.notice.cx-notice .cx-notice-action {
+    text-align: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-left: auto;
+}
+.notice.cx-notice .cx-notice-action .cx-button {
+    background-color: #d30c5c;
+    color: #fff;
+    border-color: #7c1337;
+    -webkit-box-shadow: 0 1px 0 #7c1337;
+    box-shadow: 0 1px 0 #7c1337;
+    padding: 5px 30px;
+    height: auto;
+    line-height: 20px;
+    text-transform: capitalize;
+    font-size: 13px;
+    text-decoration: none;
+    transition-duration: 0.3s;
+    border-radius: 3px;
+    border: none;
+    outline: 0;
+}
+.notice.cx-notice .cx-notice-action .cx-button:hover {
+    background-color: #a0124a;
+}
+.cx-logo-wrapper {
+    display: inline-block;
+    padding: 0.75em;
+    background-image: -webkit-linear-gradient(225deg, #ef295a, #434363);
+    background-image: -o-linear-gradient(225deg, #ef295a, #434363);
+    background-image: linear-gradient(-135deg, #ef295a, #434363);
+    -webkit-border-radius: 7.5%;
+    border-radius: 7.5%;
+    line-height: 1;
+}
+.cx-logo-wrapper span.dashicons {
+    color: #fff;
+    font-size: 1em;
+}/*license tab*/
+.cx-activation-panel {
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: baseline;
+    position: relative;
+}
+.cx-activation-panel input::placeholder {
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: .5;
+}
+.cx-activation-panel input.key-field {
+    width: 100%;
+    margin-bottom: 15px;
+    border-bottom: ;
+    border-radius: 0;
+    font-size: 18px;
+    border: 0 solid;
+    border-bottom: 1px solid #ddd;
+}
+.cx-activation-panel input.key-field:focus {
+    border-color: #ddd;
+    box-shadow: none;
+    outline: none;
+}
+.cx-activation-panel input.button-primary {
+    background-color: transparent;
+    background-image: linear-gradient(to right,#3B2C73,#E9345F);
+    padding: 4px 40px;
+    border: none;
+    width: 35%;
+    margin-right: 4px;
+    border-radius: 25px;
+}
+.cx-activation-panel input.button-primary:focus,
+.cx-activation-panel input.button-primary:hover,
+.cx-activation-panel input.button-primary:active {
+    background-image: none;
+    background-color: #3B2C73;
+    border-color: #3B2C73;
+    box-shadow: none;
+}
+.cx-activation-panel input.button {
+    border: 1px solid #E9345F;
+    border-radius: 25px;
+    padding: 3px 40px;
+    background: transparent;
+    width: 35%;
+    margin-left: 5px;
+    color: #E9345F;
+    transition: all 0.5s;
+    line-height: 28px;
+}
+.cx-activation-panel input.button:focus,
+.cx-activation-panel input.button:hover,
+.cx-activation-panel input.button:hover {
+    background-color: #E9345F;
+    border: 1px solid #E9345F;
+    color: #fff;
+    box-shadow: none;
+}
+.cx-activation-panel .cx-activation-message {
+    margin-top: 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    top: 40px;
+    text-align: center;
+    width: 100%;
+}
+@media only screen and (min-width :320px) {
+    .cx-activation-panel {
+        width:100%;
+        display:unset
+    }
+    .cx-activation-panel input.button-primary {
+        width:100%;
+        margin-right:0;
+        padding:6px 40px
+    }
+    .cx-activation-panel input.button {
+        width:100%;
+        margin-left:0;
+        padding:3px 10px
+    }
+    .cx-activation-panel input.button-primary {
+        width:49%
+    }
+    .cx-activation-panel input.button {
+        width:49%
+    }
+    .cx-activation-panel .cx-activation-message {
+        top:80px;
+        left:0;
+        right:0
+    }
+}
+@media only screen and (min-width :768px) {
+    .cx-activation-panel {
+        width:100%;
+        display:flex
+    }
+    .cx-activation-panel input.button-primary {
+        width:35%;
+        margin-right:4px;
+        margin-left:15px;
+        padding:6px 40px
+    }
+    .cx-activation-panel input.button {
+        width:35%;
+        margin-left:5px;
+        padding:3px 40px
+    }
+    .cx-activation-panel .cx-activation-message {
+        top:40px;
+        left:0;
+        right:0
+    }
+}
+@media only screen and (min-width :992px) {
+    .cx-activation-panel input.button-primary {
+        padding:4px 40px
+    }
+}
+/*license tab*/
+@media only screen and (min-width: 320px) {
+    .notice.cx-notice .cx-notice-inner {
+        display: block;
+        text-align: center;
+    }
+    .notice.cx-notice .cx-notice-content {
+        padding: 0;
+        margin-top: 10px;
+    }
+    .notice.cx-notice .cx-notice-action {
+        display: block;
+        margin-top: 10px;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .notice.cx-notice .cx-notice-inner {
+        display: flex;
+        text-align: left;
+    }
+    .notice.cx-notice .cx-notice-content {
+        padding: 0 20px;
+        margin-top: 0;
+    }
+    .notice.cx-notice .cx-notice-action {
+        display: flex;
+        margin-top: 0;
+    }
+}
