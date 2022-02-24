@@ -1,0 +1,109 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "c4d4fdffafda53bf5b1aab86f001ce1f",
+    "packages": [
+        {
+            "name": "codexpert/product",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/codexpertio/codexpert-product.git",
+                "reference": "51080efa1ebd4e4d8db22dfdfe788ab8671071be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/codexpertio/codexpert-product/get/51080efa1ebd4e4d8db22dfdfe788ab8671071be.zip",
+                "reference": "51080efa1ebd4e4d8db22dfdfe788ab8671071be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "codexpert",
+                    "email": "hello@codexpert.io",
+                    "homepage": "https://codexpert.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Product management for codexpert",
+            "homepage": "https://bitbucket.org/codexpertio/codexpert-product",
+            "keywords": [
+                "codexpert",
+                "product"
+            ],
+            "time": "2021-01-27T04:23:37+00:00"
+        },
+        {
+            "name": "mukto90/ncrypt",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mukto90/ncrypt.git",
+                "reference": "c66236716492796fcc7c28e07a5e7752daeb9225"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mukto90/ncrypt/zipball/c66236716492796fcc7c28e07a5e7752daeb9225",
+                "reference": "c66236716492796fcc7c28e07a5e7752daeb9225",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nazmul Ahsan",
+                    "email": "n.mukto@gmail.com",
+                    "homepage": "https://nazmulahsan.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple PHP class to encrypt a string and decrypt an encrypted string",
+            "homepage": "https://github.com/mukto90/ncrypt",
+            "keywords": [
+                "2 way encryption and decryption",
+                "decryption",
+                "encryption",
+                "encryption and decryption"
+            ],
+            "time": "2018-05-15T06:37:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "codexpert/product": 20,
+        "mukto90/ncrypt": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
