@@ -61,6 +61,42 @@ class Front extends Base {
 		wp_localize_script( $this->slug, 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
 	}
 
+	public function custom_rewrite_basic() {
+                $business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+		$business_post 		= get_post( $business_page_id ); 
+		$business_slug 		= $business_post->post_name;
+
+        add_rewrite_rule($business_slug.'/([a-z0-9-]+)[/]?$', 'index.php?content=$matches[1]', 'top');
+        add_rewrite_rule($business_slug.'/topic/([a-z0-9-]+)[/]?$', 'index.php?topic=$matches[1]', 'top');
+        add_rewrite_rule($business_slug.'/type/([a-z0-9-]+)[/]?$', 'index.php?type=$matches[1]', 'top');
+
+        $xero_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
+		$xero_post 		= get_post( $xero_page_id ); 
+		$xero_slug 		= $xero_post->post_name;
+
+        add_rewrite_rule($xero_slug.'/([a-z0-9-]+)[/]?$', 'index.php?content=$matches[1]', 'top');
+        add_rewrite_rule($xero_slug.'/topic/([a-z0-9-]+)[/]?$', 'index.php?topic=$matches[1]&cpt=$matches[1]', 'top');
+        add_rewrite_rule($xero_slug.'/type/([a-z0-9-]+)[/]?$', 'index.php?type=$matches[1]', 'top');
+
+        $keydates_page_id	= cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+		$keydates_post 		= get_post( $keydates_page_id ); 
+		$keydates_slug 		= $keydates_post->post_name;
+
+		$wp_rewrite->rules = array_merge(
+			[
+				"{$keydates_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
+				"{$keydates_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
+				"{$keydates_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
+			],
+			$wp_rewrite->rules
+		);
+
+        add_rewrite_rule($keydates_slug.'/([a-z0-9-]+)[/]?$', 'index.php?content=$matches[1]', 'top');
+        add_rewrite_rule($keydates_slug.'/topic/([a-z0-9-]+)[/]?$', 'index.php?topic=$matches[1]&cpt=$matches[1]', 'top');
+        add_rewrite_rule($keydates_slug.'/type/([a-z0-9-]+)[/]?$', 'index.php?type=$matches[1]', 'top');
+
+    }
+
 	public function head() {
 	}
 

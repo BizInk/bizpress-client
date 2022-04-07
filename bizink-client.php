@@ -96,6 +96,7 @@ final class Plugin {
 			 * To apply a filter, use $front->filter()
 			 */
 			$front = new Front( $this->plugin );
+			$front->action( 'init', 'custom_rewrite_basic');
 			$front->action( 'wp_enqueue_scripts', 'enqueue_scripts' );
 			$front->action( 'admin_bar_menu', 'add_admin_bar', 70 );
 			$front->action( 'wp_head', 'head' );
