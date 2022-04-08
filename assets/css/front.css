@@ -123,11 +123,11 @@
 .cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-post-title h4 span img {
 }*/
 .cxbc-item-thumbnail {
-	width: 100%;
-	height: 175px;
+	/* width: 100%; */
+	/* height: 175px; */
 	border-radius: 0 !important;
 	box-shadow: none !important;
-        object-fit: cover;
+    /* object-fit: cover; */
 }
 .cxbc-post-title .cxbc-next-icon {
 	width: 22px;
