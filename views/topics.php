@@ -99,12 +99,12 @@ if (strpos($post_type, 'keydates') === false) {
 		// }
 		echo "</div></a></div>";
 
-		if ( $post_count == 3 && count( $posts ) > 3 ) {
-			echo "</div><div class='cxbc-posts-list-mid'>";
-		}
-		if ( $post_count == 5 ) {
-			echo "</div><div class='cxbc-posts-list-bottom'>";
-		}
+		// if ( $post_count == 3 && count( $posts ) > 3 ) {
+		// 	echo "</div><div class='cxbc-posts-list-mid'>";
+		// }
+		// if ( $post_count == 5 ) {
+		// 	echo "</div><div class='cxbc-posts-list-bottom'>";
+		// }
 		$post_count++;
 	}
 	echo "</div>";
