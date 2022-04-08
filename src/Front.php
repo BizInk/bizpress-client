@@ -62,7 +62,7 @@ class Front extends Base {
 	}
 
 	public function custom_rewrite_basic() {
-                $business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+        $business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		$business_post 		= get_post( $business_page_id ); 
 		$business_slug 		= $business_post->post_name;
 
@@ -156,6 +156,14 @@ class Front extends Base {
 	    	});
 
 	    	$data  = bizink_get_single_content( 'content', $content );
+
+	    	$current_slug = explode("/", $wp->request)[0];
+
+            $main_page_id = url_to_postid($current_slug);
+
+	        if(empty($data->post)){
+	            wp_redirect(get_permalink($main_page_id));
+	        }  
 	    	
 	        bizink_update_views($data);
 
