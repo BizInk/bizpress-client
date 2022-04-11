@@ -188,8 +188,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'luca'		=> function_exists('luca') ? true : false
     ], wp_slash( $base_url ) );
 
-
-
     $args = array(
       'timeout' => 120,
       'httpversion' => '1.1',

@@ -62,7 +62,7 @@ class Front extends Base {
 	}
 
 	public function custom_rewrite_basic() {
-        $business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+                $business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		$business_post 		= get_post( $business_page_id ); 
 		$business_slug 		= $business_post->post_name;
 
@@ -123,7 +123,6 @@ class Front extends Base {
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
 	        $data 			= bizink_get_content( $content_type, 'types', $topic );
 
-
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
@@ -138,6 +137,7 @@ class Front extends Base {
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
+
 	        $data 			= bizink_get_content( $content_type, 'posts', $type );
 
 	        if( isset( $data->subscriptions_expiry ) ) {
@@ -150,6 +150,8 @@ class Front extends Base {
 	    }
 
 	    if ( $content ) {
+                global $wp;
+
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
@@ -157,14 +159,14 @@ class Front extends Base {
 
 	    	$data  = bizink_get_single_content( 'content', $content );
 
-	    	$current_slug = explode("/", $wp->request)[0];
+                $current_slug = explode("/", $wp->request)[0];
 
-            $main_page_id = url_to_postid($current_slug);
+                $main_page_id = url_to_postid($current_slug);
 
 	        if(empty($data->post)){
 	            wp_redirect(get_permalink($main_page_id));
 	        }  
-	    	
+ 	
 	        bizink_update_views($data);
 
 	        if( isset( $data->subscriptions_expiry ) ) {
