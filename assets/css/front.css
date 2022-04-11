@@ -325,10 +325,13 @@
 #demo-bar-badge:before, #demo-bar-badge:after {
 	display: none !important;
 }
-
+@media screen and (max-width: 1199px){
+	.cxbc-single-type-post-list {
+	    grid-template-columns: repeat(2, 1fr);
+	}
+}
 @media screen and  (max-width: 600px) {
-
-	.cxbc-posts-list-top {
-    grid-template-columns: 1fr;
+	.cxbc-posts-list-top, .cxbc-single-type-post-list {
+    	grid-template-columns: 1fr;
 	}
 }
