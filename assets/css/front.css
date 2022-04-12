@@ -21,7 +21,7 @@
 }
 .cxbc-single-item .cxbc-item-title {
 	padding: 15px 0;
-	font-size: 22px;
+	font-size: 30px;
 }
 .cxbc-single-item .cxbc-item-thumbnail {
 	max-width: 100%;
@@ -321,6 +321,13 @@
 	background-size: 100%;
 	overflow: hidden;
 	text-indent: -9999px;
+}
+.ast-article-single p {
+    line-height: 26px;
+    font-size: 16px;
+}
+.js-fitVids {
+    margin-bottom: 50px;
 }
 #demo-bar-badge:before, #demo-bar-badge:after {
 	display: none !important;
