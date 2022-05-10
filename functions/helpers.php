@@ -172,8 +172,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$taxonomy_topics = '';
 	}
 
-
-
     $term 			= isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
 
     $credentials    = [            
@@ -208,12 +206,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 
 
     $request    = wp_remote_get( $url, $args );
-
-    
     $body       = wp_remote_retrieve_body( $request );
-
-	
-
     $data       = json_decode( $body );
 
     return $data;
