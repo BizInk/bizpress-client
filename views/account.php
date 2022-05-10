@@ -29,11 +29,13 @@ endif;
 <?php 
   if( !empty( $sorted_posts ) ):
         printf( "<div class='%s' >", "mail_alphabatic_container row  column-control" );
+        
         foreach ($sorted_posts as $key => $value) {
 
             if( in_array( $key, array( 'a', 'j', 'r' ) ) ){
                 printf( "<div class='%s'>", "col-md-4 col-12" );
             }
+
             if( !empty( $value ) ):
                 printf( "<div class='%s'><h2 class='%s'>%s</h2>", "alphabate_word component title-text-component text text-left", "alphabate_label title title-2", $key );
                 echo "<p>";
@@ -49,6 +51,7 @@ endif;
             }
 
         }
+        
         printf( "</div>" );
   endif;  
 ?>
@@ -73,19 +76,4 @@ endif;
         margin-bottom: 0px;
         padding-bottom:0px;
     }
-
-    /* div.mail_alphabatic_container br{ display:none; } */
 </style>
-<?php
-// foreach ( $posts as $post ) {
-// 		echo "<div class='cxbc-single-listing'>";
-// 		echo "<div class='cxbc-title'><h4>{$post->title}</h4></div>";
-// 		echo "</div>";
-// 		if ( $post_count == 3 && count( $posts ) > 3 ) {
-// 			echo "</div><div class='cxbc-list-mid'>";
-// 		}
-// 		if ( $post_count == 5 ) {
-// 			echo "</div><div class='cxbc-posts-bottom'>";
-// 		}
-// 		$post_count++;
-// 	}
