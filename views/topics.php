@@ -28,14 +28,17 @@ elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
+elseif ( 'accounting-terms' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'accounting_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'accounting_desc' );
+}
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
 }
 
-
 if (strpos($post_type, 'keydates') === false) {
-
+if($post_type != 'accounting-terms'){
 	echo "<div class='cxbc-topics-list'>";
 	$topic_coun = 0;
 	foreach ( $topics as $topic ) {
@@ -51,7 +54,7 @@ if (strpos($post_type, 'keydates') === false) {
 		$topic_coun++;
 	}
 	echo "</div>";
-
+}
 }
 
 // cxbc_pri($response);
@@ -82,9 +85,17 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "</div>";
 
 	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
+	if($post_type == 'accounting-terms'){
 	echo "<div class='cxbc-posts-list'>";
+	echo "<div class='cxbc-posts-list-top1'>";
+	}else{
+		echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-top'>";
-
+	}
+if($post_type == 'accounting-terms'){
+	$post_count = 1;
+	echo cxbc_get_template( "account", "views", $posts );
+ } else{
 	$post_count = 1;
 	foreach ( $posts as $post ) {
 		echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
@@ -100,21 +111,22 @@ if (strpos($post_type, 'keydates') === false) {
 		// }
 		echo "</div></a></div>";
 
-		// if ( $post_count == 3 && count( $posts ) > 3 ) {
-		// 	echo "</div><div class='cxbc-posts-list-mid'>";
-		// }
-		// if ( $post_count == 5 ) {
-		// 	echo "</div><div class='cxbc-posts-list-bottom'>";
-		// }
+		if ( $post_count == 3 && count( $posts ) > 3 ) {
+			echo "</div><div class='cxbc-posts-list-mid'>";
+		}
+		if ( $post_count == 5 ) {
+			echo "</div><div class='cxbc-posts-list-bottom'>";
+		}
 		$post_count++;
 	}
+}
 	echo "</div>";
 	echo "</div>";
 
-	if ( !empty( $posts ) ) {
-		$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
-		echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
-	}
+	//if ( !empty( $posts ) ) {
+		//$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
+		//echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
+	//}
 
 
 }

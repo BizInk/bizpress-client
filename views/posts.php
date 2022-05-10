@@ -44,6 +44,7 @@ echo "<div class='ast-article-single'>";
 echo "<div class='cxbc-type-panel'>";
 echo "<h4>{$type_name}</h4>";
 echo "<div class='cxbc-type-list'>";
+
 foreach ( $posts as $post ) {
 
 	echo "<a href='{$slug}{$post->slug}'><div class='cxbc-single-type'>";

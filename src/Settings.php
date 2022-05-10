@@ -136,6 +136,25 @@ class Settings extends Base {
 							'required'	=> true,
 						],
 						[
+	                        'id'		=> 'accounting',
+	                        'label'		=> __( 'Bizink Client Accounting', 'bizink-client' ),
+	                        'type'		=> 'divider',
+	                    ],
+						'accounting_title' => [
+							'id'      	=> 'accounting_title',
+							'label'     => __( 'Accounting Title', 'bizink-client' ),
+							'type'      => 'text',
+							'default'   => __( 'Accounting Resources', 'bizink-client' ),
+							'required'	=> true,
+						],
+						'accounting_desc' => [
+							'id'      	=> 'accounting_desc',
+							'label'     => __( 'Accounting Description', 'bizink-client' ),
+							'type'      => 'textarea',
+							'default'   => __( 'Free resources to help you use Accounting.', 'bizink-client' ),
+							'required'	=> true,
+						],
+						[
 	                        'id'		=> 'keydates',
 	                        'label'		=> __( 'Bizink Client Key Dates', 'bizink-client' ),
 	                        'type'		=> 'divider',

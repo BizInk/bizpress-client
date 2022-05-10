@@ -21,7 +21,7 @@
 }
 .cxbc-single-item .cxbc-item-title {
 	padding: 15px 0;
-	font-size: 30px;
+	font-size: 22px;
 }
 .cxbc-single-item .cxbc-item-thumbnail {
 	max-width: 100%;
@@ -65,10 +65,10 @@
 /*grid*/
 .cxbc-posts-list-top {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 2fr 1fr;
 	grid-template-rows: repeat(2, 1fr);
 	gap: 15px;
-	/* grid-template-areas: "sidbar header-top" "sidbar header-buttom"; */
+	grid-template-areas: "sidbar header-top" "sidbar header-buttom";
 	margin-bottom: 15px;
 }
 .cxbc-posts-list-bottom {
@@ -81,10 +81,10 @@
 	grid-template-columns: repeat(2, 1fr);
 	gap: 15px;
 	margin-bottom: 15px;
-	grid-template-rows: 333px;
+	grid-template-rows: 273px;
 }
 .cxbc-posts-list-mid .cxbc-item-thumbnail {
-	height: 280px;
+	height: 208px;
 }
 /*.cxbc-posts-list-mid .cxbc-single-post-count-4 .cxbc-item-thumbnail {
 	width: 100px;
@@ -124,10 +124,9 @@
 }*/
 .cxbc-item-thumbnail {
 	width: 100%;
-	/* height: 175px; */
+	height: 126px;
 	border-radius: 0 !important;
 	box-shadow: none !important;
-    /* object-fit: cover; */
 }
 .cxbc-post-title .cxbc-next-icon {
 	width: 22px;
@@ -136,7 +135,7 @@
 	width: 22px;
 }
 .cxbc-single-post.cxbc-single-post-count-1 .cxbc-item-thumbnail {
-	/* height: 418px; */
+	height: 332px;
 }
 .cxbc-single-item .cxbc-item-thumbnail {
 	height: auto;
@@ -172,7 +171,7 @@
 	border-radius: 4px;
 }
 .cxbc-single-post.cxbc-single-post-count-1 {
-	/* grid-area: sidbar; */
+	grid-area: sidbar;
 };
 .cxbc-single-post.cxbc-single-post-count-2 {
 	grid-area: header-top;
@@ -227,7 +226,6 @@
 .cxbc-post-title h4 {
 	margin: 0 !important;
 	font-size: 15px !important;
-        width: 95%;
 }
 .cxbc-container {
     position: relative;
@@ -272,73 +270,59 @@
 	}
 }
 
+
+
+
 #demo-top-bar {
-	text-align: left;
-	background: #222;
-	position: relative;
-	zoom: 1;
-	width: 100% !important;
-	z-index: 6000;
-	padding: 20px 0 20px;
-}
-#demo-bar-inside {
-	width: 960px;
-	margin: 0 auto;
-	position: relative;
-	overflow: hidden;
-}
-#demo-bar-buttons {
-	padding-top: 10px;
-	float: right;
-}
-#demo-bar-buttons a {
-	font-size: 12px;
-	margin-left: 20px;
-	color: white;
-	margin: 2px 0;
-	text-decoration: none;
-	font: 14px "Lucida Grande", Sans-Serif !important;
-}
-#demo-bar-buttons a:hover,
-#demo-bar-buttons a:focus {
-	text-decoration: underline;
-}
-#demo-bar-badge {
-	display: inline-block;
-	width: 302px;
-	padding: 0 !important;
-	margin: 0 !important;
-	background-color: transparent !important;
-}
-#demo-bar-badge a {
-	display: block;
-	width: 100%;
-	height: 38px;
-	border-radius: 0;
-	bottom: auto;
-	margin: 0;
-	background: url(/images/examples-logo.png) no-repeat;
-	background-size: 100%;
-	overflow: hidden;
-	text-indent: -9999px;
-}
-.ast-article-single p {
-    line-height: 26px;
-    font-size: 16px;
-}
-.js-fitVids {
-    margin-bottom: 50px;
-}
-#demo-bar-badge:before, #demo-bar-badge:after {
-	display: none !important;
-}
-@media screen and (max-width: 1199px){
-	.cxbc-single-type-post-list {
-	    grid-template-columns: repeat(2, 1fr);
+		text-align: left;
+		background: #222;
+		position: relative;
+		zoom: 1;
+		width: 100% !important;
+		z-index: 6000;
+		padding: 20px 0 20px;
 	}
-}
-@media screen and  (max-width: 600px) {
-	.cxbc-posts-list-top, .cxbc-single-type-post-list {
-    	grid-template-columns: 1fr;
+	#demo-bar-inside {
+		width: 960px;
+		margin: 0 auto;
+		position: relative;
+		overflow: hidden;
 	}
-}
+	#demo-bar-buttons {
+		padding-top: 10px;
+		float: right;
+	}
+	#demo-bar-buttons a {
+		font-size: 12px;
+		margin-left: 20px;
+		color: white;
+		margin: 2px 0;
+		text-decoration: none;
+		font: 14px "Lucida Grande", Sans-Serif !important;
+	}
+	#demo-bar-buttons a:hover,
+	#demo-bar-buttons a:focus {
+		text-decoration: underline;
+	}
+	#demo-bar-badge {
+		display: inline-block;
+		width: 302px;
+		padding: 0 !important;
+		margin: 0 !important;
+		background-color: transparent !important;
+	}
+	#demo-bar-badge a {
+		display: block;
+		width: 100%;
+		height: 38px;
+		border-radius: 0;
+		bottom: auto;
+		margin: 0;
+		background: url(/images/examples-logo.png) no-repeat;
+		background-size: 100%;
+		overflow: hidden;
+		text-indent: -9999px;
+	}
+	#demo-bar-badge:before, #demo-bar-badge:after {
+		display: none !important;
+	}

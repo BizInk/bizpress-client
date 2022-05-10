@@ -22,10 +22,13 @@ endif;
 if( ! function_exists( 'cxbc_get_posts' ) ) :
 function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true ) {
 
+	//	'orderby' => 'title',
+	//	'order'   => 'DESC',
+	print_r($posts);
 	$defaults = [
 		'post_type'         => 'post',
 		'posts_per_page'    => -1,
-		'post_status'		=> 'publish'
+		'post_status'		=> 'publish',
 	];
 
 	$_args = wp_parse_args( $args, $defaults );
@@ -165,10 +168,14 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	elseif ( 'xero-content' == $post_type ) {
 		$taxonomy_topics = 'xero-topics';
 	}
+	elseif ( 'accounting-terms' == $post_type ) {
+		$taxonomy_topics = '';
+	}
 
 
 
     $term 			= isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
+
     $credentials    = [            
         'email'         => $options['user_email'],
         'password'      => $options['user_password'],
@@ -176,7 +183,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $country 		= strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.0/{$api_endpoint}",
-        'per_page'      => $options['post_per_page'],
+        'per_page'      => -1,//$options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
@@ -188,6 +195,8 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'luca'		=> function_exists('luca') ? true : false
     ], wp_slash( $base_url ) );
 
+
+
     $args = array(
       'timeout' => 120,
       'httpversion' => '1.1',
@@ -196,9 +205,15 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
   	);
 
+
+
     $request    = wp_remote_get( $url, $args );
+
     
     $body       = wp_remote_retrieve_body( $request );
+
+	
+
     $data       = json_decode( $body );
 
     return $data;
@@ -238,6 +253,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
+
     $data       = json_decode( $body );
     return $data;
 }
@@ -308,3 +324,22 @@ function bizink_update_views($data) {
 }
 endif;
 
+
+/**
+ * API Authontication details
+ *
+ * @return array
+ * @author ace <ace@bizinkonline.com>
+ */
+if( ! function_exists( 'bizink_url_authontication' ) ) :
+function bizink_url_authontication()
+{
+	return array(
+		'timeout' => 120,
+		'httpversion' => '1.1',
+		'headers' => array(
+		  'Content-Type' => 'application/json',
+		  'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+	);
+}
+endif;
