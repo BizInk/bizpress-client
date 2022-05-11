@@ -2,7 +2,7 @@
 extract( $args );
 
 /**
- * Manage posts in alphabatical order whhere $args is a posts array
+ * Manage posts in alphabatical order where $args is a posts array
  */
 if( !empty( $args ) ):
 
