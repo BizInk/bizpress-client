@@ -22,9 +22,6 @@ endif;
 if( ! function_exists( 'cxbc_get_posts' ) ) :
 function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true ) {
 
-	//	'orderby' => 'title',
-	//	'order'   => 'DESC',
-	print_r($posts);
 	$defaults = [
 		'post_type'         => 'post',
 		'posts_per_page'    => -1,
@@ -321,7 +318,7 @@ endif;
 /**
  * API Authontication details
  *
- * @return array
+ * @return array array of authontication crendentials
  * @author ace <ace@bizinkonline.com>
  */
 if( ! function_exists( 'bizink_url_authontication' ) ) :

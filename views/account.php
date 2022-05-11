@@ -1,7 +1,9 @@
 <?php
 extract( $args );
-//convert posts in array
 
+/**
+ * Manage posts in alphabatical order whhere $args is a posts array
+ */
 if( !empty( $args ) ):
 
     $alphabates = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "#" ];
@@ -24,36 +26,38 @@ if( !empty( $args ) ):
     }
 endif;
 
-?>
+/**
+ * Render posts in alphabatical order
+ */
+if( !empty( $sorted_posts ) ):
+    printf( "<div class='%s' >", "mail_alphabatic_container row  column-control" );
+    
+    foreach ($sorted_posts as $key => $value) {
 
-<?php 
-  if( !empty( $sorted_posts ) ):
-        printf( "<div class='%s' >", "mail_alphabatic_container row  column-control" );
-        
-        foreach ($sorted_posts as $key => $value) {
-
-            if( in_array( $key, array( 'a', 'j', 'r' ) ) ){
-                printf( "<div class='%s'>", "col-md-4 col-12" );
-            }
-
-            if( !empty( $value ) ):
-                printf( "<div class='%s'><h2 class='%s'>%s</h2>", "alphabate_word component title-text-component text text-left", "alphabate_label title title-2", $key );
-                echo "<p>";
-                foreach ($value as $k => $v) {
-                    printf( "<a href='%s' target='_blank' >%s</a><br>", apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug, $v) ,$v->title );
-                }
-                echo "</p>";
-                printf( "</div>" );   
-            endif;
-            
-            if( in_array( $key, array( 'i', 'q', '#' ) ) ){
-                printf( "</div>" );
-            }
-
+        if( in_array( $key, array( 'a', 'j', 'r' ) ) ){
+            printf( "<div class='%s'>", "col-md-4 col-12" );
         }
+
+        if( !empty( $value ) ):
+            printf( "<div class='%s'><h2 class='%s'>%s</h2>", "alphabate_word component title-text-component text text-left", "alphabate_label title title-2", $key );
+            echo "<p>";
+
+            foreach ($value as $k => $v) {
+                printf( "<a href='%s' target='_blank' >%s</a><br>", apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug, $v) ,$v->title );
+            }
+
+            echo "</p>";
+            printf( "</div>" );   
+        endif;
         
-        printf( "</div>" );
-  endif;  
+        if( in_array( $key, array( 'i', 'q', '#' ) ) ){
+            printf( "</div>" );
+        }
+
+    }
+    
+    printf( "</div>" );
+endif;  
 ?>
 <style>
     div.mail_alphabatic_container h2.alphabate_label {
@@ -68,7 +72,6 @@ endif;
         list-style:none;
         padding-left: 0px;
     }
-
     div.mail_alphabatic_container .post_title{
         font-size:15px !important;
         font-weight:normal;
