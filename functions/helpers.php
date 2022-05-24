@@ -22,6 +22,9 @@ endif;
 if( ! function_exists( 'cxbc_get_posts' ) ) :
 function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true ) {
 
+	//	'orderby' => 'title',
+	//	'order'   => 'DESC',
+	print_r($posts);
 	$defaults = [
 		'post_type'         => 'post',
 		'posts_per_page'    => -1,
@@ -166,6 +169,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$taxonomy_topics = 'xero-topics';
 	}
 	elseif ( 'accounting-terms' == $post_type ) {
+		$taxonomy_topics = '';
+	}
+	elseif ( 'business-terms' == $post_type ) {
 		$taxonomy_topics = '';
 	}
 
@@ -318,7 +324,7 @@ endif;
 /**
  * API Authontication details
  *
- * @return array array of authontication crendentials
+ * @return array
  * @author ace <ace@bizinkonline.com>
  */
 if( ! function_exists( 'bizink_url_authontication' ) ) :

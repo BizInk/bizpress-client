@@ -92,34 +92,43 @@ if (strpos($post_type, 'keydates') === false) {
 		echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-top'>";
 	}
-if($post_type == 'accounting-terms'){
-	$post_count = 1;
-	echo cxbc_get_template( "account", "views", $posts );
- } else{
-	$post_count = 1;
-	foreach ( $posts as $post ) {
-		echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
-		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
-		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 
-		// if ( $post_count == 4 ) {
-		// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
-		// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
-		// }
-		// else {
-		echo "<div class='cxbc-post-title'><h4>{$post->title}<span><img class='cxbc-next-icon' src='{$next_icon}'></span></h4></div>";
-		// }
-		echo "</div></a></div>";
+	if($post_type == 'accounting-terms'){
 
-		if ( $post_count == 3 && count( $posts ) > 3 ) {
-			echo "</div><div class='cxbc-posts-list-mid'>";
+		$post_count = 1;
+		echo cxbc_get_template( "account", "views", $posts );
+
+	}else if($post_type == 'business-terms'){
+
+		$post_count = 1;
+		echo cxbc_get_template( "business", "views", $posts );
+
+	} else{
+
+		$post_count = 1;
+		foreach ( $posts as $post ) {
+			echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
+			echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
+			echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
+
+			// if ( $post_count == 4 ) {
+			// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
+			// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
+			// }
+			// else {
+			echo "<div class='cxbc-post-title'><h4>{$post->title}<span><img class='cxbc-next-icon' src='{$next_icon}'></span></h4></div>";
+			// }
+			echo "</div></a></div>";
+
+			if ( $post_count == 3 && count( $posts ) > 3 ) {
+				echo "</div><div class='cxbc-posts-list-mid'>";
+			}
+			if ( $post_count == 5 ) {
+				echo "</div><div class='cxbc-posts-list-bottom'>";
+			}
+			$post_count++;
 		}
-		if ( $post_count == 5 ) {
-			echo "</div><div class='cxbc-posts-list-bottom'>";
-		}
-		$post_count++;
 	}
-}
 	echo "</div>";
 	echo "</div>";
 
