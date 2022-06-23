@@ -71,6 +71,13 @@ class Settings extends Base {
 							'desc'      => __( 'Your Bizink password.', 'bizink-client' ),
 							'required'	=> true,
 						],
+						'allow_editor' => [
+							'id'      => 'allow-user',
+							'label'     => __( 'Allow Editor role to access BizPress settings', 'bizink-client' ),
+							'type'      => 'checkbox',
+							'desc'      => __( 'Allow Editor role to access BizPress settings.', 'bizink-client' ),
+							'required'	=> false,
+						],
 						'content_region' => [
 							'id'      => 'content_region',
 							'label'     => __( 'Content Region', 'bizink-client' ),
