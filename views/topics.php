@@ -28,35 +28,65 @@ elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
-elseif ( 'accounting-terms' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'accounting_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'accounting_desc' );
+elseif ( 'qbo-content' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
 }
+
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
 }
+//dropdown after single topics
+if(isset($_GET)){
+	$query_value = $_GET;	
+}
 
 if (strpos($post_type, 'keydates') === false) {
-if($post_type != 'accounting-terms'){
+	echo '<div class="topic-title"><h2>Browse by Topic</h2></div>';
 	echo "<div class='cxbc-topics-list'>";
 	$topic_coun = 0;
-	foreach ( $topics as $topic ) {
-		if ( $topic_coun == 0 ) {
-			$taxonomy 	= $topic->taxonomy;
-			$first_term = $topic->slug;
+	if(empty($query_value)){
+		foreach ( $topics as $topic ) {	
+			if ( $topic_coun == 0 ) {
+				$taxonomy 	= $topic->taxonomy;
+				$first_term = $topic->slug;
+			}
+			$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
+
+			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
+			//echo "<img class='cxbc-item-thumbnail' src='{$topic->thumbnail}'>";
+			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
+			echo "</div></a>";
+			$topic_coun++;
 		}
-		$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
-		echo "<a href='{$link}'><div class='cxbc-single-topic'>";
-		echo "<img class='cxbc-item-thumbnail' src='{$topic->thumbnail}'>";
-		echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
-		echo "</div></a>";
-		$topic_coun++;
+	}else{
+		global $wp;
+		$current_url = home_url( $wp->request ).'/?'.$_SERVER['QUERY_STRING'];
+		$selected = '';
+		echo '<div class="topic-dropdown"><select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">';
+		echo "<option value=''>Browse other topics...</option>";	
+		foreach ( $topics as $topic ) {	
+		if ( $topic_coun == 0 ) {
+				$taxonomy 	= $topic->taxonomy;
+				$first_term = $topic->slug;
+			}
+		$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
+		$selected = ($current_url == $link) ? 'selected' : '';
+		echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
+		//echo "{$topic->name}";
+		//echo "</option>";
+		}
+		echo '</select></div>';
+		
 	}
+	
 	echo "</div>";
-}
+
 }
 
+//$aaa = get_option( 'bizink-client_content' );
+//echo get_option('bizink-client_content','xero_title');
 // cxbc_pri($response);
 
 $taxonomy_topics = 'business-topics';
@@ -65,6 +95,9 @@ if ( 'business-lifecycle' == $post_type ) {
 }
 elseif ( 'xero-content' == $post_type ) {
 	$taxonomy_topics = 'xero-topics';
+}
+elseif ( 'qbo-content' == $post_type ) {
+	$taxonomy_topics = 'qbo-topics';
 }
 elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
@@ -85,52 +118,32 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "</div>";
 
 	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
-	if($post_type == 'accounting-terms'){
 	echo "<div class='cxbc-posts-list'>";
-	echo "<div class='cxbc-posts-list-top1'>";
-	}else{
-		echo "<div class='cxbc-posts-list'>";
-	echo "<div class='cxbc-posts-list-top'>";
-	}
+	echo "<div class='cxbc-posts-list-bottom'>";
 
-	if($post_type == 'accounting-terms'){
+	
+	foreach ( $posts as $post ) {
+		echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
+		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
+		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 
-		$post_count = 1;
-		echo cxbc_get_template( "account", "views", $posts );
-
-	}else if($post_type == 'business-terms'){
-
-		$post_count = 1;
-		echo cxbc_get_template( "business", "views", $posts );
-
-	} else{
-
-		$post_count = 1;
-		foreach ( $posts as $post ) {
-			echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
-			echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
-			echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
-
-			// if ( $post_count == 4 ) {
-			// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
-			// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
-			// }
-			// else {
-			echo "<div class='cxbc-post-title'><h4>{$post->title}<span><img class='cxbc-next-icon' src='{$next_icon}'></span></h4></div>";
-			// }
-			echo "</div></a></div>";
-
-			if ( $post_count == 3 && count( $posts ) > 3 ) {
-				echo "</div><div class='cxbc-posts-list-mid'>";
-			}
-			if ( $post_count == 5 ) {
-				echo "</div><div class='cxbc-posts-list-bottom'>";
-			}
-			$post_count++;
-		}
+		// if ( $post_count == 4 ) {
+		// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
+		// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
+		// }
+		// else {
+		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
+		echo "<div class='learn-more'>Learn more</div>";
+		// }
+		echo "</div></a></div>";
+		
 	}
 	echo "</div>";
-	echo "</div>";
+	if( 'xero-content' == $post_type){
+		//echo "<div class='view-resource'><a href=".get_site_url()."/xero-content/topic/all/>See all Resources</a></div>";
+		echo "<div class='view-resource'><a href=".get_site_url()."/xero-content/topic/all/>See all Resources</a></div>";
+ 	}
+ 	
 
 	//if ( !empty( $posts ) ) {
 		//$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
