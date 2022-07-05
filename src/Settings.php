@@ -71,6 +71,13 @@ class Settings extends Base {
 							'desc'      => __( 'Your Bizink password.', 'bizink-client' ),
 							'required'	=> true,
 						],
+						'allow_editor' => [
+							'id'      => 'allow-user',
+							'label'     => __( 'Allow Editor role to access BizPress settings', 'bizink-client' ),
+							'type'      => 'checkbox',
+							'desc'      => __( 'Allow Editor role to access BizPress settings.', 'bizink-client' ),
+							'required'	=> false,
+						],
 						'content_region' => [
 							'id'      => 'content_region',
 							'label'     => __( 'Content Region', 'bizink-client' ),
@@ -133,6 +140,25 @@ class Settings extends Base {
 							'label'     => __( 'Xero Description', 'bizink-client' ),
 							'type'      => 'textarea',
 							'default'   => __( 'Free resources to help you use Xero.', 'bizink-client' ),
+							'required'	=> true,
+						],
+						[
+	                        'id'		=> 'accounting',
+	                        'label'		=> __( 'Bizink Client Accounting', 'bizink-client' ),
+	                        'type'		=> 'divider',
+	                    ],
+						'accounting_title' => [
+							'id'      	=> 'accounting_title',
+							'label'     => __( 'Accounting Title', 'bizink-client' ),
+							'type'      => 'text',
+							'default'   => __( 'Accounting Resources', 'bizink-client' ),
+							'required'	=> true,
+						],
+						'accounting_desc' => [
+							'id'      	=> 'accounting_desc',
+							'label'     => __( 'Accounting Description', 'bizink-client' ),
+							'type'      => 'textarea',
+							'default'   => __( 'Free resources to help you use Accounting.', 'bizink-client' ),
 							'required'	=> true,
 						],
 						[

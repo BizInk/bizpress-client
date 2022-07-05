@@ -28,15 +28,28 @@ class Settings extends Fields {
 	public function __construct( $args = [] ) {
 
 		// default values
-		$defaults = [
-			'id'			=> 'cx-settings',
-			'label'			=> __( 'Settings' ),
-			'priority'      => 10,
-			'capability'    => 'manage_options',
-			'icon'          => 'dashicons-wordpress',
-			'position'      => 25,
-			'sections'		=> [],
-		];
+		$psettings = get_option('bizink-client_basic', 'blank');
+		if($psettings != 'blank' && isset($psettings['allow-user']) && $psettings['allow-user'] == 'on'){
+			$defaults = [
+				'id'			=> 'cx-settings',
+				'label'			=> __( 'Settings' ),
+				'priority'      => 10,
+				'capability'    => 'edit_pages',
+				'icon'          => 'dashicons-wordpress',
+				'position'      => 25,
+				'sections'		=> [],
+			];
+		} else {
+			$defaults = [
+				'id'			=> 'cx-settings',
+				'label'			=> __( 'Settings' ),
+				'priority'      => 10,
+				'capability'    => 'manage_options',
+				'icon'          => 'dashicons-wordpress',
+				'position'      => 25,
+				'sections'		=> [],
+			];
+		}
 
 		$this->config = wp_parse_args( apply_filters( 'cx-settings-args', $args ), $defaults );
 		$this->sections	= apply_filters( 'cx-settings-sections', $this->config['sections'] );
