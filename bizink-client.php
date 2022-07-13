@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: BizPress
- * Description: Bizink content for accountants.
+ * Description: Display business content on your website that is automatically updated by the Bizink team.
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
                     * Author URI: https://bizinkonline.com
