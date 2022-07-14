@@ -1,2 +1,2 @@
-# Bizink Client
-### To be installed on the Client sites
+# BizPress
+### To be installed on WordPress websites
