@@ -1,2 +1,3 @@
 # BizPress
-### To be installed on WordPress websites
+
+BizPress is Bizink's collection of WordPress plugins.
