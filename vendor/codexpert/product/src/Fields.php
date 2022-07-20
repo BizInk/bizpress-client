@@ -262,7 +262,7 @@ abstract class Fields extends Base {
 		if(empty($data)){
 			$data = '<p>No Content</p>';
 		}
-		$html = "<div class='{$class}' id='{$id}'>{$data}</div>";
+		$html = "<div id='{$id}'>{$data}</div>";
 		return $html;
 	}
 

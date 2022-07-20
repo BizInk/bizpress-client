@@ -211,8 +211,9 @@ class Settings extends Base {
 						],
 						'admin_html' => [
 							'id' => 'support_test',
-							'label' => __( 'Test', 'bizink-client' ),
-							'type' => 'admin_html'
+							'label' => __( 'Support Contact Form', 'bizink-client' ),
+							'type' => 'admin_html',
+							'html' => '<p>Suggest a form that would rease a ticket in our support system but taged BizPress</p>'
 						]
 					]
 				]
