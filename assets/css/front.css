@@ -442,3 +442,7 @@
 #demo-bar-badge:before, #demo-bar-badge:after {
 	display: none !important;
 }
+
+iframe#myframe {
+    height: 100vh;
+}
