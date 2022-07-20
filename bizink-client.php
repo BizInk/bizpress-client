@@ -4,7 +4,7 @@
  * Description: Display business content on your website that is automatically updated by the Bizink team.
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
-                    * Author URI: https://bizinkonline.com
+ * Author URI: https://bizinkonline.com
  * Version: 1.0
  * Text Domain: bizink-client
  * Domain Path: /languages

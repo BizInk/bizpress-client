@@ -7,6 +7,10 @@
         {
             "name": "codexpert",
             "email": "hello@codexpert.io"
+        },
+        {
+            "name":"Bizink",
+            "email": "hello@bizinkonline.com"
         }
     ],
     "require": {
