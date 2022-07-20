@@ -450,6 +450,9 @@
 #demo-bar-badge:before, #demo-bar-badge:after {
 	display: none !important;
 }
+iframe#myframe {
+    height: 100vh;
+}
 .topic-all-main-wrap .cxbc-post-title {
 	height: 72px;
 }
