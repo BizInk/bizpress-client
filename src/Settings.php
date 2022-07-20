@@ -40,7 +40,7 @@ class Settings extends Base {
 				'bizink-client_basic'	=> [
 					'id'        => 'bizink-client_basic',
 					'label'     => __( 'Settings', 'bizink-client' ),
-					'icon'      => 'dashicons-admin-tools',
+					'icon'      => 'dashicons-admin-generic',
 					'color'		=> '#4c3f93',
 					'sticky'	=> true,
 					'fields'    => [
@@ -52,13 +52,13 @@ class Settings extends Base {
 						// 	'placeholder'   => 'https://codexpert.io',
 						// 	'required'	=> true,
 						// ],						
-						'post_per_page' => [
-							'id'      => 'post_per_page',
-							'label'     => __( 'Posts Per Page', 'bizink-client' ),
-							'type'      => 'number',
-							'default'	=> 8,
-							'required'	=> true,
-						],
+						// 'post_per_page' => [
+						// 	'id'      => 'post_per_page',
+						// 	'label'     => __( 'Posts Per Page', 'bizink-client' ),
+						// 	'type'      => 'number',
+						// 	'default'	=> 8,
+						// 	'required'	=> true,
+						// ],
 						'user_email' => [
 							'id'      => 'user_email',
 							'label'     => __( 'Bizink Email', 'bizink-client' ),
@@ -185,6 +185,37 @@ class Settings extends Base {
 						],
 					]
 				],
+				'bizink-client_support' => [
+					'id'        => 'bizink-client_support',
+					'label'     => __( 'Support', 'bizink-client' ),
+					'icon'      => 'dashicons-businesswoman',
+					'color'		=> '#4c3f93',
+					'sticky'	=> true,
+					'fields'    => [
+						'admin_message' => [
+							'id' => 'support_message',
+							'label' => __( 'Bizpress Support', 'bizink-client' ),
+							'type' => 'admin_message',
+							'message' => 'Please feel free to email us with any support quries you may have about BizPress'
+						],
+						'admin_email' => [
+							'id' => 'support_email',
+							'label' => __( 'Support Email', 'bizink-client' ),
+							'type' => 'admin_email',
+							'email' => 'support@bizinkonline.com'
+						],
+						'divider' => [
+							'id' => 'support_divider',
+							'label' => '',
+							'type' => 'divider'
+						],
+						'admin_html' => [
+							'id' => 'support_test',
+							'label' => __( 'Test', 'bizink-client' ),
+							'type' => 'admin_html'
+						]
+					]
+				]
 			],
 		];
 
