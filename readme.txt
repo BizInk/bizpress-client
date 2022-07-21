@@ -1,7 +1,7 @@
 === Bizpress ===
 Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
-Version: 1.0
+Version: 0.9
 Requires at least: 5.6
 Tested up to: 6.0.1
 Stable tag: 1.0
@@ -17,3 +17,6 @@ Display business content on your website that is automatically updated by the Bi
 
 = 1.0 =
 * Bizpress launch
+
+= 0.9 =
+* Pre Realease

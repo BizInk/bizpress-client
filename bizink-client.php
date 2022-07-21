@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.0
+ * Version: 0.9
  * Text Domain: bizink-client
  * Domain Path: /languages
  */
@@ -147,7 +147,7 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 );
 
 // Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('master');
+$myUpdateChecker->setBranch('jayden-updates');
 
 // Using a private repository, specify the access token 
 $myUpdateChecker->setAuthentication('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'); // Token under Jayden's Account may need to change
