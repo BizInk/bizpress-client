@@ -2,6 +2,17 @@
 
 BizPress is Bizink's collection of WordPress plugins.
 
+## BizPress Pliguns
+- BizPress Main - This repo
+- BizPress - Client Accounting [https://github.com/BizInk/bizpress-accounting-glossary](https://github.com/BizInk/bizpress-accounting-glossary)
+- BizPress - Business Terms Glossary [https://github.com/BizInk/bizpress-business-terms-glossary](https://github.com/BizInk/bizpress-business-terms-glossary)
+- BizPress - Key Dates NZ [https://github.com/BizInk/bizpress-key-dates-nz](https://github.com/BizInk/bizpress-key-dates-nz)
+- BizPress - Key Dates AU [https://github.com/BizInk/bizpress-key-dates-aus](https://github.com/BizInk/bizpress-key-dates-aus)
+- BizPress - Key Dates UK [https://github.com/BizInk/bizpress-key-dates-uk](https://github.com/BizInk/bizpress-key-dates-uk)
+- BizPress - Xero Resources [https://github.com/BizInk/bizpress-xero-resources](https://github.com/BizInk/bizpress-xero-resources)
+- BizPress - Business Resources [https://github.com/BizInk/bizpress-business-resources](https://github.com/BizInk/bizpress-business-resources)
+- BizPress - Luca [https://github.com/BizInk/bizpress-luca](https://github.com/BizInk/bizpress-luca)
+
 ## How to update the plugin
 1. Have the latest version of the plugin in the master/main branch
 2. Make sure the **Readme.txt** file is up to date - This file is written in **WordPress Markdown** see Readme.txt section below
@@ -11,9 +22,8 @@ BizPress is Bizink's collection of WordPress plugins.
     - If the release is marked as *Pre Release* the plugin updater will ignore it.
     - We should also put what has changed in the release notes but these would be for our benefit and not used by the plugin.
 
-
 ### Readme.txt
-This file is written in **WordPress Markdown** this is different to GitHub Markdown and is also different to the Readme.md file. It is required for the updater to work. Update the details in this file on the master branch then add a new release with the github tag in order to post a new version of the plugin. Follow this example [https://wordpress.org/plugins/readme.txt](https://wordpress.org/plugins/readme.txt)
+This file is written in **WordPress Markdown** this is different to GitHub Markdown and is also different to the Readme.md file. It is required for the updater to work. Update the details in this file on the master branch then add a new release with the github tag in order to post a new version of the plugin. [Follow this example https://wordpress.org/plugins/readme.txt](https://wordpress.org/plugins/readme.txt)
 
 ### Tags
 Using the master branch create a tag with the name being the version number of the release. **Note:** It should be the same version number in the plugin files and the readme.txt file
