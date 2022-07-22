@@ -42,7 +42,7 @@ if ( !class_exists('Puc_v4p11_Vcs_BitBucketApi', false) ):
 			$updateSource = $this->getStableTag($configBranch);
 
 			//Look for version-like tags.
-			if ( !$updateSource && ($configBranch === 'master' || $configBranch === 'main') ) {
+			if ( !$updateSource && ($configBranch === 'master') ) {
 				$updateSource = $this->getLatestTag();
 			}
 			//If all else fails, use the specified branch itself.
@@ -59,16 +59,8 @@ if ( !class_exists('Puc_v4p11_Vcs_BitBucketApi', false) ):
 				return null;
 			}
 
-			//The "/src/{stuff}/{path}" endpoint doesn't seem to handle branch names that contain slashes.
-			//If we don't encode the slash, we get a 404. If we encode it as "%2F", we get a 401.
-			//To avoid issues, if the branch name is not URL-safe, let's use the commit hash instead.
-			$ref = $branch->name;
-			if ((urlencode($ref) !== $ref) && isset($branch->target->hash)) {
-				$ref = $branch->target->hash;
-			}
-
 			return new Puc_v4p11_Vcs_Reference(array(
-				'name' => $ref,
+				'name' => $branch->name,
 				'updated' => $branch->target->date,
 				'downloadUrl' => $this->getDownloadUrl($branch->name),
 			));
