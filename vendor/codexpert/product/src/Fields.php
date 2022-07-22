@@ -253,6 +253,45 @@ abstract class Fields extends Base {
 		return $default;
 	}
 
+	public function field_admin_html($field, $section, $scope){
+		$label 			= $field['label'];
+		$id 			= "{$section['id']}-{$field['id']}";
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$data 			= $field['html'];
+		if(empty($data)){
+			$data = '<p>No Content</p>';
+		}
+		$html = "<div id='{$id}'>{$data}</div>";
+		return $html;
+	}
+
+	public function field_admin_message($field, $section, $scope){
+		$label 			= $field['label'];
+		$message			= $field['message'];
+		if(empty($message)){
+			$message = 'No Message';
+		}
+		$id 			= "{$section['id']}-{$field['id']}";
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$html = "<div class='{$class}' id='{$id}'><p>{$message}</p></div>";
+		return $html;
+	}
+
+	public function field_admin_email($field, $section, $scope){
+		$label 			= $field['label'];
+		$email			= $field['email'];
+		if(empty($email)){
+			$email = 'support@bizinkonline.com';
+		}
+		$id 			= "{$section['id']}-{$field['id']}";
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$html = "<div class='{$class}' id='{$id}'><a href='mailto:{$email}'>{$email}</a></div>";
+		return $html;
+	}
+
 	public function field_text( $field, $section, $scope ) {
 		$default		= isset( $field['default'] ) ? $field['default'] : '';
 		$value			= $this->esc_str( $this->get_value( $field, $section, $default, $scope ) );

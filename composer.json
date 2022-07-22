@@ -7,9 +7,13 @@
         {
             "name": "codexpert",
             "email": "hello@codexpert.io"
+        },
+        {
+            "name":"Bizink",
+            "email": "hello@bizinkonline.com"
         }
     ],
     "require": {
-            "composer/installers": "v1.0.7"
+        "composer/installers": "v1.0.7"
     }
 }
