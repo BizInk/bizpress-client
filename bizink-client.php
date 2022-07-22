@@ -23,13 +23,10 @@ require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/BizInk/bizpress-client',__FILE__,'bizpress-client');
 
 // Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('jayden_updates');
+$myUpdateChecker->setBranch('master');
 
 // Using a private repository, specify the access token 
 $myUpdateChecker->setAuthentication('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');
-
-// Using the Release Assets
-$myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 /** Load The main plugin */
 require 'bizink-plugin.php';
