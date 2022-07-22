@@ -2,12 +2,6 @@
 namespace codexpert\Bizink_Client;
 
 /**
- * if accessed directly, exit.
- */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-/**
  * Main class for the plugin
  * @package Plugin
  * @author codexpert <hello@codexpert.io>
@@ -34,7 +28,9 @@ final class Plugin {
 	 */
 	public function define() {
 		// constants
-		define( 'CXBPC', __FILE__ );
+		if(!defined('CXBPC')){
+			define( 'CXBPC', __FILE__ );
+		}
 		define( 'CXBPC_DIR', dirname( CXBPC ) );
 		define( 'CXBPC_DEBUG', true );
 
@@ -44,7 +40,7 @@ final class Plugin {
 		$this->plugin['file']		= CXBPC;
 		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
 		$this->plugin['min_php']	= '5.6';
-		$this->plugin['min_wp']		= '4.0';
+		$this->plugin['min_wp']		= '5.0';
 		$this->plugin['depends']	= [];
 	}
 

@@ -17,6 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if(!defined('CXBPC')){
+	define( 'CXBPC', __FILE__ );
+}
+
 // Plugin Updater
 require 'plugin-update-checker/plugin-update-checker.php';
 
