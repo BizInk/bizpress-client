@@ -15,8 +15,21 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
+= 1.0.1 =
+* Added other repos to the readme
+
 = 1.0 =
 * Bizpress launch
 
 = 0.9 =
 * Pre Realease
+
+== BizPress Plugins ==
+- bizpress-accounting-glossary
+- bizpress-business-terms-glossary
+- bizpress-key-dates-nz
+- bizpress-key-dates-aus
+- bizpress-key-dates-uk
+- bizpress-xero-resources
+- bizpress-business-resources
+- bizpress-luca
