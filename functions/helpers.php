@@ -24,7 +24,7 @@ function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true )
 
 	//	'orderby' => 'title',
 	//	'order'   => 'DESC',
-	print_r($posts);
+	//print_r($posts);
 	$defaults = [
 		'post_type'         => 'post',
 		'posts_per_page'    => -1,

@@ -211,7 +211,14 @@ class Settings extends Base {
 							'id' => 'support_test',
 							'label' => __( 'Support Contact Form', 'bizink-client' ),
 							'type' => 'admin_html',
-							'html' => '<p>Suggest a form that would rease a ticket in our support system but taged BizPress</p>'
+							'html' => '<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+							<script>
+							  hbspt.forms.create({
+								region: "na1",
+								portalId: "5917474",
+								formId: "eeade17d-948d-4c0f-94a0-d5393b7598e8"
+							  });
+							</script>'
 						]
 					]
 				]
