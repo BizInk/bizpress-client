@@ -15,6 +15,7 @@ BizPress is Bizink's collection of WordPress plugins.
 
 ## How to update the plugin
 1. Have the latest version of the plugin in the master/main branch
+    - Note this should contain the latest version number in the plugin file ```bizink-clinet.php```
 2. Make sure the **Readme.txt** file is up to date - This file is written in **WordPress Markdown** see Readme.txt section below
     - This has a Version item and a Stable Tag item **both** should be the new verson number e.g. 1.0
     - This file also has a Change Log included. Update this as this file is used by wordpress to show changes on the plugin update section
