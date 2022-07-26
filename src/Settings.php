@@ -183,6 +183,22 @@ class Settings extends Base {
 						],
 					]
 				],
+				'bizink-client_landingpages' => [
+					'id' 	=> 'bizink-client_landingpages',
+					'label' => __( 'Landing Pages', 'bizink-client' ),
+					'icon'	=> 'dashicons-media-document',
+					'color'	=> '#4c3f93',
+					'sticky'	=> true,
+					'fields'    => [
+						'admin_message' => [
+							'id' => 'landingpage_xero',
+							'label' => __( 'Xero landing page', 'bizink-client' ),
+							'type' => 'admin_message',
+							'message' => '[bizink-landing id="xero-landing-page"]',
+							'copy' => true
+						]
+					]
+				],
 				'bizink-client_support' => [
 					'id'        => 'bizink-client_support',
 					'label'     => __( 'Support', 'bizink-client' ),
@@ -194,7 +210,7 @@ class Settings extends Base {
 							'id' => 'support_message',
 							'label' => __( 'Bizpress Support', 'bizink-client' ),
 							'type' => 'admin_message',
-							'message' => 'Please feel free to email us with any support quries you may have about BizPress'
+							'message' => 'Please feel free to email us with any support quries you may have about BizPress. Read our support documentation or contact our support team through the Bizink knowledge base. '
 						],
 						'admin_email' => [
 							'id' => 'support_email',

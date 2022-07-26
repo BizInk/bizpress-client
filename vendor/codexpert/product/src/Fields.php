@@ -267,7 +267,7 @@ abstract class Fields extends Base {
 	}
 
 	public function field_admin_message($field, $section, $scope){
-		$label 			= $field['label'];
+		$label 				= $field['label'];
 		$message			= $field['message'];
 		if(empty($message)){
 			$message = 'No Message';
