@@ -190,11 +190,11 @@ class Settings extends Base {
 					'color'	=> '#4c3f93',
 					'sticky'	=> true,
 					'fields'    => [
-						'admin_message' => [
+						'xero_shortcode' => [
 							'id' => 'landingpage_xero',
 							'label' => __( 'Xero landing page', 'bizink-client' ),
-							'type' => 'admin_message',
-							'message' => '[bizink-landing id="xero-landing-page"]',
+							'type' => 'admin_shortcode',
+							'shortcode' => '[bizink-landing id="xero-landing-page"]',
 							'copy' => true
 						]
 					]
@@ -206,13 +206,13 @@ class Settings extends Base {
 					'color'		=> '#4c3f93',
 					'sticky'	=> true,
 					'fields'    => [
-						'admin_message' => [
+						'admin_support_message' => [
 							'id' => 'support_message',
 							'label' => __( 'Bizpress Support', 'bizink-client' ),
 							'type' => 'admin_message',
 							'message' => 'Please feel free to email us with any support quries you may have about BizPress. Read our support documentation or contact our support team through the Bizink knowledge base. '
 						],
-						'admin_email' => [
+						'admin_support_email' => [
 							'id' => 'support_email',
 							'label' => __( 'Support Email', 'bizink-client' ),
 							'type' => 'admin_email',

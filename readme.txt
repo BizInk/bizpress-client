@@ -24,6 +24,10 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
+= 1.2.2 =
+* Change some of the frontend styleing for the Xero content.
+* Bug Fix: Fixed a but that show Undefined variable: post_count
+
 = 1.2.1 =
 * Added the Landing Page section to the settings tab with the ability to copy the shortcode
 

@@ -14,7 +14,6 @@ if ( $response->status == 0 ) {
 
 $topics 		= $response->topics;
 $posts 			= $response->posts;
-
 $post_type 		= $response->post_type;
 
 $default_title 	= __( 'Business Resources', 'bizink-client' );
@@ -121,20 +120,13 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-bottom'>";
 
-	
+	$post_count = count($posts);
 	foreach ( $posts as $post ) {
-		echo "<div class='cxbc-single-post cxbc-single-post-count-{$post_count}'>";
+		echo "<div class='cxbc-single-post cxbc-single-post-{$post->id} cxbc-single-post-count-{$post_count}'>";
 		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
 		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
-
-		// if ( $post_count == 4 ) {
-		// 	echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
-		// 	echo "<a class='cxbc-learn-more-btn' href='{$post->slug}'>". __( 'Learn More', 'bizink-client' ) ."</a>";
-		// }
-		// else {
 		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
 		echo "<div class='learn-more'>Learn more</div>";
-		// }
 		echo "</div></a></div>";
 		
 	}

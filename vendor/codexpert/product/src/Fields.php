@@ -266,6 +266,25 @@ abstract class Fields extends Base {
 		return $html;
 	}
 
+	public function field_admin_shortcode($field, $section, $scope){
+		$label 				= $field['label'];
+		$shortcode			= $field['shortcode'];
+		$copy				= $field['copy'];
+		if(empty($shortcode)){
+			if(empty($field['message'])){
+				$shortcode = '[No Shortcode]';
+			}
+			else{
+				$shortcode = $field['message'];
+			}
+		}
+		$id 			= "{$section['id']}-{$field['id']}";
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$html = "<div class='{$class}' id='{$id}'><p>{$shortcode}</p></div>";
+		return $html;
+	}
+
 	public function field_admin_message($field, $section, $scope){
 		$label 				= $field['label'];
 		$message			= $field['message'];
