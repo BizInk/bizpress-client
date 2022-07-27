@@ -121,8 +121,10 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "<div class='cxbc-posts-list-bottom'>";
 
 	$post_count = count($posts);
+	$item = 0;
 	foreach ( $posts as $post ) {
-		echo "<div class='cxbc-single-post cxbc-single-post-{$post->id} cxbc-single-post-count-{$post_count}'>";
+		$item++;
+		echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
 		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
 		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
