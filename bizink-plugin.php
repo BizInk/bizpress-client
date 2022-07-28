@@ -93,8 +93,13 @@ final class Plugin {
 			 * To enable a shortcode, use $shortcode->register()
 			 */
 			$shortcode = new Shortcode( $this->plugin );
+			// Bizink Shortcode
 			$shortcode->register( 'bizink-content', 'bizink_content' );
 			$shortcode->register( 'bizink-landing', 'bizink_landing' );
+
+			// Bizpress Shortcode
+			$shortcode->register( 'bizpress-content', 'bizink_content' );
+			$shortcode->register( 'bizpress-landing', 'bizink_landing' );
 
 		endif;
 	}

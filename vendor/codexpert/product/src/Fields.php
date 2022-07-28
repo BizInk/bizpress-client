@@ -281,7 +281,11 @@ abstract class Fields extends Base {
 		$id 			= "{$section['id']}-{$field['id']}";
 		$class 			= "cx-field cx-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
-		$html = "<div class='{$class}' id='{$id}'><p>{$shortcode}</p></div>";
+		$copyHtml = '';
+		if($copy){
+			$copyHtml = "<button class=\"button button-info button-small\" onclick=\"navigator.clipboard.writeText({$shortcode})\">Copy</button>";
+		}
+		$html = "<div class='{$class}' id='{$id}'><p>{$shortcode}</p>".$copyHtml."</div>";
 		return $html;
 	}
 
