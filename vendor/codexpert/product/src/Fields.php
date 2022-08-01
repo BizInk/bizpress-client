@@ -283,9 +283,9 @@ abstract class Fields extends Base {
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 		$copyHtml = '';
 		if($copy){
-			$copyHtml = "<button class=\"button button-info button-small\" onclick=\"navigator.clipboard.writeText({$shortcode})\">Copy</button>";
+			$copyHtml = "<button class=\"button button-info button-small\" onclick=\"navigator.clipboard.writeText(document.getElementById('{$id}').innerHTML)\">Copy</button>";
 		}
-		$html = "<div class='{$class}' id='{$id}'><p>{$shortcode}</p>".$copyHtml."</div>";
+		$html = "<div class='{$class}'><p id='{$id}'>{$shortcode}</p>".$copyHtml."</div>";
 		return $html;
 	}
 

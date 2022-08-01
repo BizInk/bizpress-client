@@ -26,7 +26,23 @@ class Settings extends Base {
 	}
 	
 	public function init_menu() {
+
+		$siteUrl = get_site_url();
+		$homeUrl = get_home_url();
+		$user = wp_get_current_user();
+		$phpVersion = phpversion();
+		$plugins = null;
+		if ( ! function_exists( 'get_plugins' ) ) {
+			$plugins = get_plugins();
+		}
 		
+		$supportData = [
+			'siteUrl' => $siteUrl,
+			'homeUrl' => $homeUrl,
+			'phpVersion' => $phpVersion,
+			'pluginVersion' => $this->version,
+		];
+
 		$settings = [
 			'id'            => $this->slug,
 			'label'         => $this->name,
@@ -234,6 +250,7 @@ class Settings extends Base {
 								portalId: "5917474",
 								formId: "eeade17d-948d-4c0f-94a0-d5393b7598e8"
 							  });
+							  var supportData = '.json_encode($supportData).'
 							</script>'
 						]
 					]

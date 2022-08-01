@@ -17,7 +17,15 @@ $posts 			= $response->posts;
 $post_type 		= $response->post_type;
 
 $default_title 	= __( 'Business Resources', 'bizink-client' );
-$default_desc 	= __( 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus delectus officiis quae facere rerum exercitationem labore aperiam ducimus soluta debitis, magni aspernatur tempore omnis similique eum illo dolorum corrupti accusantium?', 'bizink-client' );
+$default_desc 	= __( '', 'bizink-client' );
+
+/** Return if [bizpress-content] or [bizink-content] is on page but this page has not be configured in settings */
+if(empty( $post_type)){
+	echo '<p><b>';
+	_e('Sorry this page has not been configured in the BizPress plugin.', 'bizink-client');
+	echo '</b></p>';
+	return;
+}
 
 if ( 'business-lifecycle' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
@@ -36,6 +44,7 @@ elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
 }
+
 //dropdown after single topics
 if(isset($_GET)){
 	$query_value = $_GET;	

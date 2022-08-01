@@ -26,6 +26,7 @@ Display business content on your website that is automatically updated by the Bi
 
 = 1.2.3 =
 * Added [bizpress-content] & [bizpress-landing] shortcodes they will map to the same as [bizink-content] & [bizink-landing] respectively
+* Added extra fields to the BizPress support form
 
 = 1.2.2 =
 * Change some of the frontend styleing for the Xero content.
