@@ -26,21 +26,23 @@ class Settings extends Base {
 	}
 	
 	public function init_menu() {
-
-		$siteUrl = get_site_url();
-		$homeUrl = get_home_url();
-		$user = wp_get_current_user();
-		$phpVersion = phpversion();
-		$plugins = null;
-		if ( ! function_exists( 'get_plugins' ) ) {
-			$plugins = get_plugins();
-		}
 		
+		$pluginInfo = '';
+		$plugins = get_plugins();
+		foreach($plugins as $plugin){
+			$pluginInfo .= "{$plugin['Name']} - Version:{$plugin['Version']} By:{$plugin['AuthorName']}\r\n";
+		}
+
 		$supportData = [
-			'siteUrl' => $siteUrl,
-			'homeUrl' => $homeUrl,
-			'phpVersion' => $phpVersion,
+			'siteUrl' => get_bloginfo('wpurl'),
+			'homeUrl' => get_bloginfo('url'),
+			'phpVersion' => phpversion(),
 			'pluginVersion' => $this->version,
+			'wpVersion' => get_bloginfo('version'),
+			'wpLang' => get_bloginfo('language'),
+			'user' => wp_get_current_user(),
+			'siteTitle' => get_bloginfo('name'),
+			'plugins' => $pluginInfo
 		];
 
 		$settings = [
@@ -111,6 +113,13 @@ class Settings extends Base {
 							'default'	=> '',
 							'desc'      => __( 'Select you content region.', 'bizink-client' ),
 							'required'	=> true,
+						],
+						'content_shortcode' => [
+							'id' => 'landingpage_xero',
+							'label' => __( 'Display Content using the shortcode', 'bizink-client' ),
+							'type' => 'admin_shortcode',
+							'shortcode' => '[bizink-content]',
+							'copy' => true
 						]
 					]
 				],
@@ -226,31 +235,34 @@ class Settings extends Base {
 							'id' => 'support_message',
 							'label' => __( 'Bizpress Support', 'bizink-client' ),
 							'type' => 'admin_message',
-							'message' => 'Please feel free to email us with any support quries you may have about BizPress. Read our support documentation or contact our support team through the Bizink knowledge base. '
-						],
-						'admin_support_email' => [
-							'id' => 'support_email',
-							'label' => __( 'Support Email', 'bizink-client' ),
-							'type' => 'admin_email',
-							'email' => 'support@bizinkonline.com'
-						],
-						'divider' => [
-							'id' => 'support_divider',
-							'label' => '',
-							'type' => 'divider'
+							'message' => 'Please feel free to contact us with any support quries you may have about BizPress. Read our <a target="_blank" href="https://support.bizinkonline.com/">support documentation</a> or contact our support team through the <a target="_blank" href="https://support.bizinkonline.com/">Bizink knowledge base.</a>'
 						],
 						'admin_html' => [
-							'id' => 'support_test',
-							'label' => __( 'Support Contact Form', 'bizink-client' ),
+							'id' => 'support_form',
+							'label' => __( 'Contact Our Team', 'bizink-client' ),
 							'type' => 'admin_html',
 							'html' => '<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
 							<script>
+							  var supportData = '.json_encode($supportData).';
+							  console.log("Support Data",supportData);
 							  hbspt.forms.create({
 								region: "na1",
 								portalId: "5917474",
-								formId: "eeade17d-948d-4c0f-94a0-d5393b7598e8"
+								formId: "eeade17d-948d-4c0f-94a0-d5393b7598e8",
+								onFormReady: function($form) {
+									$form.find(\'input[name="company"]\').val(supportData["siteTitle"]).change();
+									$form.find(\'input[name="email"]\').val(supportData["user"]["data"]["user_email"]).change();
+								},							
+								onFormSubmit: function($form) {
+									$form.find(\'input[name="bizpress_version"]\').val(supportData["pluginVersion"]).change();
+									$form.find(\'input[name="bizpress_home_url"]\').val(supportData["homeUrl"]).change();
+									$form.find(\'input[name="bizpress_url"]\').val(supportData["siteUrl"]).change();
+									$form.find(\'input[name="bizpress_wordpress_version"]\').val(supportData["wpVersion"]).change();
+									$form.find(\'input[name="bizpress_language"]\').val(supportData["wpLang"]).change();
+									$form.find(\'input[name="bizpress_sitename"]\').val(supportData["siteTitle"]).change();
+									$form.find(\'input[name="bizpress_website_plugins"]\').val(supportData["plugins"]).change();
+								} 
 							  });
-							  var supportData = '.json_encode($supportData).'
 							</script>'
 						]
 					]
@@ -266,3 +278,13 @@ class Settings extends Base {
 		new \codexpert\product\Settings( $settings );
 	}
 }
+
+/**
+ * 
+	'admin_support_email' => [
+		'id' => 'support_email',
+		'label' => __( 'Support Email', 'bizink-client' ),
+		'type' => 'admin_email',
+		'email' => 'support@bizinkonline.com'
+	],
+ */
