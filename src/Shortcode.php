@@ -49,10 +49,11 @@ class Shortcode extends Base {
         $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
 
         $html   = '<iframe id="myframe" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
-        $html   .= '<script>
+        /* $html   .= '<script>
         window.addEventListener(\'message\', function (e) {
             if (e.data.hasOwnProperty("masterHeight")) {
-                jQuery("#myframe").css("height", e.data.masterHeight);        
+                jQuery("#myframe").css("height", e.data.masterHeight);
+                console.log("iFrame Height",e.data.masterHeight);      
             }
         });
 
@@ -60,7 +61,7 @@ class Shortcode extends Base {
            iframe.contentWindow.postMessage("masterHeight", "*");   
         }
         </script>';
-        
+        */
         return $html;
     }
 }
