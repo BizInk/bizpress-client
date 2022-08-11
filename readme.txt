@@ -4,7 +4,7 @@ Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.0.1
 Stable tag: 1.2.4
-Version: 1.2.4
+Version: 1.2.5
 Requires PHP: 7.2
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -23,6 +23,9 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress Luca
 
 == Changelog ==
+
+= 1.2.5 =
+* Fixed a version 1.0 vs 1.1 api request issue
 
 = 1.2.4 =
 * Fixed and error that ocours when the plugin dosn't get a responce from the server.

@@ -183,7 +183,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     ];
     $country 		= strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
-        'rest_route'    => "/bizink-publisher/v1.0/{$api_endpoint}",
+        'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => -1,//$options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
@@ -229,7 +229,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'password'      => $options['user_password'],
     ];
     $url = add_query_arg( [ 
-        'rest_route'    => "/bizink-publisher/v1.0/{$api_endpoint}",
+        'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => $options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
@@ -317,6 +317,9 @@ function bizink_update_views($data) {
 	);
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);
+	if(defined('WP_DEBUG') && WP_DEBUG == true){
+		//print_r($result);
+	}
 }
 endif;
 

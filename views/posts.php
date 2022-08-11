@@ -5,7 +5,7 @@ extract( $args );
 if ( is_null( $response ) || empty($responce) ) {
 	echo "<p>". __( 'Something went wrong. The data for this page could not be found.', 'bizink-client' ) ."</p>";
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		_e('Got a Null for $responce', 'bizink-client' );
+		_e('Got a Null for $responce in views/posts.php', 'bizink-client' );
 	}
 	return;
 }
