@@ -1,8 +1,8 @@
 <?php 
 
-extract( $args );
+extract($args);
 
-if ( is_null( $response ) || empty($responce) ) {
+if ( empty($responce) && empty($args['response']) ) {
 	echo "<p>". __( 'Something went wrong. The data for this page could not be found.', 'bizink-client' ) ."</p>";
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
 		_e('Got a Null for $responce in views/topics.php', 'bizink-client' );
@@ -10,10 +10,8 @@ if ( is_null( $response ) || empty($responce) ) {
 	return;
 }
 
-if ( empty($response->status) || $response->status == 0 ) {
-	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		print_r($response);
-	}
+
+if ( $response->status == 0 ) {
 	if(empty($response->message)){
 		echo "<p>".__('Sorry there was an error. There was an error retreveing the data for this page.','bizink-client')."</p>";
 	}
@@ -31,7 +29,7 @@ $default_title 	= __( 'Business Resources', 'bizink-client' );
 $default_desc 	= __( '', 'bizink-client' );
 
 /** Return if [bizpress-content] or [bizink-content] is on page but this page has not be configured in settings */
-if(empty( $post_type)){
+if(empty($post_type)){
 	echo '<p><b>';
 	_e('Sorry this page has not been configured in the BizPress plugin.', 'bizink-client');
 	echo '</b></p>';
@@ -50,7 +48,6 @@ elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
 }
-
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
@@ -79,7 +76,8 @@ if (strpos($post_type, 'keydates') === false) {
 			echo "</div></a>";
 			$topic_coun++;
 		}
-	}else{
+	}
+	else{
 		global $wp;
 		$current_url = home_url( $wp->request ).'/?'.$_SERVER['QUERY_STRING'];
 		$selected = '';
@@ -93,8 +91,8 @@ if (strpos($post_type, 'keydates') === false) {
 		$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
 		$selected = ($current_url == $link) ? 'selected' : '';
 		echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
-		//echo "{$topic->name}";
-		//echo "</option>";
+			//echo "{$topic->name}";
+			//echo "</option>";
 		}
 		echo '</select></div>';
 		
@@ -122,8 +120,14 @@ elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
 }
 
+/*
 $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : $first_term;
+$single_term 	= $topics->$term;
+$term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
+$term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
+*/
 
+$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : $first_term; 
 $single_term 	= $topics->$term;
 $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;

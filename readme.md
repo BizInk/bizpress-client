@@ -12,6 +12,7 @@ BizPress is Bizink's collection of WordPress plugins.
 - BizPress - Xero Resources [https://github.com/BizInk/bizpress-xero-resources](https://github.com/BizInk/bizpress-xero-resources)
 - BizPress - Business Resources [https://github.com/BizInk/bizpress-business-resources](https://github.com/BizInk/bizpress-business-resources)
 - BizPress - Luca [https://github.com/BizInk/bizpress-luca](https://github.com/BizInk/bizpress-luca)
+- Bizpress - WC [https://github.com/BizInk/bizink-wc](https://github.com/BizInk/bizink-wc) - Validates User logins this is on the Bizink site
 
 ## How to update the plugin
 1. Have the latest version of the plugin in the master/main branch

@@ -41,7 +41,6 @@ function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true )
 	// don't use cache
 	else {
 		$queried = new WP_Query( $_args );
-
 		$posts = [];
 		foreach( $queried->posts as $post ) :
 			$posts[ $post->ID ] = $post->post_title;
@@ -156,11 +155,8 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
-    $base_url 		= bizink_get_master_site_url();
+    $base_url = bizink_get_master_site_url();
     $content_region = $options['content_region'];
-
-
-
     $taxonomy_topics = 'business-topics';
 	if ( 'business-lifecycle' == $post_type ) {
 		$taxonomy_topics = 'business-topics';
@@ -175,16 +171,16 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$taxonomy_topics = '';
 	}
 
-    $term 			= isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
+    $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
 
-    $credentials    = [            
+    $credentials = [            
         'email'         => $options['user_email'],
         'password'      => $options['user_password'],
     ];
-    $country 		= strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
+    $country = strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'per_page'      => -1,//$options['post_per_page'],
+        'per_page'      => -1, //$options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
@@ -210,8 +206,17 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
-    $data       = json_decode( $body );
-
+    $data       = json_decode( $body);
+	if(defined('WP_DEBUG') && WP_DEBUG == true){
+		if(!empty($data->data)){
+			if($data->data->status > 399){
+				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
+				echo '<p><b>Message:</b> '.$data->message.'</p>';
+				echo '<p><b>Endpoint:</b> '.$api_endpoint;
+				echo '<p><b>Bace Url:</b> '.$base_url;
+			}
+		}
+	}
     return $data;
 }
 endif;
@@ -230,7 +235,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     ];
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'per_page'      => $options['post_per_page'],
+        'per_page'      => -1, //$options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
@@ -249,8 +254,17 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
-
     $data       = json_decode( $body );
+	if(defined('WP_DEBUG') && WP_DEBUG == true){
+		if(!empty($data->data)){
+			if($data->data->status > 399){
+				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
+				echo '<p><b>Message:</b> '.$data->message.'</p>';
+				echo '<p><b>Endpoint:</b> '.$api_endpoint;
+				echo '<p><b>Bace Url:</b> '.$base_url;
+			}
+		}
+	}
     return $data;
 }
 endif;
@@ -286,7 +300,8 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	return 'https://bizinkcontent.com/';
+	//return 'https://bizinkcontent.com/';
+	return 'http://localhost/jayden/bizpresspublish/';
 }
 endif;
 
@@ -296,6 +311,7 @@ endif;
  * @return url
  * @author ace <ace@bizinkonline.com>
  */
+
 if( ! function_exists( 'bizink_update_views' ) ) :
 function bizink_update_views($data) {
 
@@ -317,9 +333,6 @@ function bizink_update_views($data) {
 	);
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);
-	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		//print_r($result);
-	}
 }
 endif;
 

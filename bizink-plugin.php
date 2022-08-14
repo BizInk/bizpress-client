@@ -38,7 +38,7 @@ final class Plugin {
 		$this->plugin				= get_plugin_data( CXBPC );
 		$this->plugin['basename']	= plugin_basename( CXBPC );
 		$this->plugin['file']		= CXBPC;
-		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
+		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://bizinkonline.com' );
 		$this->plugin['min_php']	= '5.6';
 		$this->plugin['min_wp']		= '5.0';
 		$this->plugin['depends']	= [];

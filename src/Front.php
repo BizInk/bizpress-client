@@ -84,7 +84,7 @@ class Front extends Base {
 		$content	= get_query_var( 'content');
 		global $wp, $wp_query;
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
-
+		
 	    if ( $topic ) {
 
 	    	$main_slug 		= explode('topic', $current_url );
@@ -132,8 +132,10 @@ class Front extends Base {
 	public function body_class( $classes ){
 
 		global $post;
-		if ( has_shortcode( $post->post_content, 'bizink-content' ) ) {
-			$classes[] = 'bizink-page';
+		if(isset($post->post_content)){
+			if ( has_shortcode( $post->post_content, 'bizink-content' ) ) {
+				$classes[] = 'bizink-page';
+			}
 		}
 		return $classes;
 	}
