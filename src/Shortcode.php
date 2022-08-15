@@ -43,25 +43,9 @@ class Shortcode extends Base {
 
     public function bizink_landing( $args ) {
         $base_url = bizink_get_master_site_url();
-
         if ( empty( $args['id'] ) ) return;
-
         $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
-
         $html   = '<iframe id="myframe" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
-        /* $html   .= '<script>
-        window.addEventListener(\'message\', function (e) {
-            if (e.data.hasOwnProperty("masterHeight")) {
-                jQuery("#myframe").css("height", e.data.masterHeight);
-                console.log("iFrame Height",e.data.masterHeight);      
-            }
-        });
-
-        function setMasterHeight(iframe) {
-           iframe.contentWindow.postMessage("masterHeight", "*");   
-        }
-        </script>';
-        */
         return $html;
     }
 }

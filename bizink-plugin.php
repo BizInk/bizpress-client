@@ -38,9 +38,9 @@ final class Plugin {
 		$this->plugin				= get_plugin_data( CXBPC );
 		$this->plugin['basename']	= plugin_basename( CXBPC );
 		$this->plugin['file']		= CXBPC;
-		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://bizinkonline.com' );
+		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
 		$this->plugin['min_php']	= '5.6';
-		$this->plugin['min_wp']		= '5.0';
+		$this->plugin['min_wp']		= '4.0';
 		$this->plugin['depends']	= [];
 	}
 
@@ -61,7 +61,7 @@ final class Plugin {
 			$admin->filter( "plugin_action_links_{$this->plugin['basename']}", 'action_links' );
 			$admin->filter( 'generate_rewrite_rules', 'rewrite_rule' );
 			$admin->action( 'admin_notices', 'suscription_expiry_notice' );
-
+			$admin->action('init','add_rewrite_rules');
 			/**
 			 * Settings related hooks
 			 *

@@ -74,7 +74,12 @@ class Front extends Base {
 	public function single_page_template($single_template) {
 
         $single_template = get_stylesheet_directory() . '/page.php';
-
+		if(!file_exists($single_template)){
+			$single_template = get_stylesheet_directory() . '/single.php';
+			if(!file_exists($single_template)){
+				$single_template = get_stylesheet_directory() . '/index.php';
+			}
+		}
 	    return $single_template;
 	}
 
@@ -97,8 +102,7 @@ class Front extends Base {
 	        echo cxbc_get_template( 'types', 'views', [ 'response' => $data ] );
 	        die;
 	    }
- 
-	    if ( $type ) {
+		else if ( $type ) {
 
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
@@ -110,8 +114,7 @@ class Front extends Base {
 	        echo cxbc_get_template( 'posts', 'views', [ 'response' => $data ] );
 	        die;
 	    }
-
-	    if ( $content ) {
+		else if ( $content ) {
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
@@ -125,7 +128,6 @@ class Front extends Base {
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
 	        die;
 	    }
-
 	    return $body;
 	}
 

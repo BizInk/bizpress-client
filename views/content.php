@@ -64,7 +64,6 @@ echo "
 	</div>
 </div>";
 
-
 echo '</div></div>';
 
 if(!function_exists('luca')) {

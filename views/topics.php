@@ -127,7 +127,7 @@ $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $defaul
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
 */
 
-$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : $first_term; 
+$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : (isset($first_term) ? $first_term : 'business-topics'); 
 $single_term 	= $topics->$term;
 $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;

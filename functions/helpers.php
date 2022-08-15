@@ -50,7 +50,6 @@ function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true )
 	}
 
 	$posts = $show_heading ? [ '' => sprintf( __( '- Choose a %s -', 'cxbc' ), $_args['post_type'] ) ] + $posts : $posts;
-
 	return apply_filters( 'cxbc_get_posts', $posts, $_args );
 }
 endif;
@@ -180,7 +179,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $country = strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'per_page'      => -1, //$options['post_per_page'],
+        'per_page'      => -1,
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
@@ -233,9 +232,9 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'email'         => $options['user_email'],
         'password'      => $options['user_password'],
     ];
+	//'per_page'      => -1,
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'per_page'      => -1, //$options['post_per_page'],
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
         'paged'         => $paged,
@@ -248,8 +247,9 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
       'timeout' => 120,
       'httpversion' => '1.1',
       'headers' => array(
-        'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+        	'Content-Type' => 'application/json',
+        	'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO'
+		)
   	);
 
     $request    = wp_remote_get( $url, $args );
@@ -300,8 +300,8 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	//return 'https://bizinkcontent.com/';
-	return 'http://localhost/jayden/bizpresspublish/';
+	return 'https://bizinkcontent.com/';
+	//return 'http://localhost/jayden/bizpresspublish/';
 }
 endif;
 
