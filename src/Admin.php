@@ -76,10 +76,11 @@ class Admin extends Base {
 			add_rewrite_rule("{$keydates_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
 			add_rewrite_rule("{$keydates_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
 		}
-		
+		flush_rewrite_rules();
 	}
 
 	public function rewrite_rule( $wp_rewrite ) {
+		
 		$business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		if(!empty($business_page_id)){
 			$business_post 		= get_post( $business_page_id ); 
@@ -93,6 +94,7 @@ class Admin extends Base {
 				$wp_rewrite->rules
 			);
 		}
+		
 
 		$xero_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		if(!empty($xero_page_id)){	

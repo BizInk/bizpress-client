@@ -65,9 +65,9 @@ class Front extends Base {
 	}
 
 	public function query_vars( $query_vars ) {
-		$query_vars[] = 'content';
 		$query_vars[] = 'topic';
 		$query_vars[] = 'type';
+		$query_vars[] = 'content';
     	return $query_vars;
 	}
 
@@ -84,10 +84,16 @@ class Front extends Base {
 	}
 
 	public function template_redirect($body) {
+		global $wp, $wp_query;
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
-		$content	= get_query_var( 'content');
-		global $wp, $wp_query;
+		$content	= get_query_var( 'content'); // attachment
+
+		//if(!$content){
+			//$content = get_query_var('attachment');
+			//$wp_query->set('content',$content);
+		//}
+
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
 		
 	    if ( $topic ) {
@@ -102,7 +108,8 @@ class Front extends Base {
 	        echo cxbc_get_template( 'types', 'views', [ 'response' => $data ] );
 	        die;
 	    }
-		else if ( $type ) {
+		
+		if ( $type ) {
 
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
@@ -114,14 +121,15 @@ class Front extends Base {
 	        echo cxbc_get_template( 'posts', 'views', [ 'response' => $data ] );
 	        die;
 	    }
-		else if ( $content ) {
+		
+		if ( $content ) {
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
 	    	});
 
 	    	$data  = bizink_get_single_content( 'content', $content );
-	        bizink_update_views($data);
+	        // bizink_update_views($data);
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }

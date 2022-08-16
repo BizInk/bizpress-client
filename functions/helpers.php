@@ -164,10 +164,10 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$taxonomy_topics = 'xero-topics';
 	}
 	elseif ( 'accounting-terms' == $post_type ) {
-		$taxonomy_topics = '';
+		$taxonomy_topics = 'region';
 	}
 	elseif ( 'business-terms' == $post_type ) {
-		$taxonomy_topics = '';
+		$taxonomy_topics = 'region';
 	}
 
     $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
@@ -201,8 +201,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
   	);
 
-
-
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body);
@@ -226,7 +224,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url 		= bizink_get_master_site_url();
-    $keydate_country 		= apply_filters( 'bizink-keydates-country', 'country' );
+    $keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
     
     $credentials    = [            
         'email'         => $options['user_email'],
@@ -301,7 +299,6 @@ endif;
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
 	return 'https://bizinkcontent.com/';
-	//return 'http://localhost/jayden/bizpresspublish/';
 }
 endif;
 
@@ -311,17 +308,32 @@ endif;
  * @return url
  * @author ace <ace@bizinkonline.com>
  */
-
+/*
 if( ! function_exists( 'bizink_update_views' ) ) :
 function bizink_update_views($data) {
 
 	$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
 
-	$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
-	$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
-	$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
+	if(!empty($data->post)){
+		$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
+		$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
+		$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
+	}
+	else{
+		$country = 'N/A';
+		$topics = 'N/A';
+		$types = 'N/A';
+	}
+	
 
-	$data = array('title' => $data->post->post_title, 'url' => $data->post->guid, 'type' => $data->post->post_type, 'country' => $country, 'topics' => $topics, 'types' => $types);
+	$data = array(
+		'title' => $data->post->post_title,
+		'url' => $data->post->guid,
+		'type' => $data->post->post_type,
+		'country' => $country,
+		'topics' => $topics,
+		'types' => $types
+	);
 
 	// use key 'http' even if you send the request to https://...
 	$options = array(
@@ -335,7 +347,7 @@ function bizink_update_views($data) {
 	$result = file_get_contents($url, false, $context);
 }
 endif;
-
+*/
 
 /**
  * API Authontication details
