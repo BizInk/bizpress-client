@@ -3,8 +3,8 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.0.1
-Stable tag: 1.2.5
-Version: 1.2.5
+Stable tag: 1.2.6
+Version: 1.2.6
 Requires PHP: 7.2
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -23,6 +23,10 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress Luca
 
 == Changelog ==
+
+= 1.2.6 =
+* Add: a hideing feature
+* Fix a but that enables better support for PHP 8.1
 
 = 1.2.5 =
 * Fix the the bizpress content issues

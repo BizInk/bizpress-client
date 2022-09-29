@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.2.5
+ * Version: 1.2.6
  * Text Domain: bizink-client
  * Domain Path: /languages
  */

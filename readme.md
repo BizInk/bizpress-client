@@ -9,6 +9,8 @@ BizPress is Bizink's collection of WordPress plugins.
 - BizPress - Key Dates NZ [https://github.com/BizInk/bizpress-key-dates-nz](https://github.com/BizInk/bizpress-key-dates-nz)
 - BizPress - Key Dates AU [https://github.com/BizInk/bizpress-key-dates-aus](https://github.com/BizInk/bizpress-key-dates-aus)
 - BizPress - Key Dates UK [https://github.com/BizInk/bizpress-key-dates-uk](https://github.com/BizInk/bizpress-key-dates-uk)
+- BizPress - Key Dates US [https://github.com/BizInk/bizpress-key-dates-us](https://github.com/BizInk/bizpress-key-dates-us)
+- BizPress - Key Dates CA [https://github.com/BizInk/bizpress-key-dates-ca](https://github.com/BizInk/bizpress-key-dates-ca)
 - BizPress - Xero Resources [https://github.com/BizInk/bizpress-xero-resources](https://github.com/BizInk/bizpress-xero-resources)
 - BizPress - Business Resources [https://github.com/BizInk/bizpress-business-resources](https://github.com/BizInk/bizpress-business-resources)
 - BizPress - Luca [https://github.com/BizInk/bizpress-luca](https://github.com/BizInk/bizpress-luca)

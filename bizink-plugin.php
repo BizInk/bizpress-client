@@ -112,7 +112,7 @@ final class Plugin {
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 */
-	private function __wakeup() { }
+	public function __wakeup() { }
 
 	/**
 	 * Instantiate the plugin

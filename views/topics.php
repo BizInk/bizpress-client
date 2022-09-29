@@ -44,6 +44,10 @@ elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
 }
+elseif ( 'quickbooks-content' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_desc' );
+}
 elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
@@ -113,6 +117,9 @@ if ( 'business-lifecycle' == $post_type ) {
 elseif ( 'xero-content' == $post_type ) {
 	$taxonomy_topics = 'xero-topics';
 }
+elseif ( 'quickbooks-content' == $post_type ) {
+	$taxonomy_topics = 'quickbooks-topics';
+}
 elseif ( 'qbo-content' == $post_type ) {
 	$taxonomy_topics = 'qbo-topics';
 }
@@ -150,18 +157,19 @@ if (strpos($post_type, 'keydates') === false) {
 	$item = 0;
 	foreach ( $posts as $post ) {
 		$item++;
+		if(isset($post->hidden) && $post->hidden){
+			continue; // Item is hidden move to next item
+		}
 		echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
 		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
 		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
 		echo "<div class='learn-more'>Learn more</div>";
-		echo "</div></a></div>";
-		
+		echo "</div></a></div>";		
 	}
 	echo "</div>";
-	if( 'xero-content' == $post_type){
-		//echo "<div class='view-resource'><a href=".get_site_url()."/xero-content/topic/all/>See all Resources</a></div>";
-		echo "<div class='view-resource'><a href=".get_site_url()."/xero-content/topic/all/>See all Resources</a></div>";
+	if( 'xero-content' == $post_type || 'quickbooks-content' == $post_type){
+		echo "<div class='view-resource'><a href=\"/topic/all/\">See all Resources</a></div>";
  	}
  	
 

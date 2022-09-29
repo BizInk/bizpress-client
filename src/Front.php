@@ -88,7 +88,7 @@ class Front extends Base {
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
 		$content	= get_query_var( 'content'); // attachment
-
+		
 		//if(!$content){
 			//$content = get_query_var('attachment');
 			//$wp_query->set('content',$content);
@@ -97,7 +97,7 @@ class Front extends Base {
 		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
 		
 	    if ( $topic ) {
-
+			$wp_query->is_404 = false; 
 	    	$main_slug 		= explode('topic', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
@@ -110,7 +110,7 @@ class Front extends Base {
 	    }
 		
 		if ( $type ) {
-
+			$wp_query->is_404 = false; 
 	    	$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
@@ -123,16 +123,33 @@ class Front extends Base {
 	    }
 		
 		if ( $content ) {
+			$wp_query->is_404 = false;
+
+			$main_slug 		= explode('type', $current_url );
+	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
+			$content_type   = bizink_get_content_type( $main_slug_id );
+
+			$data  = bizink_get_single_content( 'content', $content );
+			/*
+			$wp_query->setup_postdata($data->post);
+			$wp_query->set('post_title',$data->post->post_title);
+			$wp_query->set('post_content',$data->post->post_content);
+			$wp_query->set('post_date',$data->post->post_date);
+			$wp_query->set('post_name',$data->post->post_name);
+			$wp_query->set('post_date_gmt',$data->post->post_date_gmt);
+			$wp_query->set('post_type',$data->post->post_type);
+			*/
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
 	    	});
 
-	    	$data  = bizink_get_single_content( 'content', $content );
+	    	
 	        // bizink_update_views($data);
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
+			print_r($wp_query);
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
 	        die;
 	    }

@@ -163,6 +163,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	elseif ( 'xero-content' == $post_type ) {
 		$taxonomy_topics = 'xero-topics';
 	}
+	elseif ( 'quickbooks-content' == $post_type ) {
+		$taxonomy_topics = 'quickbooks-topics';
+	}
 	elseif ( 'accounting-terms' == $post_type ) {
 		$taxonomy_topics = 'region';
 	}
@@ -298,6 +301,7 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
+	//return 'http://localhost/jayden/bizpresspublish/';
 	return 'https://bizinkcontent.com/';
 }
 endif;
@@ -308,7 +312,7 @@ endif;
  * @return url
  * @author ace <ace@bizinkonline.com>
  */
-/*
+
 if( ! function_exists( 'bizink_update_views' ) ) :
 function bizink_update_views($data) {
 
@@ -347,7 +351,7 @@ function bizink_update_views($data) {
 	$result = file_get_contents($url, false, $context);
 }
 endif;
-*/
+
 
 /**
  * API Authontication details
@@ -363,7 +367,8 @@ function bizink_url_authontication()
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
-		  'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+		  'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO'
+		)
 	);
 }
 endif;

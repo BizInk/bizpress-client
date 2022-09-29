@@ -150,44 +150,6 @@ class Settings extends Base {
 							'required'	=> true,
 						],
 						[
-	                        'id'		=> 'xero',
-	                        'label'		=> __( 'Bizink Client Xero', 'bizink-client' ),
-	                        'type'		=> 'divider',
-	                    ],
-						'xero_title' => [
-							'id'      	=> 'xero_title',
-							'label'     => __( 'Xero Title', 'bizink-client' ),
-							'type'      => 'text',
-							'default'   => __( 'Xero Resources', 'bizink-client' ),
-							'required'	=> true,
-						],
-						'xero_desc' => [
-							'id'      	=> 'xero_desc',
-							'label'     => __( 'Xero Description', 'bizink-client' ),
-							'type'      => 'textarea',
-							'default'   => __( 'Free resources to help you use Xero.', 'bizink-client' ),
-							'required'	=> true,
-						],
-						[
-	                        'id'		=> 'accounting',
-	                        'label'		=> __( 'Bizink Client Accounting', 'bizink-client' ),
-	                        'type'		=> 'divider',
-	                    ],
-						'accounting_title' => [
-							'id'      	=> 'accounting_title',
-							'label'     => __( 'Accounting Title', 'bizink-client' ),
-							'type'      => 'text',
-							'default'   => __( 'Accounting Resources', 'bizink-client' ),
-							'required'	=> true,
-						],
-						'accounting_desc' => [
-							'id'      	=> 'accounting_desc',
-							'label'     => __( 'Accounting Description', 'bizink-client' ),
-							'type'      => 'textarea',
-							'default'   => __( 'Free resources to help you use Accounting.', 'bizink-client' ),
-							'required'	=> true,
-						],
-						[
 	                        'id'		=> 'keydates',
 	                        'label'		=> __( 'Bizink Client Key Dates', 'bizink-client' ),
 	                        'type'		=> 'divider',
@@ -244,7 +206,7 @@ class Settings extends Base {
 							'html' => '<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
 							<script>
 							  var supportData = '.json_encode($supportData).';
-							  console.log("Support Data",supportData);
+							  //console.log("Support Data",supportData);
 							  hbspt.forms.create({
 								region: "na1",
 								portalId: "5917474",
@@ -278,13 +240,3 @@ class Settings extends Base {
 		new \codexpert\product\Settings( $settings );
 	}
 }
-
-/**
- * 
-	'admin_support_email' => [
-		'id' => 'support_email',
-		'label' => __( 'Support Email', 'bizink-client' ),
-		'type' => 'admin_email',
-		'email' => 'support@bizinkonline.com'
-	],
- */

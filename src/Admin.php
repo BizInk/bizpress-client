@@ -68,6 +68,15 @@ class Admin extends Base {
 			add_rewrite_rule("{$xero_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
 		}
 
+		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+		if(!empty($quickbooks_page_id)){	
+			$quickbooks_post = get_post( $quickbooks_page_id ); 
+			$quickbooks_slug = $quickbooks_post->post_name;
+			add_rewrite_rule("{$quickbooks_slug}/([a-z0-9-]+)[/]?$",'index.php?content=$matches[1]','top');
+			add_rewrite_rule("{$quickbooks_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
+			add_rewrite_rule("{$quickbooks_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
+		}
+
 		$keydates_page_id	= cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
 		if(!empty($keydates_page_id)){
 			$keydates_post 		= get_post( $keydates_page_id ); 
@@ -105,6 +114,20 @@ class Admin extends Base {
 					"{$xero_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
 					"{$xero_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
 					"{$xero_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
+				],
+				$wp_rewrite->rules
+			);
+		}
+
+		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
+		if(!empty($quickbooks_page_id)){	
+			$quickbooks_post 		= get_post( $quickbooks_page_id ); 
+			$quickbooks_slug 		= $quickbooks_post->post_name;
+			$wp_rewrite->rules = array_merge(
+				[
+					"{$quickbooks_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
+					"{$quickbooks_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
+					"{$quickbooks_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
 				],
 				$wp_rewrite->rules
 			);
