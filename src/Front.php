@@ -149,7 +149,7 @@ class Front extends Base {
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
-			print_r($wp_query);
+			// print_r($wp_query);
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
 	        die;
 	    }
