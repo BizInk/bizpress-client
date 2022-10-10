@@ -39,8 +39,8 @@ final class Plugin {
 		$this->plugin['basename']	= plugin_basename( CXBPC );
 		$this->plugin['file']		= CXBPC;
 		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
-		$this->plugin['min_php']	= '5.6';
-		$this->plugin['min_wp']		= '4.0';
+		$this->plugin['min_php']	= '7.1';
+		$this->plugin['min_wp']		= '5.2';
 		$this->plugin['depends']	= [];
 	}
 
@@ -85,6 +85,7 @@ final class Plugin {
 			$front->action( 'wp_head', 'head' );
 			$front->filter( 'query_vars', 'query_vars' );
 			$front->action( 'template_redirect', 'template_redirect' );
+			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts');
 			$front->action( 'body_class', 'body_class' );
 
 			/**

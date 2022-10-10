@@ -83,18 +83,36 @@ class Front extends Base {
 	    return $single_template;
 	}
 
+	
+	public function bizpress_pre_get_posts( $query ){
+		global $wp_query;
+		if ( !$query->is_main_query() ){
+			return;
+		}
+		$content = get_query_var( 'content');
+		if ( $content ) {
+			$data  = bizink_get_single_content( 'content', $content );
+			$query->set('post_title',$data->post->post_title);
+			$query->set('pagename',$data->post->post_name);
+			$query->set('title',$data->post->post_title);
+			$query->set('post_content',$data->post->post_content);
+			$query->set('post_date',$data->post->post_date);
+			$query->set('post_name',$data->post->post_name);
+			$query->set('post_date_gmt',$data->post->post_date_gmt);
+			$query->set('post_type',$data->post->post_type);
+			$query->set('is_home',false);
+			set_query_var('bizpress_data',$data);
+		}
+		return;
+	}
+
 	public function template_redirect($body) {
 		global $wp, $wp_query;
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
 		$content	= get_query_var( 'content'); // attachment
 		
-		//if(!$content){
-			//$content = get_query_var('attachment');
-			//$wp_query->set('content',$content);
-		//}
-
-		$current_url 	= home_url( add_query_arg( array(), $wp->request ) );
+		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		
 	    if ( $topic ) {
 			$wp_query->is_404 = false; 
@@ -123,33 +141,26 @@ class Front extends Base {
 	    }
 		
 		if ( $content ) {
-			$wp_query->is_404 = false;
-
 			$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
+			
+			$d = get_query_var('bizpress_data');
+			if($d){
+				$data = $d;
+			}
+			else{
+				$data = bizink_get_single_content( 'content', $content );
+			}
 
-			$data  = bizink_get_single_content( 'content', $content );
-			/*
-			$wp_query->setup_postdata($data->post);
-			$wp_query->set('post_title',$data->post->post_title);
-			$wp_query->set('post_content',$data->post->post_content);
-			$wp_query->set('post_date',$data->post->post_date);
-			$wp_query->set('post_name',$data->post->post_name);
-			$wp_query->set('post_date_gmt',$data->post->post_date_gmt);
-			$wp_query->set('post_type',$data->post->post_type);
-			*/
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;
 	    	});
-
-	    	
 	        // bizink_update_views($data);
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
-			// print_r($wp_query);
 	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
 	        die;
 	    }
@@ -159,7 +170,7 @@ class Front extends Base {
 	public function body_class( $classes ){
 
 		global $post;
-		if(isset($post->post_content)){
+		if(isset($post) && isset($post->post_content)){
 			if ( has_shortcode( $post->post_content, 'bizink-content' ) ) {
 				$classes[] = 'bizink-page';
 			}

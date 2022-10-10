@@ -50,6 +50,7 @@ class Admin extends Base {
 	}
 
 	public function add_rewrite_rules(){
+		// ([a-zA-Z0-9_-]+)[\/]+$
 		$business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		if(!empty($business_page_id)){
 			$business_post 		= get_post( $business_page_id ); 

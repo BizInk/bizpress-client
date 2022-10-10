@@ -87,17 +87,17 @@ if (strpos($post_type, 'keydates') === false) {
 		$selected = '';
 		echo '<div class="topic-dropdown"><select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">';
 		echo "<option value=''>Browse other topics...</option>";	
-		foreach ( $topics as $topic ) {	
-		if ( $topic_coun == 0 ) {
-				$taxonomy 	= $topic->taxonomy;
-				$first_term = $topic->slug;
+			foreach ( $topics as $topic ) {	
+				if ( $topic_coun == 0 ) {
+					$taxonomy 	= $topic->taxonomy;
+					$first_term = $topic->slug;
+				}
+				$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
+				$selected = ($current_url == $link) ? 'selected' : '';
+				echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
+				//echo "{$topic->name}";
+				//echo "</option>";
 			}
-		$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
-		$selected = ($current_url == $link) ? 'selected' : '';
-		echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
-			//echo "{$topic->name}";
-			//echo "</option>";
-		}
 		echo '</select></div>';
 		
 	}
@@ -169,7 +169,7 @@ if (strpos($post_type, 'keydates') === false) {
 	}
 	echo "</div>";
 	if( 'xero-content' == $post_type || 'quickbooks-content' == $post_type){
-		echo "<div class='view-resource'><a href=\"/topic/all/\">See all Resources</a></div>";
+		// echo "<div class='view-resource'><a href=\"topic/all/\">See all Resources</a></div>";
  	}
  	
 

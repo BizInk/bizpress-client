@@ -102,14 +102,14 @@ class Settings extends Base {
 							'label'     => __( 'Content Region', 'bizink-client' ),
 							'type'      => 'select',
 							'options'   => [
-											''=>' - Choose a region - ',
-											'AU'=>'Australia',
-											'CA'=>'Canada',
-											'NZ'=>'New Zealand',
-											'GB'=>'United Kingdom',
-											'US'=>'United States of America',
-											'all'=>'Other'
-										   ],
+								''=>' - Choose a region - ',
+								'AU'=>'Australia',
+								'CA'=>'Canada',
+								'NZ'=>'New Zealand',
+								'GB'=>'United Kingdom',
+								'US'=>'United States of America',
+								'all'=>'Other'
+							],
 							'default'	=> '',
 							'desc'      => __( 'Select you content region.', 'bizink-client' ),
 							'required'	=> true,

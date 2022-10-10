@@ -301,7 +301,6 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	//return 'http://localhost/jayden/bizpresspublish/';
 	return 'https://bizinkcontent.com/';
 }
 endif;
