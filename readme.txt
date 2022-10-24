@@ -24,6 +24,10 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
+= 1.2.8 =
+* New Feature: Cacheing of pages requests
+* General Compatibality updates
+
 = 1.2.7 =
 * Bug Fixes
 
