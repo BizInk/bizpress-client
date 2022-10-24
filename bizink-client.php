@@ -5,7 +5,9 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.2.7
+ * Version: 1.2.8
+ * Requires PHP: 7.1
+ * Requires at least: 5.2
  * Text Domain: bizink-client
  * Domain Path: /languages
  */
@@ -28,6 +30,7 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/BizInk
 $myUpdateChecker->setBranch('master');
 // Using a private repository, specify the access token 
 $myUpdateChecker->setAuthentication('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');
+
 
 /** Load The main plugin */
 require 'bizink-plugin.php';

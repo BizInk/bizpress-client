@@ -59,9 +59,11 @@ final class Plugin {
 			 */
 			$admin = new Admin( $this->plugin );
 			$admin->filter( "plugin_action_links_{$this->plugin['basename']}", 'action_links' );
-			$admin->filter( 'generate_rewrite_rules', 'rewrite_rule' );
 			$admin->action( 'admin_notices', 'suscription_expiry_notice' );
 			$admin->action('init','add_rewrite_rules');
+			$admin->activate('add_rewrite_rules');
+			$admin->activate('bizpress_activate_deactivate');
+			$admin->deactivate('bizpress_activate_deactivate');
 			/**
 			 * Settings related hooks
 			 *
@@ -82,9 +84,8 @@ final class Plugin {
 			$front = new Front( $this->plugin );
 			$front->action( 'wp_enqueue_scripts', 'enqueue_scripts' );
 			$front->action( 'admin_bar_menu', 'add_admin_bar', 70 );
-			$front->action( 'wp_head', 'head' );
-			$front->filter( 'query_vars', 'query_vars' );
-			$front->action( 'template_redirect', 'template_redirect' );
+			$front->filter( 'query_vars', 'query_vars');
+			$front->action( 'template_redirect', 'template_redirect',1);
 			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts');
 			$front->action( 'body_class', 'body_class' );
 

@@ -49,107 +49,71 @@ class Admin extends Base {
 		return array_merge( $new_links, $links );
 	}
 
-	public function add_rewrite_rules(){
-		// ([a-zA-Z0-9_-]+)[\/]+$
-		$business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
-		if(!empty($business_page_id)){
-			$business_post 		= get_post( $business_page_id ); 
-			$business_slug 		= $business_post->post_name;
-			add_rewrite_rule("{$business_slug}/([a-z0-9-]+)[/]?$",'index.php?content=$matches[1]','top');
-			add_rewrite_rule("{$business_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
-			add_rewrite_rule("{$business_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
-		}
-		
-		$xero_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
-		if(!empty($xero_page_id)){	
-			$xero_post 		= get_post( $xero_page_id ); 
-			$xero_slug 		= $xero_post->post_name;
-			add_rewrite_rule("{$xero_slug}/([a-z0-9-]+)[/]?$",'index.php?content=$matches[1]','top');
-			add_rewrite_rule("{$xero_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
-			add_rewrite_rule("{$xero_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
-		}
-
-		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
-		if(!empty($quickbooks_page_id)){	
-			$quickbooks_post = get_post( $quickbooks_page_id ); 
-			$quickbooks_slug = $quickbooks_post->post_name;
-			add_rewrite_rule("{$quickbooks_slug}/([a-z0-9-]+)[/]?$",'index.php?content=$matches[1]','top');
-			add_rewrite_rule("{$quickbooks_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
-			add_rewrite_rule("{$quickbooks_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
-		}
-
-		$keydates_page_id	= cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
-		if(!empty($keydates_page_id)){
-			$keydates_post 		= get_post( $keydates_page_id ); 
-			$keydates_slug 		= $keydates_post->post_name;
-			add_rewrite_rule("{$keydates_slug}/([a-z0-9-]+)[/]?$",'index.php?content=$matches[1]','top');
-			add_rewrite_rule("{$keydates_slug}/topic/([a-z0-9-]+)[/]?$",'index.php?topic=$matches[1]','top');
-			add_rewrite_rule("{$keydates_slug}/type/([a-z0-9-]+)[/]?$" ,'index.php?type=$matches[1]','top');
-		}
+	function bizpress_activate_deactivate(){
 		flush_rewrite_rules();
 	}
 
-	public function rewrite_rule( $wp_rewrite ) {
-		
-		$business_page_id	= cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
-		if(!empty($business_page_id)){
-			$business_post 		= get_post( $business_page_id ); 
-			$business_slug 		= $business_post->post_name;
-			$wp_rewrite->rules = array_merge(
-				[
-					"{$business_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
-					"{$business_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]',
-					"{$business_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
-				],
-				$wp_rewrite->rules
-			);
-		}
-		
+	public function add_rewrite_rules(){
 
-		$xero_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
-		if(!empty($xero_page_id)){	
-			$xero_post 		= get_post( $xero_page_id ); 
-			$xero_slug 		= $xero_post->post_name;
-			$wp_rewrite->rules = array_merge(
-				[
-					"{$xero_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
-					"{$xero_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
-					"{$xero_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
-				],
-				$wp_rewrite->rules
-			);
+		global $wp;
+		$wp->add_query_var( 'bizpress' );
+		$wp->add_query_var( 'topic' );
+		$wp->add_query_var( 'type' );
+
+		add_rewrite_tag('%bizpress%', '([^&]+)', 'bizpress=');
+		add_rewrite_tag('%topic%', '([^&]+)', 'topic=');
+		add_rewrite_tag('%type%', '([^&]+)', 'type=');
+
+		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+		if(!empty($business_page_id) && $business_page_id != ''){
+			$business_post = get_post( $business_page_id );
+			if(!empty($business_post)){
+				$business_slug = $business_post->post_name;
+				add_rewrite_tag('%'.$business_slug.'%', '([^&]+)', 'bizpress=');
+				add_rewrite_rule("^".$business_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$business_slug.'&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$business_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$business_slug.'&topic=$matches[1]','top');
+				add_rewrite_rule("^".$business_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$business_slug.'&type=$matches[1]','top');
+			}
+		}
+		
+		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
+		if(!empty($xero_page_id) && $xero_page_id != ''){
+			$xero_post = get_post( $xero_page_id );
+			if(!empty($xero_post)){
+				$xero_slug = $xero_post->post_name;
+				add_rewrite_tag('%'.$xero_slug.'%', '([^&]+)', 'bizpress=');
+				add_rewrite_rule("^".$xero_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$xero_slug.'&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$xero_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$xero_slug.'&topic=$matches[1]','top');
+				add_rewrite_rule("^".$xero_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$xero_slug.'&type=$matches[1]','top');
+			}
 		}
 
-		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
-		if(!empty($quickbooks_page_id)){	
-			$quickbooks_post 		= get_post( $quickbooks_page_id ); 
-			$quickbooks_slug 		= $quickbooks_post->post_name;
-			$wp_rewrite->rules = array_merge(
-				[
-					"{$quickbooks_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
-					"{$quickbooks_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
-					"{$quickbooks_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
-				],
-				$wp_rewrite->rules
-			);
+		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+		if(!empty($quickbooks_page_id) && $quickbooks_page_id != ''){	
+			$quickbooks_post = get_post( $quickbooks_page_id );
+			if(!empty($quickbooks_post)){
+				$quickbooks_slug = $quickbooks_post->post_name;
+				add_rewrite_tag('%'.$quickbooks_slug.'%', '([^&]+)', 'bizpress=');
+				add_rewrite_rule("^".$quickbooks_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$quickbooks_slug.'&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$quickbooks_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$quickbooks_slug.'&topic=$matches[1]','top');
+				add_rewrite_rule("^".$quickbooks_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$quickbooks_slug.'&type=$matches[1]','top');
+			}
+			
 		}
-		
-		$keydates_page_id	= cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
-		if(!empty($keydates_page_id)){
-			$keydates_post 		= get_post( $keydates_page_id ); 
-			$keydates_slug 		= $keydates_post->post_name;
-			$wp_rewrite->rules = array_merge(
-				[
-					"{$keydates_slug}/([a-z0-9-]+)[/]?$" 		=> 'index.php?content=$matches[1]',
-					"{$keydates_slug}/topic/([a-z0-9-]+)[/]?$" => 'index.php?topic=$matches[1]&cpt=$matches[1]',
-					"{$keydates_slug}/type/([a-z0-9-]+)[/]?$" 	=> 'index.php?type=$matches[1]',
-				],
-				$wp_rewrite->rules
-			);
+
+		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+		if(!empty($keydates_page_id) && $keydates_page_id != ''){
+			$keydates_post = get_post( $keydates_page_id ); 
+			if(!empty($keydates_post)){
+				$keydates_slug = $keydates_post->post_name;
+				add_rewrite_tag('%'.$keydates_slug.'%', '([^&]+)', 'bizpress=');
+				add_rewrite_rule("^".$keydates_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$keydates_slug.'&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$keydates_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$keydates_slug.'&topic=$matches[1]','top');
+				add_rewrite_rule("^".$keydates_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$keydates_slug.'&type=$matches[1]','top');
+			}
 		}
-		
 	}
-
+	
 	public function suscription_expiry_notice() {
 		$notice 	= get_option( '_cxbc_suscription_expiry' );
 		if ( $notice == '' ) return;

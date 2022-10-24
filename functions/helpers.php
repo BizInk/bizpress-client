@@ -197,7 +197,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 
 
     $args = array(
-      'timeout' => 120,
+      'timeout' => 300,
       'httpversion' => '1.1',
       'headers' => array(
         'Content-Type' => 'application/json',
