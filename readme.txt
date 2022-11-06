@@ -2,10 +2,10 @@
 Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
-Tested up to: 6.0.1
-Stable tag: 1.2.8
-Version: 1.2.8
-Requires PHP: 7.1
+Tested up to: 6.1
+Stable tag: 1.2.9
+Version: 1.2.9
+Requires PHP: 7.2
 
 Display business content on your website that is automatically updated by the Bizink team.
 
@@ -23,6 +23,10 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress Luca
 
 == Changelog ==
+
+= 1.2.9 =
+* Bug Fix: Xero Recources
+* New: Added mode for no conflict url setting. Config BIZINK_NOCONFLICTURL
 
 = 1.2.8 =
 * New Feature: Cacheing of pages requests

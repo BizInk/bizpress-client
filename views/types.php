@@ -57,10 +57,18 @@ foreach ( $types as $type => $posts ) {
  	echo "<a class='cxbc-type-title' href='{$slug}{$taxonomy}/{$type}'>{$posts->name}</a>";
 	echo "<div class='cxbc-single-type-post-list'>";
 	foreach ( $posts->posts as $post ) {
-		echo "<a href='{$slug}{$post->slug}'><div class='cxbc-single-post'>";
-		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
-		echo "<div class='cxbc-post-title'>{$post->title}</div>";
-		echo "</div></a>";
+		$postUrl = $slug . $post->slug;
+		if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
+			$postUrl = add_query_arg('bizpress',$post->slug,$slug);
+		}
+		?>
+		<a href="<?php echo $postUrl; ?>">
+			<div class='cxbc-single-post'>
+				<img class='cxbc-item-thumbnail' src='<?php echo $post->thumbnail; ?>'>
+				<div class='cxbc-post-title'><?php echo $post->title; ?></div>
+			</div>
+		</a>
+		<?php
 	}
 	echo "</div>";
 	echo "</div>";

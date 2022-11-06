@@ -55,8 +55,11 @@ echo "<h4>{$type_name}</h4>";
 echo "<div class='cxbc-type-list'>";
 
 foreach ( $posts as $post ) {
-
-	echo "<a href='{$slug}{$post->slug}'><div class='cxbc-single-type'>";
+	$postUrl = $slug . $post->slug;
+	if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
+		$postUrl = add_query_arg('bizpress',$post->slug,$slug);
+	}
+	echo "<a href='{$postUrl}'><div class='cxbc-single-type'>";
 	echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 	echo "<div class='cxbc-type-title'>{$post->title}</div>";
 	echo "</div></a>";

@@ -160,18 +160,18 @@ if (strpos($post_type, 'keydates') === false) {
 		if(isset($post->hidden) && $post->hidden){
 			continue; // Item is hidden move to next item
 		}
+		$postUrl = $post->slug;
+		if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
+			$postUrl = add_query_arg('bizpress',$post->slug);
+		}
 		echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
-		echo "<a href='{$post->slug}'><div class='cxbc-single-post-content'>";
+		echo "<a href='{$postUrl}'><div class='cxbc-single-post-content'>";
 		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
 		echo "<div class='learn-more'>Learn more</div>";
 		echo "</div></a></div>";		
 	}
 	echo "</div>";
-	if( 'xero-content' == $post_type || 'quickbooks-content' == $post_type){
-		// echo "<div class='view-resource'><a href=\"topic/all/\">See all Resources</a></div>";
- 	}
- 	
 
 	//if ( !empty( $posts ) ) {
 		//$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
