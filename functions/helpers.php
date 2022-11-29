@@ -151,8 +151,17 @@ endif;
 
 if( ! function_exists( 'bizink_get_content' ) ) :
 function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
-    $key            = 'bizink-client_basic';
-    $options        = get_option( $key );
+    $options = get_option( 'bizink-client_basic' );
+	if(empty($options['content_region'])){
+		$options['content_region'] = 'au';
+	}
+	if(empty($options['user_email'])){
+		$options['user_email'] = '';
+	}
+	if(empty($options['user_password'])){
+		$options['user_password'] = '';
+	}
+
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url = bizink_get_master_site_url();
     $content_region = $options['content_region'];

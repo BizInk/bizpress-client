@@ -2,9 +2,9 @@
 Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
-Tested up to: 6.1
-Stable tag: 1.2.9
-Version: 1.2.9
+Tested up to: 6.1.1
+Stable tag: 1.3
+Version: 1.3
 Requires PHP: 7.2
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -24,9 +24,12 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
+= 1.3 =
+* Bug Fix: Fixed and issue with Quickbooks Recources
+
 = 1.2.9 =
 * Bug Fix: Xero Recources
-* New: Added mode for no conflict url setting. Config BIZINK_NOCONFLICTURL
+* New: Added mode for no conflict url setting. Config BIZINK_NOCONFLICTURL define(BIZINK_NOCONFLICTURL, true); in wp_config.php 
 
 = 1.2.8 =
 * New Feature: Cacheing of pages requests

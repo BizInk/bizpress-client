@@ -113,19 +113,20 @@ class Front extends Base {
 
 		if ( $content ) {
 			$query->set( 'post_type', 'page' );
-			if($xero_page_id){
+			$pageType = get_query_var('pagename','xero-resources');
+			if($xero_page_id && $pageType == 'xero-resources'){
 				$query->set( 'p', $xero_page_id );
 				$query->set( 'page_id', $xero_page_id );
 			}
-			else if($quickbooks_page_id){
+			if($quickbooks_page_id  && $pageType == 'quickbooks-resources'){
 				$query->set( 'p', $quickbooks_page_id );
 				$query->set( 'page_id', $quickbooks_page_id );
 			}
-			else if($business_page_id){
+			if($business_page_id && $pageType = 'bizink-client-business'){
 				$query->set( 'p', $business_page_id );
 				$query->set( 'page_id', $business_page_id );
 			}
-			else if($keydates_page_id){
+			if($keydates_page_id && $pageType == 'bizink-client-keydates'){
 				$query->set( 'p', $keydates_page_id );
 				$query->set( 'page_id', $keydates_page_id );
 			}
