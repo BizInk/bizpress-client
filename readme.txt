@@ -3,8 +3,8 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.1.1
-Stable tag: 1.3
-Version: 1.3
+Stable tag: 1.3.1
+Version: 1.3.1
 Requires PHP: 7.2
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -15,14 +15,15 @@ Display business content on your website that is automatically updated by the Bi
 === BizPress Plugins ===
 - Bizpress Accounting Glossary
 - Bizpress Business Terms Glossary
-- Bizpress Key Dates NZ
-- Bizpress Key Dates AUS
-- Bizpress Key Dates Uk
+- Bizpress Key Dates
 - Bizpress Xero Resources
 - Bizpress Business Resources
 - Bizpress Luca
 
 == Changelog ==
+
+= 1.3.1 =
+* Combine different Key Dates plugins into one
 
 = 1.3 =
 * Bug Fix: Fixed and issue with Quickbooks Recources

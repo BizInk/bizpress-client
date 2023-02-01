@@ -184,11 +184,31 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 
     $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
 
-    $credentials = [            
-        'email'         => $options['user_email'],
-        'password'      => $options['user_password'],
-    ];
-    $country = strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : '';
+	//$country = strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : 'AU';
+	$country = 'AU';
+	switch($options['content_region']){
+		case 'ca':
+			$country = 'CA';
+			break;
+		case 'us':
+			$country = 'US';
+			break;
+		case 'nz':
+			$country = 'NZ';
+			break;
+		case 'gb':
+		case 'uk':
+			$country = 'GB';
+		break;
+		case 'au':
+		default:
+			$country = 'AU';
+			break;			
+	}
+	if(apply_filters( 'bizink-keydates-country', 'country' )){
+		$country = apply_filters( 'bizink-keydates-country', 'country' );
+	}
+
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => -1,
@@ -198,12 +218,10 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'post_type'     => $post_type,
         'slug'         	=> $slug,
         'term'         	=> $term,
-        'country' 		=> $country,
+		'country'		=> $country,
         'region'		=> $content_region,
         'luca'		=> function_exists('luca') ? true : false
     ], wp_slash( $base_url ) );
-
-
 
     $args = array(
       'timeout' => 300,
@@ -236,12 +254,42 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url 		= bizink_get_master_site_url();
-    $keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
-    
-    $credentials    = [            
-        'email'         => $options['user_email'],
-        'password'      => $options['user_password'],
-    ];
+	//$options = get_option( 'bizink-client_basic' );
+	if(empty($options['content_region'])){
+		$options['content_region'] = 'au';
+	}
+	if(empty($options['user_email'])){
+		$options['user_email'] = '';
+	}
+	if(empty($options['user_password'])){
+		$options['user_password'] = '';
+	}
+    //$keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
+	$keydate_country = 'AU';
+	switch(strtolower($options['content_region'])){
+		case 'ca':
+			$keydate_country = 'CA';
+			break;
+		case 'us':
+			$keydate_country = 'US';
+			break;
+		case 'nz':
+			$keydate_country = 'NZ';
+			break;
+		case 'gb':
+		case 'uk':
+			$keydate_country = 'GB';
+		break;
+		case 'au':
+		default:
+			$keydate_country = 'AU';
+			break;			
+	}
+	if(apply_filters( 'bizink-keydates-country', 'country' )){
+		$keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
+	}
+
+
 	//'per_page'      => -1,
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
