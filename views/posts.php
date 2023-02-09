@@ -41,11 +41,11 @@ else{
 	if ( array_key_exists( 'bizink-client-luca-header' , $GLOBALS['wp_filter']) ) {
 		echo apply_filters( 'bizink-client-luca-header', $post_type );
 	}
-	echo '<main class="main"><div class="section">';
+	echo '<main class="main bizpress-post-layout"><div class="section">';
 	echo '<div class="container">';
 }
 
-echo '<main id="main" role="main">';
+echo '<main id="main" role="main" class="bizink-post-layout">';
 echo '<div class="container">';
 
 echo "<div id='primary' class='cxbc-content-area content-area primary'>";

@@ -38,7 +38,18 @@ class Shortcode extends Base {
         $content_type   = bizink_get_content_type( $curent_page_id );
         $data           = bizink_get_content( $content_type, 'topics' );
 
-        return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+        if($content_type == 'business-terms' || $content_type == 'accounting-terms'){
+            return cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+        }
+        else{
+            return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+        }
+        // accounting-terms business-terms
+        //$accounting_content_page_id = cxbc_get_option( 'bizink-client_basic', 'accounting_content_page' );
+        //$business_content_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+        //$business_terms_content_page_id = cxbc_get_option( 'bizink-client_basic', 'business_terms_content_page' );
+
+        
     }
 
     public function bizink_landing( $args ) {

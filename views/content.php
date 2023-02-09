@@ -45,7 +45,7 @@ else{
 	echo '<div class="container">';
 }
 
-echo '<main id="main" role="main">';
+echo '<main id="main" role="main" class="bizpress-content-layout">';
 echo '<div class="container">';
 
 
