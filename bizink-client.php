@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.3.2
+ * Version: 1.3.3
  * Requires PHP: 7.2
  * Requires at least: 5.2
  * Text Domain: bizink-client
@@ -25,7 +25,8 @@ if(!defined('CXBPC')){
 
 // Plugin Updater
 require 'plugin-update-checker/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/BizInk/bizpress-client',__FILE__,'bizpress-client');
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker('https://github.com/BizInk/bizpress-client',__FILE__,'bizpress-client');
 // Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('master');
 // Using a private repository, specify the access token 
