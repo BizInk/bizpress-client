@@ -239,8 +239,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 			if($data->data->status > 399){
 				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
 				echo '<p><b>Message:</b> '.$data->message.'</p>';
-				echo '<p><b>Endpoint:</b> '.$api_endpoint;
-				echo '<p><b>Bace Url:</b> '.$base_url;
 			}
 		}
 	}
@@ -318,8 +316,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 			if($data->data->status > 399){
 				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
 				echo '<p><b>Message:</b> '.$data->message.'</p>';
-				echo '<p><b>Endpoint:</b> '.$api_endpoint;
-				echo '<p><b>Bace Url:</b> '.$base_url;
 			}
 		}
 	}

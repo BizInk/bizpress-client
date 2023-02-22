@@ -61,7 +61,8 @@ if( !empty( $sorted_posts ) ):
             printf( "<div class='%s'><h2 class='%s'>%s</h2>", "component bizpress-glossary-component", "bizpress-glossary-title title", $key );
                 echo '<p class="bizpress-glossary-paragraph">';
                     foreach ($value as $k => $v) {
-                        printf( "<a class='bizpress-glossary-link' href='%s'>%s</a><br>", apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug, $v) ,$v->title );
+                        $v->type = $post_type;
+                        printf( "<a class='bizpress-glossary-link' href='%s'>%s</a><br>", apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug , $v ) , $v->title );
                     }
                 echo "</p>";
             printf( "</div>" );
