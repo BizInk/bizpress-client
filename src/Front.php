@@ -50,11 +50,8 @@ class Front extends Base {
 	 */
 	public function enqueue_scripts() {
 		$min = defined( 'CXBPC_DEBUG' ) && CXBPC_DEBUG ? '' : '.min';
-
 		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/front{$min}.css", CXBPC ), '', $this->version, 'all' );
-		
 		wp_enqueue_script( $this->slug, plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, true );
-
 		$localized = [
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
@@ -93,10 +90,18 @@ class Front extends Base {
 		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
 		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+		$payroll_page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
+		$payroll_glossary_id = cxbc_get_option( 'bizink-client_basic', 'payroll_glossary_page' );
 
 		if($attachment && !$content){
 			if(!empty($business_page_id)){
 				$post = get_post( $business_page_id );
+			}
+			if(!empty($payroll_page_id)){
+				$post = get_post( $payroll_page_id );
+			}
+			if(!empty($payroll_glossary_id)){
+				$post = get_post( $payroll_glossary_id );
 			}
 			if(!empty($xero_page_id)){
 				$post = get_post( $xero_page_id );
@@ -108,33 +113,43 @@ class Front extends Base {
 				$post = get_post( $keydates_page_id );
 			}
 			$slug = $post->post_name;
-			// echo $attachment;
 		}
 
 		if ( $content ) {
 			$query->set( 'post_type', 'page' );
-			$pageType = get_query_var('pagename','xero-resources');
+			$pageType = get_query_var('pagename','page');
 			if($xero_page_id && $pageType == 'xero-resources'){
 				$query->set( 'p', $xero_page_id );
 				$query->set( 'page_id', $xero_page_id );
 			}
-			if($quickbooks_page_id  && $pageType == 'quickbooks-resources'){
+			else if($quickbooks_page_id  && $pageType == 'quickbooks-resources'){
 				$query->set( 'p', $quickbooks_page_id );
 				$query->set( 'page_id', $quickbooks_page_id );
 			}
-			if($business_page_id && $pageType = 'bizink-client-business'){
+			else if($business_page_id && $pageType = 'bizink-client-business'){
 				$query->set( 'p', $business_page_id );
 				$query->set( 'page_id', $business_page_id );
 			}
-			if($keydates_page_id && $pageType == 'bizink-client-keydates'){
+			else if($keydates_page_id && $pageType == 'bizink-client-keydates'){
 				$query->set( 'p', $keydates_page_id );
 				$query->set( 'page_id', $keydates_page_id );
 			}
+			else if($payroll_page_id && $pageType = 'payroll-resources'){
+				$query->set( 'p', $payroll_page_id );
+				$query->set( 'page_id', $payroll_page_id );
+			}
+			else if($payroll_page_id && $pageType = 'payroll-glossary'){
+				$query->set( 'p', $payroll_page_id );
+				$query->set( 'page_id', $payroll_page_id );
+			}
+			else{
+				return;
+			}
 			
-			$data = get_transient("bizink_".md5($content));
+			$data = get_transient("bizinkcontent_".md5($content));
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
-				set_transient( "bizink_".md5($content), $data, DAY_IN_SECONDS );
+				set_transient( "bizinkcontent_".md5($content), $data, DAY_IN_SECONDS );
 			}
 			
 			$query->set('post_title',$data->post->post_title);
@@ -145,17 +160,205 @@ class Front extends Base {
 			$query->set('post_date_gmt',$data->post->post_date_gmt);
 			set_query_var('bizpress_data',$data);
 		}
-		return;
+	}
+
+	public function the_post( $post ){
+		global $wp, $wp_query;
+		$current_url = home_url( add_query_arg( array(), $wp->request ) );
+		$pagename = get_query_var('pagename');
+		$content = get_query_var( 'bizpress');
+		$type = get_query_var( 'type' );
+		$topic = get_query_var( 'topic' );
+		$calculator = get_query_var('calculator');
+		$type = '';
+		if($content){
+			$d = $content;
+			$type = 'content';
+		}
+		else if($topic){
+			$d = $topic;
+			$type = 'topic';
+		}
+		else if($type){
+			$d = $type;
+			$type = 'type';
+		}
+		else if($calculator){
+			$d = $type;
+			$type = 'calculator';
+		}
+		if( $type != '' && (
+		$pagename == 'xero-resources' || 
+		$pagename == 'quickbooks-resources' || 
+		$pagename == 'bizink-client-keydates' || 
+		$pagename == 'bizink-client-business' ||
+		$pagename == 'payroll-resources' ||
+		$pagename == 'payroll-glossary' ||
+		$pagename == 'calculators') ){
+
+			$main_slug 		= explode($type, $current_url );
+			$main_slug_id 	= url_to_postid( $main_slug[0] );
+			$content_type   = bizink_get_content_type( $main_slug_id );
+			$data = get_transient("bizink'.$type.'_".md5($d));
+			if(empty($data)){
+				$data = bizink_get_content( $content_type, $type, $d );
+				set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+			}
+
+			if( isset( $data->subscriptions_expiry ) ) {
+				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+			}
+			$post->post_title = $data->post->post_title;
+			$post->post_content = $data->post->post_content;
+			$post->post_type = 'page';
+		}
+		return $post;
+	}
+
+	public function the_title($post_title) {
+		if ( is_singular() && in_the_loop() && is_main_query() ) {
+			global $wp, $wp_query;
+			$pagename = get_query_var('pagename',false);
+			if($pagename == 'xero-resources' || 
+			$pagename == 'quickbooks-resources' || 
+			$pagename == 'bizink-client-business' || 
+			$pagename == 'bizink-client-keydates' ||
+			$pagename == 'payroll-resources' ||
+			$pagename == 'payroll-glossary' ||
+			$pagename == 'calculators'){
+
+				$type = get_query_var( 'type' );
+				$topic = get_query_var( 'topic' );
+				$content = get_query_var( 'bizpress');
+				$calculator = get_query_var('calculator');
+				$current_url = home_url( add_query_arg( array(), $wp->request ) );
+				if ( $topic || $type || $content || $calculator) {
+					
+					$type = '';
+					if($content){
+						$d = $content;
+						$type = 'content';
+					}
+					else if($topic){
+						$d = $topic;
+						$type = 'topic';
+					}
+					else if($type){
+						$d = $type;
+						$type = 'type';
+					}
+					else if($calculator){
+						$d = $type;
+						$type = 'calculator';
+					}
+					$wp_query->is_404 = false; 
+					$main_slug 		= explode($type, $current_url );
+					$main_slug_id 	= url_to_postid( $main_slug[0] );
+					$content_type   = bizink_get_content_type( $main_slug_id );
+		
+					$data = get_transient("bizink'.$type.'_".md5($d));
+					if(empty($data)){
+						$data = bizink_get_content( $content_type, $type, $d );
+						set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+					}
+					//$data = bizink_get_content( $content_type, $type, $d );
+		
+					if( isset( $data->subscriptions_expiry ) ) {
+						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+					}
+					$post_title =  $data->post->post_title ? $data->post->post_title : $post_title;
+				}
+			}
+		}
+		return $post_title;
+	}
+
+	public function the_content($contentData){
+		if ( is_singular() && in_the_loop() && is_main_query() ) {
+			global $wp, $wp_query;
+			$pagename = get_query_var('pagename');
+			if
+			($pagename == 'calculators' ||
+			$pagename == 'xero-resources' ||
+			$pagename == 'quickbooks-resources' ||
+			$pagename == 'bizink-client-business' ||
+			$pagename == 'payroll-resources' ||
+			$pagename == 'bizink-client-keydates'
+			){
+				$type = get_query_var( 'type' );
+				$topic = get_query_var( 'topic' );
+				$content = get_query_var( 'bizpress');
+				$calculator = get_query_var('calculator');
+				$current_url = home_url( add_query_arg( array(), $wp->request ) );
+				if ( $topic || $type || $content || $calculator) {
+					$type = '';
+					if($topic){
+						$d = $topic;
+						$type = 'topic';
+					}
+					else if($type){
+						$d = $type;
+						$type = 'type';
+					}
+					else if($content){
+						$d = $content;
+						$type = 'content';
+					}
+					else if($calculator){
+						$d = $type;
+						$type = 'calculator';
+					}
+					$wp_query->is_404 = false; 
+					$main_slug 		= explode($type, $current_url );
+					$main_slug_id 	= url_to_postid( $main_slug[0] );
+					$content_type   = bizink_get_content_type( $main_slug_id );
+
+					$data = get_transient("bizink'.$type.'_".md5($d));
+					if(empty($data)){
+						$data = bizink_get_content( $content_type, $type, $d );
+						set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+					}
+					//$data = bizink_get_content( $content_type, $type, $d );
+
+					if( isset( $data->subscriptions_expiry ) ) {
+						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+					}
+					$contentData =  $data->post->post_content ? $data->post->post_content : $contentData;
+				}
+			}
+		}
+		return $contentData;
 	}
 
 	public function template_redirect($body) {
 		global $wp, $wp_query;
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
-		$content	= get_query_var( 'bizpress'); // attachment
-		
+		$content	= get_query_var( 'bizpress');   // attachment
+		$calculator = get_query_var('calculator');
+
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		
+		if( $calculator ){
+			$wp_query->is_404 = false; 
+	    	$main_slug 		= explode('topic', $current_url );
+	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
+	    	$content_type   = bizink_get_content_type( $main_slug_id );
+
+			$data = get_transient("bizinktopic_".md5($topic));
+			if(empty($data)){
+				$data = bizink_get_content( $content_type, 'post', $topic );
+				set_transient( "bizinktopic_".md5($topic), $data, DAY_IN_SECONDS );
+			}
+	        //$data = bizink_get_content( $content_type, 'types', $topic );
+
+	        if( isset( $data->subscriptions_expiry ) ) {
+	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+	        }
+	        echo cxbc_get_template( 'posts', 'views', [ 'response' => $data ] );
+	        die;
+		}
+
 	    if ( $topic ) {
 			$wp_query->is_404 = false; 
 	    	$main_slug 		= explode('topic', $current_url );

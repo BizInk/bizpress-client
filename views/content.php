@@ -47,10 +47,7 @@ else{
 
 echo '<main id="main" role="main" class="bizpress-content-layout">';
 echo '<div class="container">';
-
-
-echo "
-<div id='primary' class='cxbc-content-area content-area primary'>";
+echo "<div id='primary' class='cxbc-content-area content-area primary'>";
 if(!function_exists('luca')) {
 	echo "<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>";
 }

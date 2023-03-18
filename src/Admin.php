@@ -53,6 +53,24 @@ class Admin extends Base {
 		flush_rewrite_rules();
 	}
 
+	public function bizpress_create_page(){
+		check_ajax_referer('bizpress_page');
+		if(empty($_REQUEST['page_details'])){
+			return json_encode(array('status' => false, 'errors' => ['no_page_details']));
+			die();
+		}
+		$page_id = wp_insert_post(json_decode($_REQUEST['page_details']));
+		$error = is_wp_error($page_id);
+		if($error){
+			return json_encode(array('status' => false, 'errors' => $error['errors'], 'error_data' => $error['error_data']));
+		}
+		else{
+			return json_encode(array('status' => true, 'page_id' => $page_id, 'page_details' => $_REQUEST['page_details']));
+		}
+		print_r($_REQUEST);
+		die();
+	}
+
 	public function add_rewrite_rules(){
 
 		global $wp;

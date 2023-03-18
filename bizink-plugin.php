@@ -41,7 +41,6 @@ final class Plugin {
 		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
 		$this->plugin['min_php']	= '7.1';
 		$this->plugin['min_wp']		= '5.2';
-		$this->plugin['depends']	= [];
 	}
 
 	/**
@@ -64,6 +63,7 @@ final class Plugin {
 			$admin->activate('add_rewrite_rules');
 			$admin->activate('bizpress_activate_deactivate');
 			$admin->deactivate('bizpress_activate_deactivate');
+			//$admin->action('wp_ajax_bizpress_page','bizpress_create_page');
 			/**
 			 * Settings related hooks
 			 *
@@ -85,8 +85,18 @@ final class Plugin {
 			$front->action( 'wp_enqueue_scripts', 'enqueue_scripts' );
 			$front->action( 'admin_bar_menu', 'add_admin_bar', 70 );
 			$front->filter( 'query_vars', 'query_vars');
-			$front->action( 'template_redirect', 'template_redirect',1);
-			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts');
+
+			//function_exists('bz_client_luca_header')
+			if(array_key_exists( 'bizink-client-luca-header' , $GLOBALS['wp_filter'])){
+				$front->action( 'template_redirect', 'template_redirect',10);
+			}
+			//$front->action( 'template_redirect', 'template_redirect',10);
+			
+			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts',1);
+			$front->filter( 'the_title', 'the_title',1);
+			$front->filter( 'the_content', 'the_content',1);
+			$front->filter( 'the_post' ,'the_post',1);
+			
 			$front->action( 'body_class', 'body_class' );
 
 			/**

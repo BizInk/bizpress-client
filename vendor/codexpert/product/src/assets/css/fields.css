@@ -228,6 +228,10 @@
 	display: grid;
 	grid-template-columns: 10fr 1fr;
 }
+.cx-field-pageselect-div{
+	display: grid;
+    grid-template-columns: 2fr 1fr;
+}
 
 @media only screen and (min-width: 320px) {
     .cx-sections-wrapper {

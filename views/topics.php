@@ -48,6 +48,10 @@ elseif ( 'quickbooks-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_desc' );
 }
+elseif ( 'payroll-content' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'payroll_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'payroll_desc' );
+}
 elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
@@ -119,6 +123,9 @@ elseif ( 'xero-content' == $post_type ) {
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$taxonomy_topics = 'quickbooks-topics';
+}
+elseif ( 'payroll-content' == $post_type ) {
+	$taxonomy_topics = 'payroll-topics';
 }
 elseif ( 'qbo-content' == $post_type ) {
 	$taxonomy_topics = 'qbo-topics';

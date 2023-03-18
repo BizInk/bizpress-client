@@ -103,4 +103,37 @@ jQuery(function ($) {
         $(".cx-form:visible .cx-reset-button").click();
     });
     $('a[href="' + localStorage.active_cx_tab + '"]').click();
+
+
+        $('.selectbutton').click(function(event) {
+            var $this = $(this);
+            var $_nonce = $this.data("_nonce");
+            var pageDetails = $this.data('page');
+            $.ajax({
+                url: ajaxurl,
+                data: { 
+                    action: "bizpress_page",
+                    _wpnonce: $_nonce,
+                    'page_details': JSON.stringify(pageDetails)
+                },
+                type: "POST",
+                dataType: "JSON",
+                success: function (response) {
+                    var details = JSON.parse(response);
+                    details['page_details'] = JSON.parse(details['page_details']);
+                    jQurey('select-{$name}').append(jQurey('<option>',{
+                        value: details['id'],
+                        text: details['page_details']['post_title']
+                    }));
+                    jQurey('select-{$name}').val(details['id']);
+                    setTimeout(function () {
+                        window.location.href = "";
+                    }, 1000);
+                },
+                erorr: function (ret) {
+                    
+                },
+            });
+        });
+
 });

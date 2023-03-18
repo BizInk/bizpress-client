@@ -466,6 +466,55 @@ abstract class Fields extends Base {
 		return $html;
 	}
 
+	public function field_pageselect( $field, $section, $scope ) {
+		$default		= isset( $field['default'] ) ? $field['default'] : '';
+		$value			= $this->get_value( $field, $section, $default, $scope );
+
+		$name 			= $scope == 'option' ? $field['id'] : "{$section['id']}[{$field['id']}]";
+		$label 			= $field['label'];
+		$id 			= "{$section['id']}-{$field['id']}";
+
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$class 			.= isset( $field['select2'] ) && $field['select2'] ? ' cx-select2' : '';
+		$class 			.= isset( $field['chosen'] ) && $field['chosen'] ? ' cx-chosen' : '';
+
+		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
+		$required 		= isset( $field['required'] ) && $field['required'] ? " required" : "";
+		$disabled 		= isset( $field['disabled'] ) && $field['disabled'] ? " disabled" : "";
+		$multiple 		= isset( $field['multiple'] ) && $field['multiple'] ? 'multiple' : false;
+		$options 		= isset( $field['options'] ) ? $field['options'] : [];
+		$default_page   = isset( $field['default_page'] ) ? $field['default_page'] : false;
+
+		$html  = '';
+		if( $default_page ){
+			$html .= "<div class=\"cx-field-pageselect-div\">";
+		}
+		if( $multiple ) {
+			$html .= "<select id='select-{$name}' name='{$name}[]' id='{$id}' class='{$class}' multiple {$required} {$disabled} data-placeholder='{$placeholder}'>";
+			foreach ( $options as $key => $title ) {
+				$html .= "<option value='{$key}' " . ( in_array( $key, (array)$value ) ? 'selected' : '' ) . ">{$title}</option>";
+			}
+			$html .= '</select>';
+		}
+		else {
+			$html .= "<select id='select-{$name}' name='{$name}' id='{$id}' class='{$class}' {$required} {$disabled} data-placeholder='{$placeholder}'>";
+			foreach ( $options as $key => $title ) {
+				$html .= "<option value='{$key}' " . selected( $value, $key, false ) . ">{$title}</option>";
+			}
+			$html .= '</select>';
+		}
+
+		if( $default_page ){
+			$defaultPageJson = json_encode($default_page,JSON_UNESCAPED_UNICODE);
+			$_nonce = wp_create_nonce('bizpress_page');
+			$html .= "<button id=\"selectbutton-{$name}\" data-_nonce='{$_nonce}' data-select=\"select-{$name}\" data-page='".$defaultPageJson."' class=\"button button-primary selectbutton\" type=\"button\">Create Page</button>";
+			$html .= "</div>";
+		}
+
+		return $html;
+	}
+
 	public function field_file( $field, $section, $scope ) {
 		$default		= isset( $field['default'] ) ? $field['default'] : '';
 		$value			= $this->esc_str( $this->get_value( $field, $section, $default, $scope ) );

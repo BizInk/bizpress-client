@@ -162,7 +162,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$options['user_password'] = '';
 	}
 
-    $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+    $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url = bizink_get_master_site_url();
     $content_region = $options['content_region'];
     $taxonomy_topics = 'business-topics';
@@ -175,10 +175,10 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	elseif ( 'quickbooks-content' == $post_type ) {
 		$taxonomy_topics = 'quickbooks-topics';
 	}
-	elseif ( 'accounting-terms' == $post_type ) {
-		$taxonomy_topics = 'region';
+	elseif ( 'payroll-content' == $post_type ) {
+		$taxonomy_topics = 'payroll-topics';
 	}
-	elseif ( 'business-terms' == $post_type ) {
+	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {
 		$taxonomy_topics = 'region';
 	}
 
@@ -354,56 +354,10 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	return 'https://bizinkcontent.com/';
+	//return 'https://bizinkcontent.com/';
+	return 'http://bizpresspublish.localhost/';
 }
 endif;
-
-/**
- * Reporting API
- *
- * @return url
- * @author ace <ace@bizinkonline.com>
- */
-
-if( ! function_exists( 'bizink_update_views' ) ) :
-function bizink_update_views($data) {
-
-	$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
-
-	if(!empty($data->post)){
-		$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
-		$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
-		$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
-	}
-	else{
-		$country = 'N/A';
-		$topics = 'N/A';
-		$types = 'N/A';
-	}
-	
-
-	$data = array(
-		'title' => $data->post->post_title,
-		'url' => $data->post->guid,
-		'type' => $data->post->post_type,
-		'country' => $country,
-		'topics' => $topics,
-		'types' => $types
-	);
-
-	// use key 'http' even if you send the request to https://...
-	$options = array(
-	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-	        'method'  => 'POST',
-	        'content' => http_build_query($data)
-	    )
-	);
-	$context  = stream_context_create($options);
-	$result = file_get_contents($url, false, $context);
-}
-endif;
-
 
 /**
  * API Authontication details
@@ -424,3 +378,47 @@ function bizink_url_authontication()
 	);
 }
 endif;
+
+/**
+ * Reporting API
+ *
+ * @return url
+ * @author ace <ace@bizinkonline.com>
+ */
+if( ! function_exists( 'bizink_update_views' ) ) :
+	function bizink_update_views($data) {
+	
+		$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
+	
+		if(!empty($data->post)){
+			$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
+			$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
+			$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
+		}
+		else{
+			$country = 'N/A';
+			$topics = 'N/A';
+			$types = 'N/A';
+		}
+		
+		$data = array(
+			'title' => $data->post->post_title,
+			'url' => $data->post->guid,
+			'type' => $data->post->post_type,
+			'country' => $country,
+			'topics' => $topics,
+			'types' => $types
+		);
+	
+		// use key 'http' even if you send the request to https://...
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		//$context  = stream_context_create($options);
+		//$result = file_get_contents($url, false, $context);
+	}
+	endif;

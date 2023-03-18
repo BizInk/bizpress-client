@@ -118,7 +118,7 @@ class Settings extends Base {
 							'id' => 'landingpage_xero',
 							'label' => __( 'Display Content using the shortcode', 'bizink-client' ),
 							'type' => 'admin_shortcode',
-							'shortcode' => '[bizink-content]',
+							'shortcode' => '[bizpress-content]',
 							'copy' => true
 						]
 					]
@@ -130,44 +130,7 @@ class Settings extends Base {
 					'color'		=> '#4c3f93',
 					'sticky'	=> true,
 					'fields'    => [
-						[
-	                        'id'		=> 'business',
-	                        'label'		=> __( 'Bizink Client Business', 'bizink-client' ),
-	                        'type'		=> 'divider',
-	                    ],
-						'business_title' => [
-							'id'      	=> 'business_title',
-							'label'     => __( 'Business Lifecycle Title', 'bizink-client' ),
-							'type'      => 'text',
-							'default'   => __( 'Business Lifecycle', 'bizink-client' ),
-							'required'	=> true,
-						],
-						'business_desc' => [
-							'id'      	=> 'business_desc',
-							'label'     => __( 'Business Lifecycle Description', 'bizink-client' ),
-							'type'      => 'textarea',
-							'default'   => __( 'Free resources to help you grow your business.', 'bizink-client' ),
-							'required'	=> true,
-						],
-						[
-	                        'id'		=> 'keydates',
-	                        'label'		=> __( 'Bizink Client Key Dates', 'bizink-client' ),
-	                        'type'		=> 'divider',
-	                    ],
-						'keydates_title' => [
-							'id'      	=> 'keydates_title',
-							'label'     => __( 'Key Dates Title', 'bizink-client' ),
-							'type'      => 'text',
-							'default'   => __( 'Key Dates Resources', 'bizink-client' ),
-							'required'	=> true,
-						],
-						'keydates_desc' => [
-							'id'      	=> 'keydates_desc',
-							'label'     => __( 'Key Dates Description', 'bizink-client' ),
-							'type'      => 'textarea',
-							'default'   => __( 'Free resources to help you use Key Dates.', 'bizink-client' ),
-							'required'	=> true,
-						],
+												
 					]
 				],
 				'bizink-client_landingpages' => [
@@ -181,7 +144,7 @@ class Settings extends Base {
 							'id' => 'landingpage_xero',
 							'label' => __( 'Xero landing page', 'bizink-client' ),
 							'type' => 'admin_shortcode',
-							'shortcode' => '[bizink-landing id="xero-landing-page"]',
+							'shortcode' => '[bizpress-landing id="xero-landing-page"]',
 							'copy' => true
 						]
 					]
