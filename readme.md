@@ -18,7 +18,7 @@ BizPress is Bizink's collection of WordPress plugins.
 
 ### Server Plugins
 - [Bizpress - WC](https://github.com/BizInk/bizink-wc) - Validates User logins this is on the Bizink site
-- [Bizpress - Publish](https://github.com/BizInk/bizink-publish) - The content publisher on bizinkcontent.com
+- [Bizpress - Publisher](https://github.com/BizInk/bizink-publisher) - The content publisher on bizinkcontent.com
 ## How to update the plugin
 1. Have the latest version of the plugin in the master/main branch
     - Note this should contain the latest version number in the plugin file ```e.g. bizink-clinet.php```
