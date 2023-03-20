@@ -138,9 +138,9 @@ class Front extends Base {
 				$query->set( 'p', $payroll_page_id );
 				$query->set( 'page_id', $payroll_page_id );
 			}
-			else if($payroll_page_id && $pageType = 'payroll-glossary'){
-				$query->set( 'p', $payroll_page_id );
-				$query->set( 'page_id', $payroll_page_id );
+			else if($payroll_glossary_id && $pageType = 'payroll-glossary'){
+				$query->set( 'p', $payroll_glossary_id );
+				$query->set( 'page_id', $payroll_glossary_id );
 			}
 			else{
 				return;
@@ -283,6 +283,7 @@ class Front extends Base {
 			$pagename == 'quickbooks-resources' ||
 			$pagename == 'bizink-client-business' ||
 			$pagename == 'payroll-resources' ||
+			$pagename == 'payroll-glossary' ||
 			$pagename == 'bizink-client-keydates'
 			){
 				$type = get_query_var( 'type' );

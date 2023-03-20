@@ -36,8 +36,7 @@ class Shortcode extends Base {
 
         $curent_page_id = get_the_ID();
         $content_type   = bizink_get_content_type( $curent_page_id );
-        // || $content_type == 'payroll-glossary'
-        if($content_type == 'business-terms' || $content_type == 'accounting-terms' ){
+        if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
             $data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
         }
