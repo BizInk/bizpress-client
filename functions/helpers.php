@@ -354,8 +354,8 @@ endif;
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	//return 'https://bizinkcontent.com/';
-	return 'http://bizpresspublish.localhost/';
+	return 'https://bizinkcontent.com/';
+	//return 'http://bizpresspublish.localhost/';
 }
 endif;
 

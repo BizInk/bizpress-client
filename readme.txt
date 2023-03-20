@@ -24,6 +24,7 @@ Display business content on your website that is automatically updated by the Bi
 
 = 1.3.5 =
 * Luca 2 & Other theme Compatibality
+* Keydate now only displays current Finincial Year
 
 = 1.3.4 =
 * HotFix - Glossary

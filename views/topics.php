@@ -10,16 +10,18 @@ if ( empty($responce) && empty($args['response']) ) {
 	return;
 }
 
-
-if ( $response->status == 0 ) {
-	if(empty($response->message)){
-		echo "<p>".__('Sorry there was an error. There was an error retreveing the data for this page.','bizink-client')."</p>";
+if(empty($response) == false){
+	if ( $response->status == 0 ) {
+		if(empty($response->message)){
+			echo "<p>".__('Sorry there was an error. There was an error retreveing the data for this page.','bizink-client')."</p>";
+		}
+		else{
+			echo "<p>{$response->message}</p>";
+		}
+		return;
 	}
-	else{
-		echo "<p>{$response->message}</p>";
-	}
-	return;
 }
+
 
 $topics 		= $response->topics;
 $posts 			= $response->posts;
@@ -110,10 +112,6 @@ if (strpos($post_type, 'keydates') === false) {
 
 }
 
-//$aaa = get_option( 'bizink-client_content' );
-//echo get_option('bizink-client_content','xero_title');
-// cxbc_pri($response);
-
 $taxonomy_topics = 'business-topics';
 if ( 'business-lifecycle' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
@@ -140,8 +138,6 @@ $single_term 	= $topics->$term;
 $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
 */
-
-
 
 
 if (strpos($post_type, 'keydates') === false) {
@@ -190,7 +186,7 @@ if (strpos($post_type, 'keydates') === false) {
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
 	echo "<h2>Due Dates</h2>";
-	echo "<p>Key lodgement and payment dates for ".date("Y")."-".date("Y", strtotime("+1 year"))." are: </p>";
+	echo "<p>Key lodgement and payment dates for this financial year are: </p>";
 	echo "</div>";
 
 	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
