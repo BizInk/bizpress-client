@@ -118,7 +118,7 @@ class Admin extends Base {
 			}
 			
 		}
-
+		/*
 		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
 		if(!empty($keydates_page_id) && $keydates_page_id != ''){
 			$keydates_post = get_post( $keydates_page_id ); 
@@ -130,6 +130,7 @@ class Admin extends Base {
 				add_rewrite_rule("^".$keydates_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=keydates&type=$matches[1]','top');
 			}
 		}
+		*/
 	}
 	
 	public function suscription_expiry_notice() {

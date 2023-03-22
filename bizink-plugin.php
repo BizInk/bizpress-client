@@ -86,11 +86,13 @@ final class Plugin {
 			$front->action( 'admin_bar_menu', 'add_admin_bar', 70 );
 			$front->filter( 'query_vars', 'query_vars');
 
-			//function_exists('bz_client_luca_header')
-			if(array_key_exists( 'bizink-client-luca-header' , $GLOBALS['wp_filter'])){
+			$disableTemplateRedirect = false;
+			if(defined('BIZPRESS_DISABLE_TEMPLATE_REDIRECT') && constant('BIZPRESS_DISABLE_TEMPLATE_REDIRECT') == true){
+				$disableTemplateRedirect = true;
+			}
+			if(function_exists('luca') && $disableTemplateRedirect == false){
 				$front->action( 'template_redirect', 'template_redirect',10);
 			}
-			//$front->action( 'template_redirect', 'template_redirect',10);
 			
 			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts',1);
 			$front->filter( 'the_title', 'the_title',1);
