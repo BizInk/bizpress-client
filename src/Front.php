@@ -188,9 +188,9 @@ class Front extends Base {
 			$type = 'calculator';
 		}
 		if( $type != '' && (
+		$pagename == 'keydates' ||
 		$pagename == 'xero-resources' || 
 		$pagename == 'quickbooks-resources' || 
-		$pagename == 'bizink-client-keydates' || 
 		$pagename == 'bizink-client-business' ||
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
@@ -220,9 +220,9 @@ class Front extends Base {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename',false);
 			if($pagename == 'xero-resources' || 
+			$pagename == 'keydates' ||
 			$pagename == 'quickbooks-resources' || 
 			$pagename == 'bizink-client-business' || 
-			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'payroll-resources' ||
 			$pagename == 'payroll-glossary' ||
 			$pagename == 'calculators'){
@@ -279,12 +279,13 @@ class Front extends Base {
 			$pagename = get_query_var('pagename');
 			if
 			($pagename == 'calculators' ||
+			$pagename == 'keydates' ||
 			$pagename == 'xero-resources' ||
 			$pagename == 'quickbooks-resources' ||
+			$pagename == 'myob-resources' ||
 			$pagename == 'bizink-client-business' ||
 			$pagename == 'payroll-resources' ||
-			$pagename == 'payroll-glossary' ||
-			$pagename == 'bizink-client-keydates'
+			$pagename == 'payroll-glossary'
 			){
 				$type = get_query_var( 'type' );
 				$topic = get_query_var( 'topic' );
@@ -337,6 +338,7 @@ class Front extends Base {
 		$topic 		= get_query_var( 'topic' );
 		$content	= get_query_var( 'bizpress');   // attachment
 		$calculator = get_query_var('calculator');
+		$pagename = get_query_var('pagename');
 
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		
@@ -421,7 +423,12 @@ class Front extends Base {
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
-	        echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
+			if($pagename == 'keydates'){
+				echo cxbc_get_template( 'item', 'views', [ 'response' => $data ] );
+			}
+			else{
+				echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
+			}
 	        die;
 	    }
 	    return $body;

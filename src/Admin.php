@@ -88,9 +88,9 @@ class Admin extends Base {
 			if(!empty($business_post)){
 				$business_slug = $business_post->post_name;
 				add_rewrite_tag('%'.$business_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$business_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$business_slug.'&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$business_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$business_slug.'&topic=$matches[1]','top');
-				add_rewrite_rule("^".$business_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$business_slug.'&type=$matches[1]','top');
+				add_rewrite_rule("^".$business_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=bizink-client-business&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$business_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=bizink-client-business&topic=$matches[1]','top');
+				add_rewrite_rule("^".$business_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=bizink-client-business&type=$matches[1]','top');
 			}
 		}
 		
@@ -100,9 +100,9 @@ class Admin extends Base {
 			if(!empty($xero_post)){
 				$xero_slug = $xero_post->post_name;
 				add_rewrite_tag('%'.$xero_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$xero_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$xero_slug.'&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$xero_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$xero_slug.'&topic=$matches[1]','top');
-				add_rewrite_rule("^".$xero_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$xero_slug.'&type=$matches[1]','top');
+				add_rewrite_rule("^".$xero_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=xero-resources&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$xero_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=xero-resources&topic=$matches[1]','top');
+				add_rewrite_rule("^".$xero_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=xero-resources&type=$matches[1]','top');
 			}
 		}
 
@@ -112,9 +112,9 @@ class Admin extends Base {
 			if(!empty($quickbooks_post)){
 				$quickbooks_slug = $quickbooks_post->post_name;
 				add_rewrite_tag('%'.$quickbooks_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$quickbooks_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$quickbooks_slug.'&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$quickbooks_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$quickbooks_slug.'&topic=$matches[1]','top');
-				add_rewrite_rule("^".$quickbooks_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$quickbooks_slug.'&type=$matches[1]','top');
+				add_rewrite_rule("^".$quickbooks_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=quickbooks-resources&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$quickbooks_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=quickbooks-resources&topic=$matches[1]','top');
+				add_rewrite_rule("^".$quickbooks_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=quickbooks-resources&type=$matches[1]','top');
 			}
 			
 		}
@@ -125,9 +125,9 @@ class Admin extends Base {
 			if(!empty($keydates_post)){
 				$keydates_slug = $keydates_post->post_name;
 				add_rewrite_tag('%'.$keydates_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$keydates_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$keydates_slug.'&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$keydates_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$keydates_slug.'&topic=$matches[1]','top');
-				add_rewrite_rule("^".$keydates_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$keydates_slug.'&type=$matches[1]','top');
+				add_rewrite_rule("^".$keydates_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=keydates&bizpress=$matches[1]','top');
+				add_rewrite_rule("^".$keydates_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=keydates&topic=$matches[1]','top');
+				add_rewrite_rule("^".$keydates_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=keydates&type=$matches[1]','top');
 			}
 		}
 	}
