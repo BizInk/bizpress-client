@@ -15,6 +15,7 @@ BizPress is Bizink's collection of WordPress plugins.
 
 ### Client Site Plugins
 - [BizPress - Luca](https://github.com/BizInk/bizpress-luca) - Luca 1 sites only
+- [BizPress - Luca 2](https://github.com/BizInk/bizpress-luca-2) - Luca 2 sites only
 
 ### Server Plugins
 - [Bizpress - WC](https://github.com/BizInk/bizink-wc) - Validates User logins this is on the Bizink site

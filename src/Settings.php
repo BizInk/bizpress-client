@@ -195,7 +195,15 @@ class Settings extends Base {
 			],
 		];
 
-		if(function_exists('luca')) {
+		$luca = false;
+		if(function_exists('luca')){
+			$luca = true;
+		}
+		elseif(in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
+			$luca = true;
+		}
+
+		if($luca) {
 			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);
 			unset($settings['sections']['bizink-client_basic']['fields']['user_password']);
 		}

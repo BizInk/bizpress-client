@@ -209,6 +209,14 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$country = apply_filters( 'bizink-keydates-country', 'country' );
 	}
 
+	$luca = false;
+	if(function_exists('luca')){
+		$luca = true;
+	}
+	elseif(in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
+		$luca = true;
+	}
+
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => -1,
@@ -220,7 +228,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'term'         	=> $term,
 		'country'		=> $country,
         'region'		=> $content_region,
-        'luca'		=> function_exists('luca') ? true : false
+        'luca'			=> $luca
     ], wp_slash( $base_url ) );
 
     $args = array(
@@ -288,6 +296,14 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	}
 
 
+	$luca = false;
+	if(function_exists('luca')){
+		$luca = true;
+	}
+	elseif(in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
+		$luca = true;
+	}
+
 	//'per_page'      => -1,
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
@@ -296,7 +312,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'paged'         => $paged,
         'slug'         	=> $slug,
         'kd_region' 	=> strtolower($keydate_country),
-        'luca'		=> function_exists('luca') ? true : false
+        'luca'			=> $luca
     ], wp_slash( $base_url ) );
 
     $args = array(
@@ -387,7 +403,8 @@ endif;
  */
 if( ! function_exists( 'bizink_update_views' ) ) :
 	function bizink_update_views($data) {
-	
+		return; 
+		
 		$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
 	
 		if(!empty($data->post)){
