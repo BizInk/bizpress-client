@@ -172,6 +172,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	elseif ( 'xero-content' == $post_type ) {
 		$taxonomy_topics = 'xero-topics';
 	}
+	elseif ( 'myob-content' == $post_type ) {
+		$taxonomy_topics = 'myob-topics';
+	}
 	elseif ( 'quickbooks-content' == $post_type ) {
 		$taxonomy_topics = 'quickbooks-topics';
 	}

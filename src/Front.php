@@ -89,6 +89,7 @@ class Front extends Base {
 		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+		$myob_page_id	= cxbc_get_option( 'bizink-client_basic', 'myob_content_page' );
 		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
 		$payroll_page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
 		$payroll_glossary_id = cxbc_get_option( 'bizink-client_basic', 'payroll_glossary_page' );
@@ -106,6 +107,9 @@ class Front extends Base {
 			if(!empty($xero_page_id)){
 				$post = get_post( $xero_page_id );
 			}
+			if(!empty($myob_page_id)){
+				$post = get_post( $myob_page_id );
+			}
 			if(!empty($quickbooks_page_id)){
 				$post = get_post( $quickbooks_page_id );
 			}
@@ -121,6 +125,10 @@ class Front extends Base {
 			if($xero_page_id && $pageType == 'xero-resources'){
 				$query->set( 'p', $xero_page_id );
 				$query->set( 'page_id', $xero_page_id );
+			}
+			else if($myob_page_id  && $pageType == 'myob-resources'){
+				$query->set( 'p', $myob_page_id );
+				$query->set( 'page_id', $myob_page_id );
 			}
 			else if($quickbooks_page_id  && $pageType == 'quickbooks-resources'){
 				$query->set( 'p', $quickbooks_page_id );
@@ -194,7 +202,8 @@ class Front extends Base {
 		if( $type != '' && (
 		$pagename == 'keydates' ||
 		$pagename == 'bizink-client-keydates' ||
-		$pagename == 'xero-resources' || 
+		$pagename == 'xero-resources' ||
+		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' || 
 		$pagename == 'bizink-client-business' ||
 		$pagename == 'payroll-resources' ||
@@ -227,7 +236,8 @@ class Front extends Base {
 			if($pagename == 'xero-resources' || 
 			$pagename == 'keydates' ||
 			$pagename == 'bizink-client-keydates' ||
-			$pagename == 'quickbooks-resources' || 
+			$pagename == 'quickbooks-resources' ||
+			$pagename == 'myob-resources' || 
 			$pagename == 'bizink-client-business' || 
 			$pagename == 'payroll-resources' ||
 			$pagename == 'payroll-glossary' ||
