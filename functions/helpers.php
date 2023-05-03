@@ -323,10 +323,11 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
       'httpversion' => '1.1',
       'headers' => array(
         	'Content-Type' => 'application/json',
-        	'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO'
+        	'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt'
 		)
   	);
-
+	// gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt
+	// OLD KEY: tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
