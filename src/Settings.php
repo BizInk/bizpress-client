@@ -107,7 +107,7 @@ class Settings extends Base {
 								'CA'=>'Canada',
 								'NZ'=>'New Zealand',
 								'GB'=>'United Kingdom',
-								'IE'=>'Irland',
+								'IE'=>'Ireland',
 								'US'=>'United States of America',
 								'all'=>'Other'
 							],
