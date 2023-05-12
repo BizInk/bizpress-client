@@ -203,6 +203,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		case 'uk':
 			$country = 'GB';
 		break;
+		case 'ie':
+			$country = 'IE';
+		break;
 		case 'au':
 		default:
 			$country = 'AU';
@@ -239,7 +242,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
       'httpversion' => '1.1',
       'headers' => array(
         'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO')
+        'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt')
   	);
 
     $request    = wp_remote_get( $url, $args );
@@ -288,6 +291,9 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 		case 'gb':
 		case 'uk':
 			$keydate_country = 'GB';
+		break;
+		case 'ie':
+			$keydate_country = 'IE';
 		break;
 		case 'au':
 		default:
@@ -393,7 +399,7 @@ function bizink_url_authontication()
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
-		  'Authorization' => 'Bearer tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO'
+		  'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt'
 		)
 	);
 }
