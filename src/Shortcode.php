@@ -48,7 +48,7 @@ class Shortcode extends Base {
             $data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
         }
-        /**
+        /*
          else if($content_type == 'keydates' || $content_type == 'bizink-client-keydates' ||
             $content_type == 'keydates-au' ||
             $content_type == 'keydates-ca' ||
@@ -58,7 +58,7 @@ class Shortcode extends Base {
             $data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
         }
-         */
+        */
         // accounting-terms business-terms
         //$accounting_content_page_id = cxbc_get_option( 'bizink-client_basic', 'accounting_content_page' );
         //$business_content_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );

@@ -139,7 +139,6 @@ $term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $defaul
 $term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
 */
 
-
 if (strpos($post_type, 'keydates') === false) {
 
 	$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : (isset($first_term) ? $first_term : 'business-topics'); 
@@ -185,7 +184,7 @@ if (strpos($post_type, 'keydates') === false) {
 }
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
-	echo "<h2>Due Dates</h2>";
+	echo "<h2>".__('Due Dates','bizpress-client')."</h2>";
 	echo "<p>Key lodgement and payment dates for this financial year are: </p>";
 	echo "</div>";
 
@@ -203,3 +202,12 @@ else{
 	echo "</div>";
 	echo "</div>";
 }
+
+echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+data-single="false"
+data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+data-title="'.$default_title.'" 
+data-url="'. get_permalink( get_the_ID() ) .'" 
+data-posttype="'.$post_type.'"
+data-topics="'. (empty($topics) == false ? implode(',',$topics) : "false") .'"
+data-types="'. $taxonomy_topics . '" ></div>';

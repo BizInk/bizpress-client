@@ -3,6 +3,103 @@ if( !function_exists( 'get_plugin_data' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
+/**
+ * Bizpress Site ID
+ */
+if( ! function_exists( 'bizpress_anylitics_get_site_id' ) ) :
+function bizpress_anylitics_get_site_id(){
+	$anyliticsURL = 'https://anylitics.biz.press/api/v1';
+	$anyliticsURL = "http://bizpressanylitics.localhost/api/v1"; // Test URl
+	$bizpressOptions = get_option('bizink-client_basic',false);
+	if($bizpressOptions == false){
+		// Bizpress not setup
+		return false;
+	}
+	$siteID = get_option('bizpress_site_id',false);
+	if(empty($bizpressOptions['content_region'])){
+		$bizpressOptions['content_region'] = 'all';
+	}
+	$version = '1.4.2'; // First version with this included
+	if(!defined('CXBPC')){
+		$versionData = get_plugin_data(constant('CXBPC'))['Version'];
+		if(!empty($versionData)) $version = $versionData;
+	}
+	$siteData = array(
+		"siteName" => get_bloginfo('name'),
+		"siteDescription" => get_bloginfo("description"),
+		"url" => get_bloginfo("url"),
+		"lang" => get_bloginfo("language"),
+		"timezone" => wp_timezone_string(),
+		"wpVersion" => get_bloginfo( 'version' ),
+		"rtl" => is_rtl(),
+		"bizpressVersion" => $version,
+		"region" => $bizpressOptions['content_region'],
+		"themeName" => get_stylesheet()
+	);
+	$siteDataHash = hash('sha256',implode(",",$siteData));
+	$savedSiteDataHash = get_option('siteDataHash');
+	if($savedSiteDataHash != $siteDataHash && $siteID == false){ // New Site
+		$args = array(
+			'body' => json_encode($siteData),
+			'headers' => [
+				'Cache-Control' => 'no-cache',
+				'Content-Type'  => 'application/json',
+				'Accept' 		=> 'application/json',
+			],
+			'timeout'     => 10,
+			'redirection' => 3,
+			'httpversion' => '1.1',
+		);
+		$responce = wp_remote_post($anyliticsURL.'/site',$args);
+		$code = wp_remote_retrieve_response_code($responce);
+		if($code >= 200 && $code < 400){
+			$data = json_decode(wp_remote_retrieve_body($responce));
+			if($data->id){
+				add_option('siteDataHash',$siteDataHash);
+				add_option('bizpress_site_id',$data->id);
+				$siteID = $data->id;
+			}
+			else{
+				return false; // Don't know how it would get here
+			}
+		}
+		else{
+			return false; // Server or request error
+		}
+	}
+	else if($savedSiteDataHash != $siteDataHash && $siteID != false){ // Change of site details
+		$args = array(
+			'body' => json_encode($siteData),
+			'method' => 'PUT',
+			'headers' => [
+				'Cache-Control' => 'no-cache',
+				'Content-Type'  => 'application/json',
+				'Accept' 		=> 'application/json',
+			],
+			'timeout'     => 10,
+			'redirection' => 3,
+			'httpversion' => '1.1',
+		);
+		$responce = wp_remote_request($anyliticsURL."/site\/".$siteID ,$args);
+		$code = wp_remote_retrieve_response_code($responce);
+		if($code >= 200 && $code < 400){
+			$data = json_decode(wp_remote_retrieve_body($responce));
+			if($data->id){
+				add_option('siteDataHash',$siteDataHash);
+			}
+			else{
+				return false; // Don't know how it would get here
+			}
+		}
+		else{
+			return false; // Server or request error
+		}
+	}
+	
+	return $siteID;
+}
+endif;
+
 if( ! function_exists( 'cxbc_pri' ) ) :
 function cxbc_pri( $data ) {
 	echo '<pre>';

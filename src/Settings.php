@@ -80,14 +80,14 @@ class Settings extends Base {
 							'label'     => __( 'Bizink Email', 'bizink-client' ),
 							'type'      => 'email',
 							'desc'      => __( 'The email that you used to subscribe to Bizink.', 'bizink-client' ),
-							'placeholder'   => 'hello@codexpert.io',
+							'placeholder'   => 'hello@bizinkonline.com',
 							'required'	=> true,
 						],
 						'user_password' => [
 							'id'      => 'user_password',
 							'label'     => __( 'Password', 'bizink-client' ),
 							'type'      => 'password',
-							'desc'      => __( 'Your Bizink password.', 'bizink-client' ),
+							'desc'      => __( 'Your Bizink account password.', 'bizink-client' ),
 							'required'	=> true,
 						],
 						'allow_editor' => [

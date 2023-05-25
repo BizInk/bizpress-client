@@ -39,8 +39,8 @@ final class Plugin {
 		$this->plugin['basename']	= plugin_basename( CXBPC );
 		$this->plugin['file']		= CXBPC;
 		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
-		$this->plugin['min_php']	= '7.1';
-		$this->plugin['min_wp']		= '5.2';
+		$this->plugin['min_php']	= '7.4';
+		$this->plugin['min_wp']		= '5.6';
 	}
 
 	/**
@@ -100,6 +100,12 @@ final class Plugin {
 			$front->filter( 'the_post' ,'the_post',1);
 			
 			$front->action( 'body_class', 'body_class' );
+
+
+			/**
+			 * Anylitics
+			 */
+			$front->action('wp_head','bizpress_anylitics_head');
 
 			/**
 			 * Shortcode hooks

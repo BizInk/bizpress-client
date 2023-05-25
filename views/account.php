@@ -34,7 +34,6 @@ $sorted_posts = array();
 foreach ( $alphabates as $key => $word ) {
     $sorted_posts[ $word ] = array();
     foreach ( $posts as $key => $value ) {
-        
         $post_title = strtolower( $value->title );
         $first_word = substr( sanitize_text_field( $post_title ) , 0, 1) ;
         if( !empty( $post_title ) && $first_word == $word ):
@@ -43,11 +42,8 @@ foreach ( $alphabates as $key => $word ) {
         elseif( $word == "#" &&  ( preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $first_word) || is_numeric( $first_word )  ) ):
             $sorted_posts[ $word ][] = $value;
         endif;
-
     }
-    
 }
-
 
 /**
  * Render posts in alphabatical order
@@ -71,5 +67,14 @@ if( !empty( $sorted_posts ) ):
     }
     
     printf( "</div>" );
-endif;  
+endif;
+
+echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+data-single="false"
+data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+data-title="'.get_the_title( get_the_ID() ).'" 
+data-url="'. get_permalink( get_the_ID() ) .'" 
+data-posttype="'.$post_type.'"
+data-topics="'. (empty($topics) == false ? implode(',',$topics) : "false") .'"
+data-types="" ></div>';
 ?>

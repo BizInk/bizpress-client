@@ -47,7 +47,6 @@ else{
 echo '<main id="main" role="main" class="bizpress-types-layout">';
 echo '<div class="container">';
 
-
 echo "<div id='primary' class='cxbc-content-area content-area primary'>";
 echo "<div class='ast-article-single'>";
 echo "<div class='cxbc-types-list'>";
@@ -77,6 +76,14 @@ echo "</div>";
 echo "</div>";
 echo "</div>";
 
+echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+data-single="false"
+data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+data-title="'.get_the_title($page_id).'" 
+data-url="'.get_permalink($page_id).'" 
+data-posttype="'.$post_type.'"
+data-topics="'. (empty($types) == false ? implode(',',$types) : "false") .'"
+data-types="" ></div>';
 
 echo '</div></div>';
 

@@ -44,7 +44,16 @@ else{
 	echo '<main class="main"><div class="section">';
 	echo '<div class="container">';
 }
-
+/*
+$anyliticsData = '<div style="display:none;" class="bizpress-data" 
+id="bizpress-'.$data->post->id.'" 
+data-id="'.$data->post->id.'" 
+data-title="'.$data->post->post_title.'" 
+data-slug="'.$data->post->post_name.'" 
+data-post-type="'.$data->post->post_type.'"
+data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+*/
 echo '<main id="main" role="main" class="bizpress-content-layout">';
 echo '<div class="container">';
 echo "<div id='primary' class='cxbc-content-area content-area primary'>";

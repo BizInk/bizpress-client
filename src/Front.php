@@ -25,11 +25,18 @@ class Front extends Base {
 	 * Constructor function
 	 */
 	public function __construct( $plugin ) {
-		$this->plugin	= $plugin;
-		$this->slug		= $this->plugin['TextDomain'];
-		$this->name		= $this->plugin['Name'];
-		$this->version	= $this->plugin['Version'];
-		$this->ncrypt   = ncrypt();
+		$this->plugin		= $plugin;
+		$this->slug			= $this->plugin['TextDomain'];
+		$this->name			= $this->plugin['Name'];
+		$this->version		= $this->plugin['Version'];
+		$this->ncrypt   	= ncrypt();
+	}
+
+	public function bizpress_anylitics_head(){
+		$id = bizpress_anylitics_get_site_id();
+		if($id){
+			echo '<meta title="bizpresssiteid" content="'.$id.'" />';
+		}
 	}
 
 	public function add_admin_bar( $admin_bar ) {
@@ -52,6 +59,7 @@ class Front extends Base {
 		$min = defined( 'CXBPC_DEBUG' ) && CXBPC_DEBUG ? '' : '.min';
 		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/front{$min}.css", CXBPC ), '', $this->version, 'all' );
 		wp_enqueue_script( $this->slug, plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->slug, plugins_url( "/assets/js/anylitics{$min}.js", CXBPC ), array(), $this->version, true );
 		$localized = [
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
@@ -222,8 +230,20 @@ class Front extends Base {
 			if( isset( $data->subscriptions_expiry ) ) {
 				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 			}
+
+			$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+			data-id="'.$data->post->ID.'"
+			data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+			data-single="true"
+			data-title="'.$data->post->post_title.'" 
+			data-slug="'.$data->post->post_name.'" 
+			data-posttype="'.$data->post->post_type.'"
+			data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+			data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+
 			$post->post_title = $data->post->post_title;
-			$post->post_content = $data->post->post_content;
+			$post->post_content = $data->post->post_content . $anyliticsData;
+
 			$post->post_type = 'page';
 		}
 		return $post;
@@ -342,7 +362,18 @@ class Front extends Base {
 					if( isset( $data->subscriptions_expiry ) ) {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 					}
+					$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data" 
+					data-id="'.$data->post->ID.'"
+					data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+					data-single="true"
+					data-title="'.$data->post->post_title.'" 
+					data-slug="'.$data->post->post_name.'" 
+					data-posttype="'.$data->post->post_type.'"
+					data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+					data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+
 					$contentData =  $data->post->post_content ? $data->post->post_content : $contentData;
+					$contentData = $contentData . $anyliticsData;
 				}
 			}
 		}

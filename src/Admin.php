@@ -118,25 +118,12 @@ class Admin extends Base {
 			}
 			
 		}
-		/*
-		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
-		if(!empty($keydates_page_id) && $keydates_page_id != ''){
-			$keydates_post = get_post( $keydates_page_id ); 
-			if(!empty($keydates_post)){
-				$keydates_slug = $keydates_post->post_name;
-				add_rewrite_tag('%'.$keydates_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$keydates_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=keydates&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$keydates_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=keydates&topic=$matches[1]','top');
-				add_rewrite_rule("^".$keydates_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=keydates&type=$matches[1]','top');
-			}
-		}
-		*/
 	}
 	
 	public function suscription_expiry_notice() {
 		$notice 	= get_option( '_cxbc_suscription_expiry' );
 		if ( $notice == '' ) return;
-		$message 	= __( 'Your Bizink suscription will be expired ', 'bizink-client' ) . strtolower( $notice );
+		$message 	= __( 'Your Bizink suscription will expire on', 'bizink-client' ) .' '. date( get_option('date_format') ,strtotime($notice));
 		echo "<div class='notice notice-error'><p>{$message}</p></div>";
 	}
 }
