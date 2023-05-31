@@ -209,5 +209,5 @@ data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_i
 data-title="'.$default_title.'" 
 data-url="'. get_permalink( get_the_ID() ) .'" 
 data-posttype="'.$post_type.'"
-data-topics="'. (empty($topics) == false ? implode(',',$topics) : "false") .'"
+data-topics="'. (empty(array_keys((array) $topics)) == false ? implode(',',array_keys((array) $topics)) : "false") .'"
 data-types="'. $taxonomy_topics . '" ></div>';

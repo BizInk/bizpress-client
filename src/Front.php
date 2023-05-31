@@ -58,12 +58,12 @@ class Front extends Base {
 	public function enqueue_scripts() {
 		$min = defined( 'CXBPC_DEBUG' ) && CXBPC_DEBUG ? '' : '.min';
 		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/front{$min}.css", CXBPC ), '', $this->version, 'all' );
-		wp_enqueue_script( $this->slug, plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( $this->slug, plugins_url( "/assets/js/anylitics{$min}.js", CXBPC ), array(), $this->version, true );
+		wp_enqueue_script( $this->slug.'-front', plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->slug.'-anylitics', plugins_url( "/assets/js/anylitics{$min}.js", CXBPC ), array(), $this->version, true );
 		$localized = [
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
-		wp_localize_script( $this->slug, 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
+		wp_localize_script( $this->slug.'-front', 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
 	}
 
 	public function query_vars( $query_vars ) {

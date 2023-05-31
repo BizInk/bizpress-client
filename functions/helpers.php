@@ -339,7 +339,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
       'httpversion' => '1.1',
       'headers' => array(
         'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt')
+        'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB')
   	);
 
     $request    = wp_remote_get( $url, $args );
@@ -426,11 +426,9 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
       'httpversion' => '1.1',
       'headers' => array(
         	'Content-Type' => 'application/json',
-        	'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt'
+        	'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB'
 		)
   	);
-	// gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt
-	// OLD KEY: tkAVTdsSQGyKJifrsoyeeuEQuDQqqkbRjgRqQOxO
     $request    = wp_remote_get( $url, $args );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
@@ -478,7 +476,6 @@ endif;
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
 	return 'https://bizinkcontent.com/';
-	//return 'http://bizpresspublish.localhost/';
 }
 endif;
 
@@ -496,7 +493,7 @@ function bizink_url_authontication()
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
-		  'Authorization' => 'Bearer gvATLaalwnQoiZZsAcsHfqVMotLtgJCnWOGSTHvt'
+		  'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB'
 		)
 	);
 }
@@ -511,38 +508,5 @@ endif;
 if( ! function_exists( 'bizink_update_views' ) ) :
 	function bizink_update_views($data) {
 		return; 
-		
-		$url = 'http://contentreport.bizinkonline.com/api/update_views.php';
-	
-		if(!empty($data->post)){
-			$country = $data->post->post_type == 'business-lifecycle' ? $data->region : 'N/A';
-			$topics = $data->post->post_type == 'business-lifecycle' ? $data->topic : 'N/A';
-			$types = $data->post->post_type == 'business-lifecycle' ? $data->type : 'N/A';
-		}
-		else{
-			$country = 'N/A';
-			$topics = 'N/A';
-			$types = 'N/A';
-		}
-		
-		$data = array(
-			'title' => $data->post->post_title,
-			'url' => $data->post->guid,
-			'type' => $data->post->post_type,
-			'country' => $country,
-			'topics' => $topics,
-			'types' => $types
-		);
-	
-		// use key 'http' even if you send the request to https://...
-		$options = array(
-			'http' => array(
-				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				'method'  => 'POST',
-				'content' => http_build_query($data)
-			)
-		);
-		//$context  = stream_context_create($options);
-		//$result = file_get_contents($url, false, $context);
 	}
-	endif;
+endif;

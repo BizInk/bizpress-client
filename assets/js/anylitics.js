@@ -1,32 +1,40 @@
 
-let siteID = document.head.querySelector("[property~=bizpresssiteid][content]").content;
-const startTime = Date.now();
+//let siteID = document.head.querySelector("[property~=bizpresssiteid][content]").content;
+let startTime = new Date( Date.now() );
 window.addEventListener("beforeunload", function (e) {
+    const dataEllement = document.getElementById('bizpress-data');
+    const siteID = dataEllement.dataset.siteid;
     if(siteID != "" || siteID != null || siteID != undefined){
-
-        const dataEllement = document.getElementById('bizpress-data');
+        let endTime = new Date( Date.now() );
         const single = dataEllement.dataset.single ? dataEllement.dataset.single : false;
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.setRequestHeader("Accept", "application/json");
-        xmlhttp.open("POST", "https://anylitics.biz.press/api/v1/report", true);
-        xmlhttp.send(JSON.stringify({
-            siteID: siteID,
-            bizpressType: dataEllement.dataset.posttype,
-            ...(single & {
-                resourceSlug: dataEllement.dataset.slug,
-                resourceTopic: dataEllement.dataset.topics,
-                resourceType: dataEllement.dataset.types
-            }),
-            startTime: startTime,
-            stopTime: Date.now(),
-            userAgent: window.navigator.userAgent,
-            screenHeight: screen.height,
-            screenWidth: screen.width,
-            availHeight: screen.availHeight,
-            availWidth: screen.availWidth,
-            referrer: document.referrer
-        }));
+        // http://bizpressanylitics.localhost/
+        // https://anylitics.biz.press
+            fetch("http://bizpressanylitics.localhost/api/v1/report",{
+                method: 'POST',
+                headers:{
+                    "Content-Type":"application/json",
+                    "Accept":"application/json"
+                },
+                body: JSON.stringify({
+                    site_id: siteID,
+                    bizpressType: dataEllement.dataset.posttype,
+                    ...(single & {
+                        resourceTopic: dataEllement.dataset.topics ? dataEllement.dataset.topics : (dataEllement.dataset.types ? dataEllement.dataset.types : null),
+                    }),
+                    resourceSlug: dataEllement.dataset.slug ? dataEllement.dataset.slug : window.location.pathname,
+                    resourceType: single ? 'resource':'page',
+                    startTime: startTime.toISOString(),
+                    stopTime: endTime.toISOString(),
+                    screenHeight: screen.height,
+                    screenWidth: screen.width,
+                    availHeight: screen.availHeight,
+                    availWidth: screen.availWidth,
+                    referrer: document.referrer
+                })
+            })
+            .catch(error => {
+                //console.log(error);
+            });
     }
     else{
         console.log("No Bizpress Site ID Found...");

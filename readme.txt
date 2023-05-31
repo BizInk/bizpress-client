@@ -19,6 +19,7 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress Business Resources
 - BizPress Payroll
 - Bizpress Luca
+- Bizpress XPM
 
 == Changelog ==
 

@@ -75,6 +75,6 @@ data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_i
 data-title="'.get_the_title( get_the_ID() ).'" 
 data-url="'. get_permalink( get_the_ID() ) .'" 
 data-posttype="'.$post_type.'"
-data-topics="'. (empty($topics) == false ? implode(',',$topics) : "false") .'"
-data-types="" ></div>';
+data-topics="false"
+data-types="false" ></div>';
 ?>
