@@ -70,7 +70,6 @@ if( !empty( $sorted_posts ) ):
 endif;
 
 echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-data-single="false"
 data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
 data-title="'.get_the_title( get_the_ID() ).'" 
 data-url="'. get_permalink( get_the_ID() ) .'" 

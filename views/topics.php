@@ -204,7 +204,6 @@ else{
 }
 
 echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-data-single="false"
 data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
 data-title="'.$default_title.'" 
 data-url="'. get_permalink( get_the_ID() ) .'" 

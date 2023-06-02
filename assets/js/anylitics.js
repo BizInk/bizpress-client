@@ -6,7 +6,8 @@ window.addEventListener("beforeunload", function (e) {
     const siteID = dataEllement.dataset.siteid;
     if(siteID != "" || siteID != null || siteID != undefined){
         let endTime = new Date( Date.now() );
-        const single = dataEllement.dataset.single ? dataEllement.dataset.single : false;
+        let single = dataEllement.dataset.single ? dataEllement.dataset.single : false;
+        if(single == 'false')single = false;
         // http://bizpressanylitics.localhost/
         // https://anylitics.biz.press
             fetch("http://bizpressanylitics.localhost/api/v1/report",{

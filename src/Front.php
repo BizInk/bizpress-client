@@ -169,7 +169,7 @@ class Front extends Base {
 			$data = get_transient("bizinkcontent_".md5($content));
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
-				set_transient( "bizinkcontent_".md5($content), $data, DAY_IN_SECONDS );
+				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
 			
 			$query->set('post_title',$data->post->post_title);
@@ -224,7 +224,7 @@ class Front extends Base {
 			$data = get_transient("bizink'.$type.'_".md5($d));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, $type, $d );
-				set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+				set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 			if( isset( $data->subscriptions_expiry ) ) {
@@ -295,7 +295,7 @@ class Front extends Base {
 					$data = get_transient("bizink'.$type.'_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 					//$data = bizink_get_content( $content_type, $type, $d );
 		
@@ -355,7 +355,7 @@ class Front extends Base {
 					$data = get_transient("bizink'.$type.'_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, DAY_IN_SECONDS );
+						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 					//$data = bizink_get_content( $content_type, $type, $d );
 
@@ -398,7 +398,7 @@ class Front extends Base {
 			$data = get_transient("bizinktopic_".md5($topic));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'post', $topic );
-				set_transient( "bizinktopic_".md5($topic), $data, DAY_IN_SECONDS );
+				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
 	        //$data = bizink_get_content( $content_type, 'types', $topic );
 
@@ -418,7 +418,7 @@ class Front extends Base {
 			$data = get_transient("bizinktopic_".md5($topic));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'types', $topic );
-				set_transient( "bizinktopic_".md5($topic), $data, DAY_IN_SECONDS );
+				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
 	        //$data = bizink_get_content( $content_type, 'types', $topic );
 
@@ -438,7 +438,7 @@ class Front extends Base {
 			$data = get_transient("bizinktype_".md5($type));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'type', $type );
-				set_transient( "bizinktype_".md5($type), $data, DAY_IN_SECONDS );
+				set_transient( "bizinktype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
 			}
 	        //$data = bizink_get_content( $content_type, 'type', $type );
 
