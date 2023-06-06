@@ -8,7 +8,7 @@ if( !function_exists( 'get_plugin_data' ) ) {
  */
 if( ! function_exists( 'bizpress_anylitics_get_site_id' ) ) :
 function bizpress_anylitics_get_site_id(){
-	$anyliticsURL = 'https://anylitics.biz.press/api/v1';
+	$anyliticsURL = 'https://analytics.biz.press/api/v1';
 	$bizpressOptions = get_option('bizink-client_basic',false);
 	if($bizpressOptions == false){
 		// Bizpress not setup
