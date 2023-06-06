@@ -8,9 +8,11 @@ window.addEventListener("beforeunload", function (e) {
         let endTime = new Date( Date.now() );
         let single = dataEllement.dataset.single ? dataEllement.dataset.single : false;
         if(single == 'false')single = false;
-        // http://bizpressanylitics.localhost/
-        // https://anylitics.biz.press
-            fetch("http://bizpressanylitics.localhost/api/v1/report",{
+        let resourceType = single ? 'resource':'page';
+        if(single == false && dataEllement.dataset.topics){
+            resourceType = 'taxonomy';
+        }
+            fetch("https://analytics.biz.press/api/v1/report",{
                 method: 'POST',
                 headers:{
                     "Content-Type":"application/json",
@@ -19,11 +21,9 @@ window.addEventListener("beforeunload", function (e) {
                 body: JSON.stringify({
                     site_id: siteID,
                     bizpressType: dataEllement.dataset.posttype,
-                    ...(single & {
-                        resourceTopic: dataEllement.dataset.topics ? dataEllement.dataset.topics : (dataEllement.dataset.types ? dataEllement.dataset.types : null),
-                    }),
+                    resourceTopic: dataEllement.dataset.topics ? dataEllement.dataset.topics : null,
                     resourceSlug: dataEllement.dataset.slug ? dataEllement.dataset.slug : window.location.pathname,
-                    resourceType: single ? 'resource':'page',
+                    resourceType,
                     startTime: startTime.toISOString(),
                     stopTime: endTime.toISOString(),
                     screenHeight: screen.height,
@@ -34,7 +34,7 @@ window.addEventListener("beforeunload", function (e) {
                 })
             })
             .catch(error => {
-                //console.log(error);
+                console.log(error);
             });
     }
     else{
