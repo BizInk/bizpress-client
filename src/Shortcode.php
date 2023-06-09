@@ -37,15 +37,30 @@ class Shortcode extends Base {
         $curent_page_id = get_the_ID();
         $content_type   = bizink_get_content_type( $curent_page_id );
         if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
-            $data = bizink_get_content( $content_type, 'topics' );
+            $data = get_transient("bizinktype_".md5($content_type));
+			if(empty($data)){
+				$data = bizink_get_content( $content_type, 'topics');
+				set_transient( "bizinktype_".md5($content_type), $data, (DAY_IN_SECONDS * 2) );
+			}
+            //$data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
         }
         else if($content_type == 'calculator-content'){
-            $data = bizink_get_content( $content_type, 'calculators' );
+            $data = get_transient("bizinktype_".md5($content_type));
+			if(empty($data)){
+				$data = bizink_get_content( $content_type, 'calculators');
+				set_transient( "bizinktype_".md5($content_type), $data, (DAY_IN_SECONDS * 2) );
+			}
+            //$data = bizink_get_content( $content_type, 'calculators' );
             return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
         }
         else{
-            $data = bizink_get_content( $content_type, 'topics' );
+            $data = get_transient("bizinktype_".md5($content_type));
+			if(empty($data)){
+				$data = bizink_get_content( $content_type, 'type');
+				set_transient( "bizinktype_".md5($content_type), $data, (DAY_IN_SECONDS * 2) );
+			}
+            //$data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
         }
         /*
@@ -71,7 +86,7 @@ class Shortcode extends Base {
         $base_url = bizink_get_master_site_url();
         if ( empty( $args['id'] ) ) return;
         $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
-        $html   = '<iframe id="myframe" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
+        $html   = '<iframe area-title="Landing Page" id="myframe" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
         return $html;
     }
 

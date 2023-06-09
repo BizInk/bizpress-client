@@ -69,7 +69,7 @@ if(isset($_GET)){
 }
 
 if (strpos($post_type, 'keydates') === false) {
-	echo '<div class="topic-title"><h2>Browse by Topic</h2></div>';
+	echo '<div class="topic-title"><h2>'.__('Browse by Topic','bizink-client').'</h2></div>';
 	echo "<div class='cxbc-topics-list'>";
 	$topic_coun = 0;
 	if(empty($query_value)){
@@ -81,7 +81,7 @@ if (strpos($post_type, 'keydates') === false) {
 			$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
 
 			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
-			//echo "<img class='cxbc-item-thumbnail' src='{$topic->thumbnail}'>";
+			//echo "<img alt='{$topic->name}' class='cxbc-item-thumbnail' src='{$topic->thumbnail}'>";
 			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
 			echo "</div></a>";
 			$topic_coun++;
@@ -168,7 +168,7 @@ if (strpos($post_type, 'keydates') === false) {
 		}
 		echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
 		echo "<a href='{$postUrl}'><div class='cxbc-single-post-content'>";
-		echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
+		echo "<img alt='{$post->title}' class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
 		echo "<div class='learn-more'>Learn more</div>";
 		echo "</div></a></div>";		

@@ -63,7 +63,7 @@ foreach ( $types as $type => $posts ) {
 		?>
 		<a href="<?php echo $postUrl; ?>">
 			<div class='cxbc-single-post'>
-				<img class='cxbc-item-thumbnail' src='<?php echo $post->thumbnail; ?>'>
+				<img alt="<?php echo $post->title; ?>" class='cxbc-item-thumbnail' src='<?php echo $post->thumbnail; ?>'>
 				<div class='cxbc-post-title'><?php echo $post->title; ?></div>
 			</div>
 		</a>

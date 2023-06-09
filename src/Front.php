@@ -313,8 +313,7 @@ class Front extends Base {
 		if ( is_singular() && in_the_loop() && is_main_query() ) {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename');
-			if
-			($pagename == 'calculators' ||
+			if($pagename == 'calculators' ||
 			$pagename == 'keydates' ||
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'xero-resources' ||

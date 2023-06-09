@@ -60,7 +60,7 @@ foreach ( $posts as $post ) {
 		$postUrl = add_query_arg('bizpress',$post->slug,$slug);
 	}
 	echo "<a href='{$postUrl}'><div class='cxbc-single-type'>";
-	echo "<img class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
+	echo "<img alt='{$post->title}' class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
 	echo "<div class='cxbc-type-title'>{$post->title}</div>";
 	echo "</div></a>";
 }
