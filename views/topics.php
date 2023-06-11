@@ -11,7 +11,7 @@ if ( empty($responce) && empty($args['response']) ) {
 }
 
 if(empty($response) == false){
-	if ( $response->status == 0 ) {
+	if ( isset($response->status) == false || $response->status == 0 ) {
 		if(empty($response->message)){
 			echo "<p>".__('Sorry there was an error. There was an error retreveing the data for this page.','bizink-client')."</p>";
 		}
