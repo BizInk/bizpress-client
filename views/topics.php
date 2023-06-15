@@ -58,6 +58,10 @@ elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
 }
+elseif ( 'myob-content' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'myob_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'myob_desc' );
+}
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
@@ -121,6 +125,9 @@ elseif ( 'xero-content' == $post_type ) {
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$taxonomy_topics = 'quickbooks-topics';
+}
+elseif ( 'myob-content' == $post_type ) {
+	$taxonomy_topics = 'myob-topics';
 }
 elseif ( 'payroll-content' == $post_type ) {
 	$taxonomy_topics = 'payroll-topics';
