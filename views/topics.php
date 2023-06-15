@@ -45,26 +45,44 @@ if ( 'business-lifecycle' == $post_type ) {
 elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Xero Resources', 'bizink-client');
+	}
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('QuickBooks Resources', 'bizink-client');
+	}
 }
 elseif ( 'payroll-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'payroll_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'payroll_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Payroll Resources', 'bizink-client');
+	}
 }
 elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('QuickBooks Resources', 'bizink-client');
+	}
 }
 elseif ( 'myob-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'myob_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'myob_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('MYOB Resources', 'bizink-client');
+	}
 }
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Key Dates', 'bizink-client');
+	}
 }
 
 //dropdown after single topics
