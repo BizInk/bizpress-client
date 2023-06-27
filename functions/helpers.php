@@ -333,15 +333,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
         'luca'			=> $luca
     ], wp_slash( $base_url ) );
 
-    $args = array(
-      'timeout' => 300,
-      'httpversion' => '1.1',
-      'headers' => array(
-        'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB')
-  	);
-
-    $request    = wp_remote_get( $url, $args );
+    $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body);
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
@@ -351,6 +343,12 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 				echo '<p><b>Message:</b> '.$data->message.'</p>';
 			}
 		}
+	}
+	if(!empty($data['product'])){
+		update_option('bizpress_product', $data['product']);
+	}
+	if(!empty($data['subscriptions_expiry'])){
+		update_option('bizpress_subscriptions_expiry', $data['subscriptions_expiry']);
 	}
     return $data;
 }
@@ -362,7 +360,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $options        = get_option( $key );
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url 		= bizink_get_master_site_url();
-	//$options = get_option( 'bizink-client_basic' );
 	if(empty($options['content_region'])){
 		$options['content_region'] = 'au';
 	}
@@ -372,7 +369,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	if(empty($options['user_password'])){
 		$options['user_password'] = '';
 	}
-    //$keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
 	$keydate_country = 'AU';
 	switch(strtolower($options['content_region'])){
 		case 'ca':
@@ -409,7 +405,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 		$luca = true;
 	}
 
-	//'per_page'      => -1,
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'email'         => $options['user_email'],
@@ -420,15 +415,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
         'luca'			=> $luca
     ], wp_slash( $base_url ) );
 
-    $args = array(
-      'timeout' => 120,
-      'httpversion' => '1.1',
-      'headers' => array(
-        	'Content-Type' => 'application/json',
-        	'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB'
-		)
-  	);
-    $request    = wp_remote_get( $url, $args );
+    $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
@@ -438,6 +425,12 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 				echo '<p><b>Message:</b> '.$data->message.'</p>';
 			}
 		}
+	}
+	if(!empty($data['product'])){
+		update_option('bizpress_product', $data['product']);
+	}
+	if(!empty($data['subscriptions_expiry'])){
+		update_option('bizpress_subscriptions_expiry', $data['subscriptions_expiry']);
 	}
     return $data;
 }
@@ -488,7 +481,7 @@ if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()
 {
 	return array(
-		'timeout' => 120,
+		'timeout' => 10,
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
@@ -498,12 +491,6 @@ function bizink_url_authontication()
 }
 endif;
 
-/**
- * Reporting API
- *
- * @return url
- * @author ace <ace@bizinkonline.com>
- */
 if( ! function_exists( 'bizink_update_views' ) ) :
 	function bizink_update_views($data) {
 		return; 
