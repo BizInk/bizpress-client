@@ -426,11 +426,11 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 			}
 		}
 	}
-	if(!empty($data['product'])){
-		update_option('bizpress_product', $data['product']);
+	if(!empty($data->product)){
+		update_option('bizpress_product', $data->product);
 	}
-	if(!empty($data['subscriptions_expiry'])){
-		update_option('bizpress_subscriptions_expiry', $data['subscriptions_expiry']);
+	if(!empty($data->subscriptions_expiry)){
+		update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
 	}
     return $data;
 }
