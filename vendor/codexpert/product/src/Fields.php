@@ -45,7 +45,7 @@ abstract class Fields extends Base {
         }
 
         wp_enqueue_style( 'codexpert-product-fields', plugins_url( 'assets/css/fields.css', __FILE__ ), [], '' );
-        wp_enqueue_script( 'codexpert-product-fields', plugins_url( 'assets/js/fields.js', __FILE__ ), [ 'jquery' ], '', true );
+        wp_enqueue_script( 'codexpert-product-fields', plugins_url( 'assets/js/fields.js', __FILE__ ), [ 'jquery','wp-i18n' ], '', true );
     }
 
 	public function callback_head() {
@@ -57,7 +57,7 @@ abstract class Fields extends Base {
 						if( isset( $section['fields'] ) && is_array( $section['fields'] ) && count( $section['fields'] ) > 0 ) {
 							foreach ( $section['fields'] as $field ) {
 								if( isset( $field['condition'] ) && is_array( $field['condition'] ) ) {
-									$key = $field['condition']['key'];
+									$key = $field['condition']['key'] ? $field['condition']['key'] : null;
 									$value = isset( $field['condition']['value'] ) ? $field['condition']['value'] : 'on';
 									$compare = isset( $field['condition']['compare'] ) ? $field['condition']['compare'] : '==';
 
@@ -163,9 +163,30 @@ abstract class Fields extends Base {
 				}
 				else {
 					$field_display = isset( $field['condition'] ) && is_array( $field['condition'] ) ? 'none' : '';
-					echo "
-					<div class='cxrow' id='cxrow-{$section['id']}-{$field['id']}' style='display: {$field_display}'>
-						<div class='cx-label-wrap'>";
+					$field_display = apply_filters( 'cx-settings-field-display', $field_display, $field, $section );
+					$style_display = $field_display == 'none' ? 'style="display: none"' : '';
+					echo "<div class='cxrow' id='cxrow-{$section['id']}-{$field['id']}' {$style_display}>";
+					$hideLabel = empty($field['hidelabel']) ? false : $field['hidelabel'];
+					if($hideLabel):
+						echo '<div class="cx-wrap">';
+
+						do_action( 'cx-settings-before-field', $field, $section );
+
+						if( isset( $field['template'] ) && $field['template'] != '' ) echo $field['template'];
+
+						if( isset( $field['type'] ) && $field['type'] != '' ) echo $this->populate( $field, $section, $scope );
+
+						do_action( 'cx-settings-after-field', $field, $section );
+
+						if( isset( $field['desc'] ) && $field['desc'] != '' ) {
+							echo "<p class='cx-desc'>{$field['desc']}</p>";
+						}
+
+						do_action( 'cx-settings-after-description', $field, $section );
+
+						echo '</div>';
+					else:
+						echo "<div class='cx-label-wrap'>";
 
 						do_action( 'cx-settings-before-label', $field, $section );
 
@@ -173,25 +194,26 @@ abstract class Fields extends Base {
 
 						do_action( 'cx-settings-after-label', $field, $section );
 
-					echo "</div>
-						<div class='cx-field-wrap'>";
+						echo "</div>";
+						// end label
+						echo "<div class='cx-field-wrap'>";
 
-							do_action( 'cx-settings-before-field', $field, $section );
+						do_action( 'cx-settings-before-field', $field, $section );
 
-							if( isset( $field['template'] ) && $field['template'] != '' ) echo $field['template'];
+						if( isset( $field['template'] ) && $field['template'] != '' ) echo $field['template'];
 
-							if( isset( $field['type'] ) && $field['type'] != '' ) echo $this->populate( $field, $section, $scope );
+						if( isset( $field['type'] ) && $field['type'] != '' ) echo $this->populate( $field, $section, $scope );
 
-							do_action( 'cx-settings-after-field', $field, $section );
+						do_action( 'cx-settings-after-field', $field, $section );
 
-							if( isset( $field['desc'] ) && $field['desc'] != '' ) {
-								echo "<p class='cx-desc'>{$field['desc']}</p>";
-							}
+						if( isset( $field['desc'] ) && $field['desc'] != '' ) {
+							echo "<p class='cx-desc'>{$field['desc']}</p>";
+						}
 
 						do_action( 'cx-settings-after-description', $field, $section );
 
-					echo "</div>
-					</div>";
+						echo "</div></div>";
+					endif;
 				}
 			}
 			endif; // if( count( $fields ) > 0 ) :
@@ -296,7 +318,7 @@ abstract class Fields extends Base {
 			$message = 'No Message';
 		}
 		$id 			= "{$section['id']}-{$field['id']}";
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cx-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 		$html = "<div class='{$class}' id='{$id}'><p>{$message}</p></div>";
 		return $html;
@@ -368,6 +390,31 @@ abstract class Fields extends Base {
 		return $html;
 	}
 
+	public function field_switch( $field, $section, $scope ){
+		$default		= isset( $field['default'] ) ? $field['default'] : '';
+		$value			= $this->get_value( $field, $section, $default, $scope );
+
+		$name 			= $scope == 'option' ? $field['id'] : "{$section['id']}[{$field['id']}]";
+		$label 			= $field['label'] ? $field['label'] : '';
+		$id 			= "{$section['id']}-{$field['id']}";
+
+		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+
+		$labelClass     = "cx-field-label-{$field['type']}";
+		$labelClass     .= isset( $field['labelClass'] ) ? $field['labelClass'] : '';
+
+		$required 		= isset( $field['required'] ) && $field['required'] ? " required" : "";
+		$readonly 		= isset( $field['readonly'] ) && $field['readonly'] ? " readonly" : "";
+		$disabled 		= isset( $field['disabled'] ) && $field['disabled'] ? " disabled" : "";
+
+		$html =  "<label class='{$labelClass}' for='{$id}'>";
+		$html .= "<input type='checkbox' class='{$class}' id='{$id}' name='{$name}' value='on' {$required} {$readonly} {$disabled} " . checked( $value, 'on', false ) . "/>";
+		$html .= "<span class='slider round'></span></label>";
+
+		return $html;
+	}
+
 	public function field_radio( $field, $section, $scope ) {
 		$default		= isset( $field['default'] ) ? $field['default'] : '';
 		$value			= $this->get_value( $field, $section, $default, $scope );
@@ -390,7 +437,7 @@ abstract class Fields extends Base {
 			$html .= "<input type='radio' name='{$name}' id='{$id}-{$key}' class='{$class}' value='{$key}' {$required} {$disabled} " . checked( $value, $key, false ) . "/>";
 			$html .= "<label for='{$id}-{$key}'>{$title}</label><br />";
 		}
-
+		
 		return $html;
 	}
 
@@ -466,6 +513,37 @@ abstract class Fields extends Base {
 		return $html;
 	}
 
+	public function field_plugin_install_grid($field, $section, $scope){
+		$plugins = $field['plugins'];
+		$html = '';
+		foreach ( $plugins as $plugin ) {
+			$html .= "<div class='cx-plugin-install-grid-item'>";
+			$html .= "<div class='cx-plugin-install-grid-item-thumb'>";
+			$html .= "<img src='{$plugin['thumbnail']}' alt='{$plugin['name']}' width='100' />";
+			$html .= "</div>";
+			$html .= "<div class='cx-plugin-install-grid-item-content'>";
+			$html .= "<h3>{$plugin['name']}</h3>";
+			$html .= "<p>{$plugin['description']}</p>";
+			$html .= "</div>";
+			$html .= "<div class='cx-plugin-install-grid-item-actions'>";
+			if(empty($plugin['auth'])){
+				$plugin['auth'] = false;
+			}
+			if($plugin['installed']){
+				$html .= "<p class='cx-plugin-installed-text'>".__('Installed')."</p>";
+			}
+			else{
+				$html .= "<a href='#' data-url='{$plugin['url']}' data-plugin='{$plugin['plugin']}' data-nonce=".wp_create_nonce('cx-plugin-install')." class='cx-plugin-install-grid-item-button'>";
+				$html .= __('Install');		
+				$html .= "</a>";
+			}
+			
+			$html .= "</div>";
+			$html .= "</div>";
+		}
+		return $html;
+	}
+
 	public function field_pageselect( $field, $section, $scope ) {
 		$default		= isset( $field['default'] ) ? $field['default'] : '';
 		$value			= $this->get_value( $field, $section, $default, $scope );
@@ -474,7 +552,7 @@ abstract class Fields extends Base {
 		$label 			= $field['label'];
 		$id 			= "{$section['id']}-{$field['id']}";
 
-		$class 			= "cx-field cx-field-{$field['type']}";
+		$class 			= "cx-field cx-field-select cx-field-{$field['type']}";
 		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
 		$class 			.= isset( $field['select2'] ) && $field['select2'] ? ' cx-select2' : '';
 		$class 			.= isset( $field['chosen'] ) && $field['chosen'] ? ' cx-chosen' : '';
@@ -482,7 +560,6 @@ abstract class Fields extends Base {
 		$placeholder	= isset( $field['placeholder'] ) ? $field['placeholder'] : '';
 		$required 		= isset( $field['required'] ) && $field['required'] ? " required" : "";
 		$disabled 		= isset( $field['disabled'] ) && $field['disabled'] ? " disabled" : "";
-		$multiple 		= isset( $field['multiple'] ) && $field['multiple'] ? 'multiple' : false;
 		$options 		= isset( $field['options'] ) ? $field['options'] : [];
 		$default_page   = isset( $field['default_page'] ) ? $field['default_page'] : false;
 
@@ -490,25 +567,15 @@ abstract class Fields extends Base {
 		if( $default_page ){
 			$html .= "<div class=\"cx-field-pageselect-div\">";
 		}
-		if( $multiple ) {
-			$html .= "<select id='select-{$name}' name='{$name}[]' id='{$id}' class='{$class}' multiple {$required} {$disabled} data-placeholder='{$placeholder}'>";
-			foreach ( $options as $key => $title ) {
-				$html .= "<option value='{$key}' " . ( in_array( $key, (array)$value ) ? 'selected' : '' ) . ">{$title}</option>";
-			}
-			$html .= '</select>';
+		$html .= "<select id='select-{$name}' name='{$name}' id='{$id}' class='{$class}' {$required} {$disabled} placeholder='{$placeholder}'>";
+		foreach ( $options as $key => $title ) {
+			$html .= "<option value='{$key}' " . selected( $value, $key, false ) . ">{$title}</option>";
 		}
-		else {
-			$html .= "<select id='select-{$name}' name='{$name}' id='{$id}' class='{$class}' {$required} {$disabled} data-placeholder='{$placeholder}'>";
-			foreach ( $options as $key => $title ) {
-				$html .= "<option value='{$key}' " . selected( $value, $key, false ) . ">{$title}</option>";
-			}
-			$html .= '</select>';
-		}
+		$html .= '</select>';
 
 		if( $default_page ){
-			$defaultPageJson = json_encode($default_page,JSON_UNESCAPED_UNICODE);
-			$_nonce = wp_create_nonce('bizpress_page');
-			$html .= "<button id=\"selectbutton-{$name}\" data-_nonce='{$_nonce}' data-select=\"select-{$name}\" data-page='".$defaultPageJson."' class=\"button button-primary selectbutton\" type=\"button\">Create Page</button>";
+			$_nonce = wp_create_nonce('cx-createpage');
+			$html .= "<button id=\"selectbutton-{$name}\" data-nonce='{$_nonce}' data-select=\"#select-{$name}\" data-post_type='".$default_page['post_type']."' data-post_status='".$default_page['post_status']."' data-post_content='".$default_page['post_content']."' data-post_title='".$default_page['post_title']."' class=\"button button-primary selectbutton cx-createpage\" type=\"button\">".__("Create Page")."</button>";
 			$html .= "</div>";
 		}
 

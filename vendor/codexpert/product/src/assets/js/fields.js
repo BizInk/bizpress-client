@@ -1,5 +1,6 @@
+const { __ } = wp.i18n;
 jQuery(function ($) {
-    console.log('fields JS loaded');
+    console.log('Fields JS loaded');
     if ($(".cx-color-picker").length > 0) $(".cx-color-picker").wpColorPicker();
     if ($(".cx-select2").length > 0) $(".cx-select2").select2({ width: "100%" });
     if ($(".cx-chosen").length > 0) $(".cx-chosen").chosen({ width: "100%" });
@@ -34,6 +35,76 @@ jQuery(function ($) {
         var target = $("a", this).attr("href");
         $(target).show();
         localStorage.setItem("active_cx_tab", target);
+    });
+    $(".cx-createpage").click(function (e) {
+        e.preventDefault();
+        var button = $(this);
+        $(button).text("Creating Page...");
+        $(button).attr("disabled", "disabled");
+
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            dataType: "JSON",
+            data: { 
+                action: "cx-createpage",
+                post_title: $(this).data("post_title"),
+                post_content: $(this).data("post_content"),
+                post_type: $(this).data("post_type"),
+                post_status: $(this).data("post_status"),
+                _wpnonce: $(this).data("nonce")
+            },
+            success: function (ret) {
+                if (ret.status == 1) {
+                    $(button).hide();
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-green'>"+__('Page Created')+"</div>");
+                    $($(button).data("select")).append($('<option>', {
+                        value: ret.page_id,
+                        text: ret.page.post_title
+                    }));
+                    //$($(button).data("select")).append("<option value='"+ret.page_id+"'>"+ret.page.post_title+"</option>");
+                    $($(button).data("select")).val(ret.page_id);
+
+                }
+                else{
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-red'>Error: "+ret.message+"</div>");
+                }
+            },
+            error: function (ret) {
+                console.log(ret);
+                alert("Something went wrong creating the page. Please try again later.");
+            }
+        });
+    });
+    $(".cx-plugin-install-grid-item-button").click(function (e) {
+        e.preventDefault();
+        var button = $(this);
+        $(button).text("Installing...");
+        $(button).attr("disabled", "disabled");
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            dataType: "JSON",
+            data: { 
+                action: "cx-installplugin",
+                pluginUrl: $(this).data("url"),
+                plugin: $(this).data("plugin"),
+                _wpnonce: $(this).data("nonce")
+            },
+            success: function (ret) {
+                if (ret.status == 1) {
+                    $(button).hide();
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-green'>"+ret.message+"</div>");
+                }
+                else{
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-red'>Error: "+ret.message+"</div>");
+                }
+            },
+            error: function (ret) {
+                console.log(ret);
+                alert("Something went wrong installing the plugin. Please try again later.");
+            }
+        });
     });
     $(".cx-form").submit(function (e) {
         e.preventDefault();
@@ -103,37 +174,4 @@ jQuery(function ($) {
         $(".cx-form:visible .cx-reset-button").click();
     });
     $('a[href="' + localStorage.active_cx_tab + '"]').click();
-
-
-        $('.selectbutton').click(function(event) {
-            var $this = $(this);
-            var $_nonce = $this.data("_nonce");
-            var pageDetails = $this.data('page');
-            $.ajax({
-                url: ajaxurl,
-                data: { 
-                    action: "bizpress_page",
-                    _wpnonce: $_nonce,
-                    'page_details': JSON.stringify(pageDetails)
-                },
-                type: "POST",
-                dataType: "JSON",
-                success: function (response) {
-                    var details = JSON.parse(response);
-                    details['page_details'] = JSON.parse(details['page_details']);
-                    jQurey('select-{$name}').append(jQurey('<option>',{
-                        value: details['id'],
-                        text: details['page_details']['post_title']
-                    }));
-                    jQurey('select-{$name}').val(details['id']);
-                    setTimeout(function () {
-                        window.location.href = "";
-                    }, 1000);
-                },
-                erorr: function (ret) {
-                    
-                },
-            });
-        });
-
 });

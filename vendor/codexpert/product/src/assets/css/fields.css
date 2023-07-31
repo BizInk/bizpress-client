@@ -233,6 +233,104 @@
     grid-template-columns: 2fr 1fr;
 }
 
+.cx-field-label-switch{
+    position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.cx-field-label-switch .cx-field-switch {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.cx-field-label-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.cx-field-label-switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.cx-field-switch:checked + .slider {
+  background-color: rgb(76, 63, 147);
+}
+
+.cx-field-switch:focus + .slider {
+  box-shadow: 0 0 1px rgb(76, 63, 147);
+}
+
+.cx-field-switch:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.cx-wrap{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.cx-plugin-install-grid-item{
+    padding: 1rem;
+    border: 1px solid #aaa;
+    margin: 0.8rem;
+    border-radius: 6px;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.cx-plugin-install-grid-item .cx-plugin-install-grid-item-content{
+    flex-grow: 1;
+}
+.cx-plugin-install-grid-item .cx-plugin-install-grid-item-actions{
+    margin:0.4rem;
+}
+.cx-plugin-install-grid-item .cx-plugin-install-grid-item-actions .cx-plugin-install-grid-item-button{
+    background: rgb(76, 63, 147);
+    color:#fefefe;
+    border:1px solid rgb(76, 63, 147);
+    padding:0.6rem 1.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    margin: 0.6rem;
+}
+.cx-plugin-install-grid-item .cx-plugin-install-grid-item-actions .cx-plugin-install-grid-item-button:hover{
+    color: rgb(76, 63, 147);
+    background:#fefefe;
+}
+.cx-plugin-install-grid-item-status{
+    text-align: center;
+    font-size: 1rem;
+    padding: 1rem;
+    color: rgb(76, 63, 147);
+}
+.cx-plugin-install-grid-item-status-green{
+    color: green;
+}
+.cx-plugin-install-grid-item-status-red{
+    color: red;
+}
+
 @media only screen and (min-width: 320px) {
     .cx-sections-wrapper {
         width: 73.5%;

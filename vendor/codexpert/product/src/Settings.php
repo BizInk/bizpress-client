@@ -63,6 +63,104 @@ class Settings extends Fields {
 		$this->action( 'admin_menu', 'admin_menu', $this->config['priority'] );
 		$this->priv( 'cx-settings', 'save_settings' );
 		$this->priv( 'cx-reset', 'reset_settings' );
+		$this->priv( 'cx-installplugin', 'install_plugin' );
+		$this->priv( 'cx-createpage', 'create_page' );
+	}
+
+	public function create_page(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-createpage' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		$page_id = wp_insert_post(array(
+			'post_title' => $_REQUEST['post_title'] ? $_REQUEST['post_title'] : 'Untitled',
+			'post_content' => $_REQUEST['post_content'] ? $_REQUEST['post_content'] : '',
+			'post_status' => $_REQUEST['post_status'] ? $_REQUEST['post_status'] : 'publish',
+			'post_type' => $_REQUEST['post_type'] ? $_REQUEST['post_type'] :'page',
+		));
+		$error = is_wp_error($page_id);
+		if($error){
+			wp_send_json(array('status' => false, 'errors' => $error['errors'], 'error_data' => $error['error_data']));
+		}
+		else{
+			wp_send_json(array('status' => true, 'page_id' => $page_id, 'page' => array(
+				'post_title' => $_REQUEST['post_title'] ? $_REQUEST['post_title'] : 'Untitled',
+				'post_content' => $_REQUEST['post_content'] ? $_REQUEST['post_content'] : '',
+				'post_status' => $_REQUEST['post_status'] ? $_REQUEST['post_status'] : 'publish',
+				'post_type' => $_REQUEST['post_type'] ? $_REQUEST['post_type'] :'page',
+			)));
+		}
+		wp_die();
+	}
+	
+	public function install_plugin(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-plugin-install' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		if(!empty($_POST['pluginUrl'])){			
+			
+			
+			// WP_PLUGIN_DIR 
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $_POST['pluginUrl']);
+			/*
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Authorization: Bearer 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',
+				'Accept: application/vnd.github.v3+json'
+			));
+			*/
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			$zipContents = curl_exec($ch);
+
+			// Check for errors during the request
+			if ($zipContents === false) {
+				wp_send_json( array( 'status' => 0, 'message' => 'Error: ' . curl_error($ch) ) );
+				wp_die();
+			}
+			else if($zipContents == 'Not Found'){
+				wp_send_json( array( 'status' => 0, 'message' => 'Error: Plugin file not found!' ) );
+				wp_die();
+			}
+
+			curl_close($ch);
+			$zipFilePath = tempnam(sys_get_temp_dir(), 'downloaded_zip_');
+			file_put_contents($zipFilePath, $zipContents);
+
+			// Extract the contents of the zip file to the plugins folder
+			$zip = new \ZipArchive();
+			if ($zip->open($zipFilePath) === true) {
+				$zip->extractTo(WP_PLUGIN_DIR);
+				$zip->close();
+
+				if(isset($_POST['plugin'])){
+					wp_cache_flush();
+					$result = activate_plugin($_POST['plugin']);
+					if ( is_wp_error( $result ) ) {
+						// Process Error
+						wp_send_json( array( 'status' => 0, 'message' => __( 'Plugin installed but failed to activate!') , 'error' => $result ) );
+					}
+					else{
+						// Process Success
+						wp_send_json( array( 'status' => 1, 'message' => __( 'Plugin installed!' ) ) );
+					}
+				}
+				else{
+					wp_send_json( array( 'status' => 0, 'message' => __( 'Plugin installed but no plugin path supplied!' ) ) );
+				}
+				
+			} else {
+				wp_send_json( array( 'status' => 0, 'message' => 'Error: Failed to extract the zip file.' ) );
+			}
+
+			// Remove the downloaded zip file
+			unlink($zipFilePath);
+			wp_die();
+		}
+		else{
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Plugin URL is empty!' ) ) );
+		}
+
+		wp_die();
 	}
 
 	public function enqueue_scripts() {
@@ -72,7 +170,7 @@ class Settings extends Fields {
 		parent::enqueue_scripts();
     }
 
-	public function admin_menu() {
+	public function admin_menu() {	
 		if( isset( $this->config['parent'] ) && $this->config['parent'] != '' ) {
 			add_submenu_page( $this->config['parent'], $this->config['label'], $this->config['label'], $this->config['capability'], $this->config['id'], array( $this, 'callback_fields' ) );
 		}

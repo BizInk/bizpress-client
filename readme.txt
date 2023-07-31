@@ -3,7 +3,7 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.2.2
-Stable tag: 1.5
+Stable tag: 1.5.1
 Requires PHP: 7.4
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -19,12 +19,18 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress Business Resources
 - BizPress Payroll
 - Bizpress Luca
-- Bizpress XPM
+- Bizpress XPM (Forms)
 
 == Changelog ==
 
+= 1.5.1 =
+* Better Login Screen
+* Addon Installer
+* Added switches in options menu
+* Added a page creation feature
+
 = 1.5 =
-* HOT Fix: Fix a Bug indevual Page loading
+* HOT Fix: Fix a Bug individual Page loading
 
 = 1.4.9 =
 * HOT Fix: Fix a Bug in the helpers file the prevents pages from loading
