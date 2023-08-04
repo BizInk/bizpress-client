@@ -9,6 +9,7 @@ namespace codexpert\Bizink_Client;
 final class Plugin {
 	
 	public static $_instance;
+	public $plugin;
 
 	public function __construct() {
 		self::include();

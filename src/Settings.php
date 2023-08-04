@@ -14,7 +14,11 @@ use codexpert\product\Base;
 class Settings extends Base {
 
 	public $plugin;
-
+	public $slug;
+	public $name;
+	public $version;
+	public $numberVersion;
+	
 	/**
 	 * Constructor function
 	 */
