@@ -485,7 +485,7 @@ function bizink_url_authontication()
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
-		  'Authorization' => 'Bearer OSEgUIcnTnaLAPTjkbVtwrwZzMqkpywTIYzZMnpB'
+		  'Authorization' => 'Bearer lumhWOCoZuYeMFGXfvHajcsuhMgCdLsRqsVQMbnD'
 		)
 	);
 }

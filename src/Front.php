@@ -24,7 +24,7 @@ class Front extends Base {
 	public $name;
 	public $version;
 	public $ncrypt;
-	
+
 	/**
 	 * Constructor function
 	 */

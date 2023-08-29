@@ -25,6 +25,7 @@ class Shortcode extends Base {
     public $version;
     public $ncrypt;
     
+
     /**
      * Constructor function
      */

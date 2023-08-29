@@ -16,9 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Deactivator extends Base {
 
 	public $slug;
-	
 	public $name;
-	
 	public $server;
 	
 	public function __construct( $plugin ) {

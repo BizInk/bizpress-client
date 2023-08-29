@@ -18,7 +18,7 @@ class Settings extends Base {
 	public $name;
 	public $version;
 	public $numberVersion;
-	
+
 	/**
 	 * Constructor function
 	 */
