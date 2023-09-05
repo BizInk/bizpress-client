@@ -245,6 +245,32 @@ function ncrypt() {
 }
 endif;
 
+function bizpress_landingpage_all(){
+	//$data = get_transient("bizpress_landingpages");
+	$args = bizink_url_authontication();
+	$base_url = bizink_get_master_site_url();
+	$options = get_option( 'bizink-client_basic' );
+    if(empty($options['user_email'])){
+		$options['user_email'] = '';
+	}
+	if(empty($options['user_password'])){
+		$options['user_password'] = '';
+	}
+	$url = add_query_arg( [ 
+        'email'         => $options['user_email'],
+        'password'      => ncrypt()->encrypt( $options['user_password'] ),
+        'luca'		    => function_exists('luca') ? true : false
+    ], wp_slash( $base_url.'wp-json/wp/v2/landing' ) );
+    $response = wp_remote_get( $url, $args );
+    if ( is_wp_error( $response ) ) {
+        return $response;
+    } 
+    else {
+		set_transient( "bizpress_landingpages", $response, (DAY_IN_SECONDS * 2) );
+        return json_decode( wp_remote_retrieve_body( $response ) );
+    }
+}
+
 if( ! function_exists( 'bizink_get_content' ) ) :
 function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $options = get_option( 'bizink-client_basic' );
@@ -481,7 +507,7 @@ if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()
 {
 	return array(
-		'timeout' => 10,
+		'timeout' => 20,
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',

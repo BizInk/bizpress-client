@@ -161,7 +161,31 @@ class Settings extends Base {
 
 		else:
 		
-
+		
+		$landingpage_data = bizpress_landingpage_all();
+		$pageItems = [];
+		if(!empty($landingpage_data)):
+			foreach($landingpage_data as $page){
+				$pageItems[$page->slug] = [
+					'id' => $page->slug,
+					'label' => $page->title->rendered,
+					'type' => 'admin_shortcode',
+					'shortcode' => '[bizpress-landing id="'.$page->slug.'"]',
+					'copy' => true
+				];
+			}
+		else:
+			$pageItems = [
+				'none' => [
+					'id' => 'none',
+					'label' => 'None Landing Pages',
+					'type' => 'admin_message',
+					'message' => __('Select a landing pages to show at this time.','bizpress-client'),
+					'copy' => true
+				]
+			];
+		endif;
+		
 		$supportData = [
 			'siteUrl' => get_bloginfo('wpurl'),
 			'homeUrl' => get_bloginfo('url'),
@@ -259,15 +283,7 @@ class Settings extends Base {
 					'sticky'	=> false,
 					'submit_button' => false,
 					'reset_button' => false,
-					'fields'    => [
-						'xero_shortcode' => [
-							'id' => 'landingpage_xero',
-							'label' => __( 'Xero landing page', 'bizink-client' ),
-							'type' => 'admin_shortcode',
-							'shortcode' => '[bizpress-landing id="xero-landing-page"]',
-							'copy' => true
-						]
-					]
+					'fields'    => $pageItems
 				],
 				'bizink-client_support' => [
 					'id'        => 'bizink-client_support',
@@ -407,6 +423,13 @@ class Settings extends Base {
 				]
 			],
 		];
+
+		/*
+		if(!empty($landingPages)){
+			$settings['sections']['bizink-client_landingpages'] = $landingPages;
+			print_r(json_encode($landingPages));
+		}
+		*/
 
 		if($luca) {
 			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);
