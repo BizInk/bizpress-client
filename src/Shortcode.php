@@ -97,7 +97,7 @@ class Shortcode extends Base {
         $base_url = bizink_get_master_site_url();
         if ( empty( $args['id'] ) ) return;
         $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
-        $html   = '<iframe area-title="Landing Page" id="myframe" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
+        $html   = '<iframe area-title="Landing Page" style="border:none; background:transparent;" id="bizpress_landingpage_'.$args['id'].'" class="bizpress_landingpage bizpress_landingpage_'.$args['id'].'" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
         return $html;
     }
 
