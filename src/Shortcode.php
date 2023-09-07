@@ -85,11 +85,6 @@ class Shortcode extends Base {
             return cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
         }
         */
-        // accounting-terms business-terms
-        //$accounting_content_page_id = cxbc_get_option( 'bizink-client_basic', 'accounting_content_page' );
-        //$business_content_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
-        //$business_terms_content_page_id = cxbc_get_option( 'bizink-client_basic', 'business_terms_content_page' );
-
         
     }
 
@@ -99,11 +94,5 @@ class Shortcode extends Base {
         $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
         $html   = '<iframe area-title="Landing Page" style="border:none; background:transparent;" id="bizpress_landingpage_'.$args['id'].'" class="bizpress_landingpage bizpress_landingpage_'.$args['id'].'" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
         return $html;
-    }
-
-    public function bizink_calculators( $args ){
-        if ( empty( $args['id'] ) ) return;
-        //$base_url = bizink_get_master_site_url();
-
     }
 }

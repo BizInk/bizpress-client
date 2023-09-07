@@ -150,7 +150,7 @@ function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true )
 }
 endif;
 
-if( ! function_exists( 'cxbc_get_option' ) ) :
+if( !function_exists( 'cxbc_get_option' ) ) :
 function cxbc_get_option( $key, $section, $default = '' ) {
 
 	$options = get_option( $key );
@@ -271,7 +271,6 @@ function bizpress_landingpage_all(){
     }
 }
 
-if( ! function_exists( 'bizink_get_content' ) ) :
 function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
     $options = get_option( 'bizink-client_basic' );
 	if(empty($options['content_region'])){
@@ -378,9 +377,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	}
     return $data;
 }
-endif;
 
-if( ! function_exists( 'bizink_get_single_content' ) ) :
 function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $key            = 'bizink-client_basic';
     $options        = get_option( $key );
@@ -460,7 +457,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	}
     return $data;
 }
-endif;
 
 /**
  * bizink content type
@@ -468,7 +464,6 @@ endif;
  * @return type
  * @author akash <alimranakash.bd@gmail.com>
  */
-if( ! function_exists( 'bizink_get_content_type' ) ) :
 function bizink_get_content_type( $curent_page_id ) {
 
 	$content_type = [];
@@ -483,7 +478,6 @@ function bizink_get_content_type( $curent_page_id ) {
 	    }
 	}
 }
-endif;
 
 /**
  * Master site url
@@ -507,7 +501,7 @@ if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()
 {
 	return array(
-		'timeout' => 20,
+		'timeout' => 10,
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',
