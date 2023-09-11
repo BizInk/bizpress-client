@@ -15,6 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Setup extends Base {
 
+	public $server;
+	public $slug;
+	public $name;
+	public $steps;
+	public $admin_url;
+
 	public function __construct( $plugin ) {
 
 		$this->plugin 	= $plugin;

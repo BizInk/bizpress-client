@@ -24,7 +24,9 @@ Display business content on your website that is automatically updated by the Bi
 == Changelog ==
 
 = 1.5.7 =
-* General Fixes
+* General Bug Fixes
+* Calculator Fix
+* Hide Label Fix
 
 = 1.5.6 =
 * Fix iframe height

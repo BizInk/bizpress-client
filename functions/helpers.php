@@ -344,6 +344,10 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$luca = true;
 	}
 
+	$args = [
+		
+	];
+
     $url = add_query_arg( [ 
         'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => -1,

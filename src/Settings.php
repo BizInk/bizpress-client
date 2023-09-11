@@ -349,7 +349,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_glossary.svg',
 									'name' => 'BizPress Accounting & Business Glossary',
 									'description' => 'A glossary of accounting and business terms for your website.',
-									//'url' => 'https://github.com/BizInk/bizpress-business-terms-glossary/releases/latest/download/bizpress-business-terms-glossary.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1dCQ6oYn3zKlYxth6jd8vQoL1aWHPBjyw',
 									'plugin' => 'bizpress-business-terms-glossary/bizpress-business-terms-glossary.php',
 									'installed' => $bizpressPlugins['bizpress-business-terms-glossary']
@@ -358,7 +357,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_keydates.svg',
 									'name' => 'BizPress KeyDates',
 									'description' => 'A glossary of Keydates.',
-									//'url' => 'https://github.com/BizInk/bizpress-key-dates/releases/latest/download/bizpress-key-dates.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=16722aKAIFz2ANO4bcGDY5Xvm4H9BIKDG',
 									'plugin' => 'bizpress-key-dates/bizpress-key-dates.php',
 									'installed' => $bizpressPlugins['bizpress-key-dates']
@@ -367,7 +365,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_payroll.svg',
 									'name' => 'BizPress Payroll Glossary',
 									'description' => 'A libary of resources for your payroll company.',
-									//'url' => 'https://github.com/BizInk/bizpress-payroll/releases/latest/download/bizpress-payroll.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1vpd4pWseT0oR6Ie-SZyhiLVrXNmpGQ6L',
 									'plugin' => 'bizpress-payroll/bizpress-payroll.php',
 									'installed' => $bizpressPlugins['bizpress-payroll']
@@ -376,7 +373,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_caculators.svg',
 									'name' => 'BizPress Calculators',
 									'description' => 'A set of Calculators for your website.',
-									//'url' => 'https://github.com/BizInk/bizpress-calculators/releases/latest/download/bizpress-calculators.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1aN3beVHg2dyICNjnVgtJsq8r663TDDQo',
 									'plugin' => 'bizpress-calculators/bizpress-caculators.php',
 									'installed' => $bizpressPlugins['bizpress-calculators']
@@ -385,7 +381,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_xero.svg',
 									'name' => 'BizPress Xero Resources',
 									'description' => 'A libary of resources for Xero.',
-									//'url' => 'https://github.com/BizInk/bizpress-xero-resources/releases/latest/download/bizpress-xero-resources.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1IIhd75FPrMgxC0fFa41FPo7b4sJJzt3L',
 									'plugin' => 'bizpress-xero-resources/bizpress-xero-resources.php',
 									'installed' => $bizpressPlugins['bizpress-xero-resources']
@@ -394,7 +389,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_quickbooks.svg',
 									'name' => 'BizPress Quickbooks Resources',
 									'description' => 'A libary of resources for Quickbooks.',
-									//'url' => 'https://github.com/BizInk/bizpress-quickbooks-resources/releases/latest/download/bizpress-quickbooks-resources.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
 									'plugin' => 'bizpress-quickbooks-resources/bizpress-quickbooks-resources.php',
 									'installed' => $bizpressPlugins['bizpress-quickbooks-resources']
@@ -403,7 +397,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_myob.svg',
 									'name' => 'BizPress MYOB Resources',
 									'description' => 'A libary of resources for MYOB.',
-									//'url' => 'https://github.com/BizInk/bizpress-myob-resources/releases/latest/download/bizpress-myob-resources.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1-kNdLNTRmXBvpb-NEWzCfselUmqSjxET',
 									'plugin' => 'bizpress-myob-resources/bizpress-myob-resources.php',
 									'installed' => $bizpressPlugins['bizpress-myob-resources']
@@ -412,7 +405,6 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_blogs.svg',
 									'name' => 'BizPress Blogs',
 									'description' => 'A tool for impoting Blogs to your website.',
-									//'url' => 'https://github.com/BizInk/bizpress-blogs/releases/latest/download/bizpress-blogs.zip',
 									'url' => 'https://docs.google.com/uc?export=download&id=1Tz4JFRuD8ZRtluvtmPNUHpUKK7YOaBkM',
 									'plugin' => 'bizpress-blogs/bizpress-blogs.php',
 									'installed' => $bizpressPlugins['bizpress-blogs']
@@ -424,13 +416,6 @@ class Settings extends Base {
 			],
 		];
 
-		/*
-		if(!empty($landingPages)){
-			$settings['sections']['bizink-client_landingpages'] = $landingPages;
-			print_r(json_encode($landingPages));
-		}
-		*/
-
 		if($luca) {
 			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);
 			unset($settings['sections']['bizink-client_basic']['fields']['user_password']);
@@ -441,19 +426,3 @@ class Settings extends Base {
 		new \codexpert\product\Settings( $settings );
 	}
 }
-
-/*
-'test_pageselect' => [
-	'id' => 'test_pageselect',
-	'label' => __( 'Test Page', 'bizink-client' ),
-	'type' => 'pageselect',
-	'options'	=> cxbc_get_posts( [ 'post_type' => 'page' ] ),
-	'desc' => __( 'Select the page you would like to use as your test page.', 'bizink-client' ),
-	'default_page' => [
-		'post_title' => 'Test',
-		'post_content' => '[bizpress-content]',
-		'post_status' => 'publish',
-		'post_type' => 'page'
-	]
-]
-*/

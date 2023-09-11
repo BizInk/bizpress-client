@@ -184,7 +184,7 @@ abstract class Fields extends Base {
 
 						do_action( 'cx-settings-after-description', $field, $section );
 
-						echo '</div>';
+						echo '</div></div>';
 					else:
 						echo "<div class='cx-label-wrap'>";
 
@@ -518,27 +518,23 @@ abstract class Fields extends Base {
 		$html = '';
 		foreach ( $plugins as $plugin ) {
 			$html .= "<div class='cx-plugin-install-grid-item'>";
-			$html .= "<div class='cx-plugin-install-grid-item-thumb'>";
-			$html .= "<img src='{$plugin['thumbnail']}' alt='{$plugin['name']}' width='100' />";
-			$html .= "</div>";
-			$html .= "<div class='cx-plugin-install-grid-item-content'>";
-			$html .= "<h3>{$plugin['name']}</h3>";
-			$html .= "<p>{$plugin['description']}</p>";
-			$html .= "</div>";
-			$html .= "<div class='cx-plugin-install-grid-item-actions'>";
-			if(empty($plugin['auth'])){
-				$plugin['auth'] = false;
-			}
-			if($plugin['installed']){
-				$html .= "<p class='cx-plugin-installed-text'>".__('Installed')."</p>";
-			}
-			else{
-				$html .= "<a href='#' data-url='{$plugin['url']}' data-plugin='{$plugin['plugin']}' data-nonce=".wp_create_nonce('cx-plugin-install')." class='cx-plugin-install-grid-item-button'>";
-				$html .= __('Install');		
-				$html .= "</a>";
-			}
-			
-			$html .= "</div>";
+				$html .= "<div class='cx-plugin-install-grid-item-thumb'>";
+					$html .= "<img src='{$plugin['thumbnail']}' alt='{$plugin['name']}' width='100' />";
+				$html .= "</div>";
+				$html .= "<div class='cx-plugin-install-grid-item-content'>";
+					$html .= "<h3>{$plugin['name']}</h3>";
+					$html .= "<p>{$plugin['description']}</p>";
+				$html .= "</div>";
+				$html .= "<div class='cx-plugin-install-grid-item-actions'>";
+					if($plugin['installed']){
+						$html .= "<p class='cx-plugin-installed-text'>".__('Installed')."</p>";
+					}
+					else{
+						$html .= "<a href='#' data-url='{$plugin['url']}' data-plugin='{$plugin['plugin']}' data-nonce=".wp_create_nonce('cx-plugin-install')." class='cx-plugin-install-grid-item-button'>";
+							$html .= __('Install');		
+						$html .= "</a>";
+					}
+				$html .= "</div>";
 			$html .= "</div>";
 		}
 		return $html;
