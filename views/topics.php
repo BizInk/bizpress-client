@@ -37,10 +37,11 @@ if(empty($post_type)){
 	echo '</b></p>';
 	return;
 }
-
+$page_id = null;
 if ( 'business-lifecycle' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
+	$page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 }
 elseif ( 'xero-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
@@ -48,6 +49,7 @@ elseif ( 'xero-content' == $post_type ) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('Xero Resources', 'bizink-client');
 	}
+	$page_id =  cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
@@ -55,6 +57,7 @@ elseif ( 'quickbooks-content' == $post_type ) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('QuickBooks Resources', 'bizink-client');
 	}
+	$page_id =  cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
 }
 elseif ( 'payroll-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'payroll_title' );
@@ -62,6 +65,7 @@ elseif ( 'payroll-content' == $post_type ) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('Payroll Resources', 'bizink-client');
 	}
+	$page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
 }
 elseif ( 'qbo-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
@@ -69,6 +73,7 @@ elseif ( 'qbo-content' == $post_type ) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('QuickBooks Resources', 'bizink-client');
 	}
+	$page_id = cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
 }
 elseif ( 'myob-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'myob_title' );
@@ -76,6 +81,7 @@ elseif ( 'myob-content' == $post_type ) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('MYOB Resources', 'bizink-client');
 	}
+	$page_id = cxbc_get_option( 'bizink-client_basic', 'myob_content_page' );
 }
 elseif (strpos($post_type, 'keydates') !== false) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
@@ -83,6 +89,7 @@ elseif (strpos($post_type, 'keydates') !== false) {
 	if(empty($default_title) && $default_title != ""){
 		$default_title = __('Key Dates', 'bizink-client');
 	}
+	$page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
 }
 
 //dropdown after single topics
@@ -103,7 +110,6 @@ if (strpos($post_type, 'keydates') === false) {
 			$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
 
 			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
-			//echo "<img alt='{$topic->name}' class='cxbc-item-thumbnail' src='{$topic->thumbnail}'>";
 			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
 			echo "</div></a>";
 			$topic_coun++;
@@ -123,8 +129,6 @@ if (strpos($post_type, 'keydates') === false) {
 				$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
 				$selected = ($current_url == $link) ? 'selected' : '';
 				echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
-				//echo "{$topic->name}";
-				//echo "</option>";
 			}
 		echo '</select></div>';
 		
@@ -135,7 +139,7 @@ if (strpos($post_type, 'keydates') === false) {
 }
 
 $taxonomy_topics = 'business-topics';
-if ( 'business-lifecycle' == $post_type ) {
+if ( 'business-lifecycle' == $post_type || 'business-content' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
 }
 elseif ( 'xero-content' == $post_type ) {
@@ -156,13 +160,7 @@ elseif ( 'qbo-content' == $post_type ) {
 elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
 }
-
-/*
-$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : $first_term;
-$single_term 	= $topics->$term;
-$term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
-$term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
-*/
+$structure = get_option( 'permalink_structure' );
 
 if (strpos($post_type, 'keydates') === false) {
 
@@ -187,44 +185,52 @@ if (strpos($post_type, 'keydates') === false) {
 		if(isset($post->hidden) && $post->hidden){
 			continue; // Item is hidden move to next item
 		}
-		$postUrl = $post->slug;
-		if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
-			$postUrl = add_query_arg('bizpress',$post->slug);
+		$postUrl = get_permalink($page_id) . $post->slug;
+		if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
+			$page = get_post($page_id);
+			$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
 		}
-		echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
-		echo "<a href='{$postUrl}'><div class='cxbc-single-post-content'>";
-		echo "<img alt='{$post->title}' class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";
-		echo "<div class='cxbc-post-title'><h4>{$post->title}</h4></div>";
-		echo "<div class='learn-more'>Learn more</div>";
-		echo "</div></a></div>";		
+		?>
+		<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
+			<a href="<?= $postUrl ?>">
+				<div class="cxbc-single-post-content">
+					<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $post->thumbnail ?>">
+					<div class="cxbc-post-title">
+						<h4><?= $post->title ?></h4>
+					</div>
+					<div class="learn-more"><?php _e('Learn more','bizink-client'); ?></div>
+				</div>
+			</a>
+		</div>
+		<?php	
 	}
 	echo "</div>";
-
-	//if ( !empty( $posts ) ) {
-		//$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : 'all';
-		//echo "<a href='topic/{$term}'><div class='cxbc-all-post-btn'>See All</a>";
-	//}
-
 
 }
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
-	echo "<h2>".__('Due Dates','bizpress-client')."</h2>";
-	echo "<p>Key lodgement and payment dates for this financial year are: </p>";
+		echo "<h2>".__('Due Dates','bizpress-client')."</h2>";
+		echo "<p>Key lodgement and payment dates for this financial year are: </p>";
 	echo "</div>";
 
 	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
 	echo "<div class='cxbc-posts-list'>";
-	echo "<div class='cxbc-posts-list-top'>";
-	echo "<ul>";
-	$post_count = 1;
-	foreach ( $posts as $post ) {
-		echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
-		echo "<a href='{$post->slug}'>{$post->title}</a>";
-		echo "</li>";
-	}
-	echo "</ul>";
-	echo "</div>";
+		echo "<div class='cxbc-posts-list-top'>";
+			echo "<ul>";
+			$post_count = 1;
+			foreach ( $posts as $post ) {
+				$postUrl = get_permalink($page_id) . $post->slug;
+				if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
+					$page = get_post($page_id);
+					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+				}
+
+				echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
+				echo "<a href='{$postUrl}'>{$post->title}</a>";
+				echo "</li>";
+			}
+			echo "</ul>";
+		echo "</div>";
 	echo "</div>";
 }
 
