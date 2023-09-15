@@ -74,25 +74,30 @@ class Shortcode extends Base {
             $data = bizink_get_content( $content_type, 'topics' );
             return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
         }
-        /*
-         else if($content_type == 'keydates' || $content_type == 'bizink-client-keydates' ||
-            $content_type == 'keydates-au' ||
-            $content_type == 'keydates-ca' ||
-            $content_type == 'keydates-us' ||
-            $content_type == 'keydates-nz' ||
-            $content_type == 'keydates-gb' ){
-            $data = bizink_get_content( $content_type, 'topics' );
-            return cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
-        }
-        */
         
     }
 
     public function bizink_landing( $args ) {
         $base_url = bizink_get_master_site_url();
+        $atts = shortcode_atts( array(
+            'id' => '',
+            'height' => '800px'
+        ), $args,'bizink_landing');
         if ( empty( $args['id'] ) ) return;
-        $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $args['id'];
-        $html   = '<iframe area-title="Landing Page" style="border:none; background:transparent;" id="bizpress_landingpage_'.$args['id'].'" class="bizpress_landingpage bizpress_landingpage_'.$args['id'].'" src="'. $url .'" width="100%" scrolling="no" onload="setMasterHeight(this)"></iframe>';
+
+        $url    = trailingslashit( "{$base_url}" ) . 'landing/' . $atts['id'];
+        $html   = '<iframe area-title="Landing Page" style="border:none; background:transparent; height:'.$atts['height'].';" id="bizpress_landingpage_'.$atts['id'].'" 
+        class="bizpress_landingpage bizpress_landingpage_'.$args['id'].'" src="'. $url .'" width="100%" scrolling="no"></iframe>';
+        $jsID = 'bizpress_landingpage_'.str_replace('-','_',$atts['id']);
+        $html  .= '<script>
+        (function() {
+            var bizpress_landingpage_'.$jsID.'_doc = document.getElementById("bizpress_landingpage_'.$args['id'].'");
+            window.addEventListener("message", function (e) {
+                if (e.data.hasOwnProperty("masterHeight") && e.source === bizpress_landingpage_'.$jsID.'_doc.contentWindow) { bizpress_landingpage_'.$jsID.'_doc.style.height = e.data.masterHeight + "px"; }
+            });
+            bizpress_landingpage_'.$jsID.'_doc.contentWindow.postMessage("masterHeight", "*");
+        })();
+        </script>';
         return $html;
     }
 }

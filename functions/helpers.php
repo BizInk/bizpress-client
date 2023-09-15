@@ -307,8 +307,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 	}
 
     $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
-
-	//$country = strpos($post_type, 'keydates') !== false ? apply_filters( 'bizink-keydates-country', 'country' ) : 'AU';
 	$country = 'AU';
 	switch($options['content_region']){
 		case 'ca':
@@ -332,9 +330,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 			$country = 'AU';
 			break;			
 	}
-	if(apply_filters( 'bizink-keydates-country', 'country' )){
-		$country = apply_filters( 'bizink-keydates-country', 'country' );
-	}
+	$country = apply_filters( 'bizink-keydates-country', $country );
 
 	$luca = false;
 	if(function_exists('luca')){
@@ -344,23 +340,38 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$luca = true;
 	}
 
-	$args = [
-		
-	];
+	$per_paage = -1;
 
-    $url = add_query_arg( [ 
-        'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'per_page'      => -1,
-        'email'         => $options['user_email'],
-        'password'      => ncrypt()->encrypt( $options['user_password'] ),
-        'paged'         => $paged,
-        'post_type'     => $post_type,
-        'slug'         	=> $slug,
-        'term'         	=> $term,
+	$args = [
+		'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
+        'per_page'      => $per_paage,
+		'post_type'     => $post_type,
 		'country'		=> $country,
         'region'		=> $content_region,
-        'luca'			=> $luca
-    ], wp_slash( $base_url ) );
+	];
+
+	if($luca){
+		$args['luca'] = true;
+	}
+	else{
+		$args['email'] = $options['user_email'];
+		$args['password'] = ncrypt()->encrypt( $options['user_password'] );
+		$args['luca'] = false;
+	}
+
+	if($per_paage > 0){
+		$args['paged'] = $paged;
+	}
+
+	if(!empty($slug)){
+		$args['slug'] = $slug;
+	}
+
+	if(!empty($term)){
+		$args['term'] = $term;
+	}
+
+    $url = add_query_arg( $args, wp_slash( $base_url ) );
 
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
@@ -419,10 +430,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 			$keydate_country = 'AU';
 			break;			
 	}
-	if(apply_filters( 'bizink-keydates-country', 'country' )){
-		$keydate_country = apply_filters( 'bizink-keydates-country', 'country' );
-	}
-
+	$keydate_country = apply_filters( 'bizink-keydates-country', $keydate_country );
 
 	$luca = false;
 	if(function_exists('luca')){
@@ -432,15 +440,23 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 		$luca = true;
 	}
 
-    $url = add_query_arg( [ 
-        'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
-        'email'         => $options['user_email'],
-        'password'      => ncrypt()->encrypt( $options['user_password'] ),
-        'paged'         => $paged,
-        'slug'         	=> $slug,
-        'kd_region' 	=> strtolower($keydate_country),
-        'luca'			=> $luca
-    ], wp_slash( $base_url ) );
+	$args = [
+		'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
+		'slug'         	=> $slug,
+		'paged'         => $paged,
+		'kd_region' 	=> strtolower($keydate_country),
+	];
+
+	if($luca){
+		$args['luca'] = true;
+	}
+	else{
+		$args['email'] = $options['user_email'];
+		$args['password'] = ncrypt()->encrypt( $options['user_password'] );
+		$args['luca'] = false;
+	}
+
+    $url = add_query_arg( $args, wp_slash( $base_url ) );
 
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );

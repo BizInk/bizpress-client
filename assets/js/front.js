@@ -17,14 +17,3 @@ jQuery(function($){
 	$('.cxbc-posts-list .cxbc-post-title span').height(title_height);
 	
 });
-
-window.addEventListener('message', function (e) {
-	if (e.data.hasOwnProperty("masterHeight")) {
-		jQuery(".bizpress_landingpage").css("height", e.data.masterHeight);
-		console.log("iFrame Height",e.data.masterHeight);      
-	}
-});
-
-function setMasterHeight(iframe) {
-	iframe.contentWindow.postMessage("masterHeight", "*");   
-}
