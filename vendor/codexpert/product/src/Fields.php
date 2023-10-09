@@ -105,12 +105,12 @@ abstract class Fields extends Base {
 		echo '
 		<div class="cx-navs-wrapper" style="display: ' . $display . '">
 			<ul class="cx-nav-tabs">';
-		foreach ( $sections as $section ) {
-			$icon = $this->generate_icon( $section['icon'] );
-			$color = isset( $section['color'] ) ? $section['color'] : '#23282d';
-			echo "<li class='cx-nav-tab' data-color='{$color}'><a href='#{$section['id']}'>{$icon}<span id='cx-nav-label-{$section['id']}' class='cx-nav-label'> {$section['label']}</span></a></li>";
-		}
-		echo '</ul>
+			foreach ( $sections as $section ) {
+				$icon = $this->generate_icon( $section['icon'] );
+				$color = isset( $section['color'] ) ? $section['color'] : '#23282d';
+				echo "<li class='cx-nav-tab' data-color='{$color}'><a href='#{$section['id']}'>{$icon}<span id='cx-nav-label-{$section['id']}' class='cx-nav-label'> {$section['label']}</span></a></li>";
+			}
+			echo '</ul>
 		</div><!--div class="cx-navs-wrapper"-->';
 
 		// form areas
@@ -121,6 +121,16 @@ abstract class Fields extends Base {
 			$submit_button = isset( $section['submit_button'] ) ? $section['submit_button'] : __( 'Save Settings' );
 			$reset_button = isset( $section['reset_button'] ) ? $section['reset_button'] : __( 'Reset Default' );
 			$_nonce = wp_create_nonce();
+			$hideWhenEmpty = isset($section['hideWhenEmpty']) ? $section['hideWhenEmpty'] : false;
+			$hide = isset($section['hide']) ? $section['hide'] : false;
+
+			if($hide) continue;
+
+			$fields = apply_filters( 'cx-settings-fields', $section['fields'], $section );
+			$show_form = isset( $section['hide_form'] ) && $section['hide_form'] ? false : true;
+			$show_form = apply_filters( 'cx-settigns-show-form', $show_form, $section );
+
+			if( $hideWhenEmpty && count( $fields ) <= 0 ) continue;
 
 			echo "<div id='{$section['id']}' class='cx-section' style='display:none'>";
 
@@ -134,11 +144,7 @@ abstract class Fields extends Base {
 
 			do_action( 'cx-settings-before-form', $section );
 
-			$fields = apply_filters( 'cx-settings-fields', $section['fields'], $section );
-			$show_form = isset( $section['hide_form'] ) && $section['hide_form'] ? false : true;
-			$show_form = apply_filters( 'cx-settigns-show-form', $show_form, $section );
-
-			if( $scope == 'option' && $show_form ) :
+			if( $scope == 'option' && $show_form ):
 				
 			$page_load = isset( $section['page_load'] ) && $section['page_load'] ? 1 : 0;
 
@@ -166,8 +172,7 @@ abstract class Fields extends Base {
 					$field_display = apply_filters( 'cx-settings-field-display', $field_display, $field, $section );
 					$style_display = $field_display == 'none' ? 'style="display: none"' : '';
 					echo "<div class='cxrow' id='cxrow-{$section['id']}-{$field['id']}' {$style_display}>";
-					$hideLabel = empty($field['hidelabel']) ? false : $field['hidelabel'];
-					if($hideLabel):
+					if( isset($field['hidelabel']) ):
 						echo '<div class="cx-wrap">';
 
 						do_action( 'cx-settings-before-field', $field, $section );
@@ -511,6 +516,143 @@ abstract class Fields extends Base {
 		}
 
 		return $html;
+	}
+
+	public function field_content_manager($field, $section, $scope){
+		ob_start();
+		$fields = $field['fields'];
+		$html = '';
+		$color = isset( $section['color'] ) ? $section['color'] : '#23282d';
+		$hidden_posts = get_option('bizpress_hidden_posts',[]);
+		$edited_posts = get_option('bizpress_edited_posts',[]);
+		$nonce = wp_create_nonce('cx-content_manager');
+		if(!empty($fields)){
+			?>
+			<div class="cx-content-manager">
+				<div class="cx-content-manager-nav">
+					<nav class="cx-content-manager-nav">
+						<?php
+						$i = 0;
+						foreach($fields as $field){
+							$selected = "";
+							$style = "color:";
+							if($i == 0){
+								$selected = "selected";
+								$style = "background:";
+							}
+							echo '<a class="cx-content-manager-nav-item '.$selected.'" data-color="'.$color.'" data-id="'.$field['id'].'" href="#" style="'.$style.$color.'">'.$field['label'].'</a>';
+							$i++;
+						}
+						?>
+					</nav>
+				</div>
+				<div class="cx-content-manager-content">
+					<?php
+					$i = 0;
+					foreach($fields as $field){
+						if($i == 0){$selected = "selected";}
+						?>
+						<div class="cx-content-manager-content-item <?php echo $selected; ?> cx-content-manager-content-<?php echo $field['id']; ?>">
+							<h2><?php echo $field['label']; ?></h2>
+							<div class="content-wrap">
+						<?php
+						if(!empty($field['posts'])):
+							foreach($field['posts'] as $post):
+								if($post->hidden){continue;} // Hidden on server
+								// Hidden on Client
+								$isHidden = false;
+								if(in_array($post->ID,$hidden_posts)){
+									$isHidden = true;
+								}
+								// Edited
+								$editedPost = null;
+								$isEdited = false;
+								if(in_array($post->ID,$edited_posts)){
+									$isEdited = $edited_posts[$post->ID];
+									$editedPost = get_post($isEdited);
+								}
+								// Display
+								$cssExtra = "";
+								if($isHidden){
+									$cssExtra = " content-post-hidden";
+								}
+								else if($isEdited){
+									$cssExtra = " content-post-edited";
+								}
+								?>
+								<div class="post content-post <?php echo $cssExtra; ?>" id="content-post-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>" data-hidden="<?php echo ($isHidden ? 1:0); ?>" data-edit="<?php echo ($isEdited ? 1:0); ?>">
+									<div class="content-post-banner hidden_banner">
+										<p><?php _e("Hidden","bizink-client"); ?></p>
+									</div>
+									<div class="content-post-banner edit_banner">
+										<p><?php _e("Eddited","bizink-client"); ?></p>
+									</div>
+									<img loading="lazy" height="161" src="<?php echo $post->thumbnail; ?>" alt="<?php echo ($isEdited ? $editedPost->post_title : $post->title); ?>" class="content-post_img"/>
+									<h2 class="content-post_title"><?php echo ($isEdited ? $editedPost->post_title : $post->title); ?></h2>
+									<div class="content-post_actions">
+										<a href="#" data-nonce="<?php echo $nonce; ?>" data-id="<?php echo $post->ID; ?>" data-title="<?php echo ($isEdited ? $editedPost->post_title : $post->title); ?>" data-editid="<?php echo ($isEdited ? $isEdited : 0);?>" style="background:'.$color.';" class="content-post_action content-post_action-edit"><?php _e('Edit','bizink-client'); ?></a>
+									<?php
+										if($isHidden){
+											echo '<a href="#" data-id="'.$post->ID.'" data-title="'.($isEdited ? $editedPost->post_title : $post->title).'" data-hidden="'.($isHidden ? 1:0).'" style="background:'.$color.';" class="content-post_action content-post_action-show">'. __("Un Hide",'bizink-client').'</a>';
+										}
+										else{
+											echo '<a href="#" data-id="'.$post->ID.'" data-title="'.($isEdited ? $editedPost->post_title : $post->title).'" data-hidden="'.($isHidden ? 1:0).'" style="background:'.$color.';" class="content-post_action content-post_action-hide">'. __("Hide",'bizink-client').'</a>';
+										}
+									?>
+									</div>
+								</div>
+								<?php
+							endforeach;
+						else:
+							echo "<h3>". __('Sorry there are no posts at the moment','bizink-client')."</h3>";
+						endif;
+						?>
+						</div>
+						<?php
+						$i++;
+					}
+					?>
+					</div>
+				</div>
+			</div>
+			<div class='cx-content-modal-bg' style='display:none;'>
+				<div class='cx-content-modal cx-content-model_edit' style='display:none;'>
+					<div class="cx-content-model-close">X</div>
+					<h2 class='cx-content-modal_type'>Edit Post</h2>
+					<input type="text" placeholder="Title" value="" class='cx-content-modal_title_input'/>
+					<div id="cx-content-editor" class="content_editor">
+						<div class="loader">
+							<div class="loader-spinner"><div style="background:'<?php echo $color; ?>';"></div><div style="background:'<?php echo $color; ?>';"></div><div style="background:'<?php echo $color; ?>';"></div></div>
+							<p><?php _e('Loading Editor...','bizink-client'); ?></p>
+						</div>
+					</div>
+					<div class='cx-content-modal_actions'>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-confirm' data-nonce="<?php echo $nonce; ?>"><?php _e("Save","bizink-client"); ?></a>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-cancel'><?php _e("Close","bizink-client"); ?></a>
+					</div>
+				</div>
+				<div class='cx-content-modal cx-contnet-model_hide' style='display:none;'>
+					<div class="cx-content-model-close">X</div>
+					<h2 class='cx-content-modal_title'></h2>
+					<p><?php _e("Are you sure you wish to hide this post?","bizink-client"); ?></p>
+					<div class='cx-content-modal_actions'>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-confirm' data-nonce="<?php echo $nonce; ?>"><?php _e("Yes Hide","bizink-client"); ?></a>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-cancel'><?php _e("No Cancel","bizink-client"); ?></a>
+					</div> 
+				</div>
+				<div class='cx-content-modal cx-contnet-model_show' style='display:none;'>
+					<div class="cx-content-model-close">X</div>
+					<h2 class='cx-content-modal_title'></h2>
+					<p><?php _e("Do you wish to show this post?","bizink-client"); ?></p>
+					<div class='cx-content-modal_actions'>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-confirm' data-nonce="<?php echo $nonce; ?>"><?php _e("Yes Show","bizink-client"); ?></a>
+						<a href='#' style="background:'<?php echo $color; ?>';" class='cx-content-modal_action cx-content-modal_action-cancel'><?php _e("No Cancel","bizink-client"); ?></a>
+					</div> 
+				</div>
+			</div>
+			<?php
+		}
+		return ob_get_clean();
 	}
 
 	public function field_plugin_install_grid($field, $section, $scope){

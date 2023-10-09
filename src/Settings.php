@@ -94,7 +94,6 @@ class Settings extends Base {
 			}
 		}
 
-		
 		$options = get_option( 'bizink-client_basic' );
 		if( (empty($options['user_email']) || empty($options['user_password'])) && $luca == false ):
 			$current_user = wp_get_current_user();
@@ -198,6 +197,9 @@ class Settings extends Base {
 			'plugins' => $pluginInfo
 		];
 
+		$content_manager_fields = apply_filters('bizpress_content_manager_fields',array());
+		$content_manager_hide = empty($content_manager_fields) ? true : false;
+
 		$settings = [
 			'id'            => $this->slug,
 			'label'         => $this->name,
@@ -284,6 +286,25 @@ class Settings extends Base {
 					'submit_button' => false,
 					'reset_button' => false,
 					'fields'    => $pageItems
+				],
+				'bizink-client_contentmanager' => [
+					'id'	=> 'bizink-client_contentmanager',
+					'label' => __( 'Content Manager', 'bizink-client' ),
+					'icon'	=> 'dashicons-media-document',
+					'color'	=> '#4c3f93',
+					'sticky'	=> false,
+					'submit_button' => false,
+					'reset_button' => false,
+					'hide' => $content_manager_hide,
+					'fields' => [
+						'content_manager' => [
+							'id' => 'content_manager',
+							'hidelabel' => true,
+							'label' => __( 'Content Manager', 'bizink-client' ),
+							'type' => 'content_manager',
+							'fields' => $content_manager_fields
+						]
+					]
 				],
 				'bizink-client_support' => [
 					'id'        => 'bizink-client_support',

@@ -62,8 +62,8 @@ class Front extends Base {
 	public function enqueue_scripts() {
 		$min = defined( 'CXBPC_DEBUG' ) && CXBPC_DEBUG ? '' : '.min';
 		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/front{$min}.css", CXBPC ), '', $this->version, 'all' );
-		wp_enqueue_script( $this->slug.'-front', plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( $this->slug.'-anylitics', plugins_url( "/assets/js/anylitics{$min}.js", CXBPC ), array(), $this->version, true );
+		wp_enqueue_script( $this->slug.'-front', plugins_url( "/assets/js/front{$min}.js", CXBPC ), array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->slug.'-dataprocess', plugins_url( "/assets/js/dataprocess{$min}.js", CXBPC ), array(), $this->version, true );
 		$localized = [
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
@@ -107,6 +107,7 @@ class Front extends Base {
 		$payroll_glossary_id = cxbc_get_option( 'bizink-client_basic', 'payroll_glossary_page' );
 
 		if($attachment && !$content){
+			$post = null;
 			if(!empty($business_page_id)){
 				$post = get_post( $business_page_id );
 			}
@@ -128,7 +129,9 @@ class Front extends Base {
 			if(!empty($keydates_page_id)){
 				$post = get_post( $keydates_page_id );
 			}
-			$slug = $post->post_name;
+			if(!empty($post)){
+				$slug = $post->post_name;
+			}
 		}
 
 		if ( $content ) {

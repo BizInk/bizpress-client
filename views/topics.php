@@ -38,7 +38,7 @@ if(empty($post_type)){
 	return;
 }
 $page_id = null;
-if ( 'business-lifecycle' == $post_type ) {
+if ( 'business-lifecycle' == $post_type || 'business-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
 	$page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
@@ -138,8 +138,11 @@ if (strpos($post_type, 'keydates') === false) {
 
 }
 
-$taxonomy_topics = 'business-topics';
-if ( 'business-lifecycle' == $post_type || 'business-content' == $post_type ) {
+$taxonomy_topics = 'business-article-topics';
+if ( 'business-content' == $post_type ) {
+	$taxonomy_topics = 'business-article-topics';
+}
+elseif ( 'business-lifecycle' == $post_type ) {
 	$taxonomy_topics = 'business-topics';
 }
 elseif ( 'xero-content' == $post_type ) {
@@ -194,7 +197,13 @@ if (strpos($post_type, 'keydates') === false) {
 		<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
 			<a href="<?= $postUrl ?>">
 				<div class="cxbc-single-post-content">
-					<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $post->thumbnail ?>">
+					<?php 
+					$image = $post->thumbnail;
+					if(empty($image)){
+						$image = plugins_url( 'assets/img/default.png', CXBPC );
+					}
+					?>
+					<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $image; ?>">
 					<div class="cxbc-post-title">
 						<h4><?= $post->title ?></h4>
 					</div>

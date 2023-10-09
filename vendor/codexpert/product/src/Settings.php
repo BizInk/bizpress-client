@@ -65,6 +65,86 @@ class Settings extends Fields {
 		$this->priv( 'cx-reset', 'reset_settings' );
 		$this->priv( 'cx-installplugin', 'install_plugin' );
 		$this->priv( 'cx-createpage', 'create_page' );
+
+		$this->priv( 'cx-hidepost', 'hide_post' );
+		$this->priv( 'cx-showpost', 'show_post' );
+		$this->priv( 'cx-saveeditpost', 'save_edit_post' );
+		$this->priv( 'cx-geteditor', 'get_editor' );
+	}
+
+	public function get_editor(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-content_manager' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		$content = $_POST['content'] ? $_POST['content'] : '';
+		if(!empty($_POST['post_id'])){
+			$post = get_post($_POST['post_id']);
+			if($post){
+				$content = $post->post_content;
+			}
+		}
+		ob_start();
+		$args = array(
+			'tinymce'       => array(
+				'toolbar1'      => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
+				'toolbar2'      => '',
+				'toolbar3'      => '',
+			),
+		);
+		wp_editor($content,"cx-content-editor",$args);
+		$editor = ob_get_clean();
+		wp_send_json( array( 'status' => 1, 'message' => __( 'Editor loaded!' ), 'editor' => $editor ) );
+		wp_die();
+	}
+
+	public function hide_post(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-content_manager' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		if(!empty($_POST['post_id'])){
+			$hidden_posts = get_option('bizpress_hidden_posts',[]);
+			if(in_array($_POST['post_id'], $hidden_posts)){
+				wp_send_json( array( 'status' => 1, 'message' => __( 'Post already hidden!' ), 'post_id' => $_POST['post_id'] ) );
+			}
+			else{
+				$hidden_posts[] = intval($_POST['post_id']);
+				update_option('bizpress_hidden_posts', $hidden_posts);
+				wp_send_json( array( 'status' => 1, 'message' => __( 'Post hidden!' ), 'post_id' => $_POST['post_id'] ) );
+			}
+		}
+		else{
+			wp_send_json( array( 'status' => 0, 'message' => __( 'No Data!' ) ) );
+		}
+		wp_die();
+	}
+
+	public function show_post(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-content_manager' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		if(!empty($_POST['post_id'])){
+			$hidden_posts = get_option('bizpress_hidden_posts',[]);
+			if(in_array($_POST['post_id'], $hidden_posts)){
+				$hidden_posts = array_diff($hidden_posts, array($_POST['post_id']));
+				update_option('bizpress_hidden_posts', $hidden_posts);
+				wp_send_json( array( 'status' => 1, 'message' => __( 'Post shown!' ), 'post_id' => $_POST['post_id'] ) );
+			}
+			else{
+				wp_send_json( array( 'status' => 1, 'message' => __( 'Post already shown!' ), 'post_id' => $_POST['post_id'] ) );
+			}
+		}
+		else{
+			wp_send_json( array( 'status' => 0, 'message' => __( 'No Data!' ) ) );
+		}
+		wp_die();
+	}
+
+	public function save_edit_post(){
+		if( !wp_verify_nonce( $_POST['_wpnonce'], 'cx-content_manager' ) ) {
+			wp_send_json( array( 'status' => 0, 'message' => __( 'Unauthorized!' ) ) );
+		}
+		$edited_posts = get_option('bizpress_edited_posts',[]);
+		wp_die();
 	}
 
 	public function create_page(){

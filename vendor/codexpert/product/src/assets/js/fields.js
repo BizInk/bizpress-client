@@ -174,4 +174,169 @@ jQuery(function ($) {
         $(".cx-form:visible .cx-reset-button").click();
     });
     $('a[href="' + localStorage.active_cx_tab + '"]').click();
+
+    // Content Manager
+    function hidePopup(){
+        $(".cx-content-modal-bg").hide();
+        $(".cx-content-modal").hide();
+    }
+
+    $(".content-post_action-edit").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(".cx-content-modal_title").text($(this).data('title'));
+        $(".cx-content-modal_title_input").val($(this).data('title'));
+        $(".cx-contnet-model_edit .cx-content-modal_action-confirm").data("id", $(this).data('id'));
+        $(".cx-contnet-model_edit .cx-content-modal_action-confirm").data("editid", $(this).data('editid'));
+        $(".cx-content-modal-bg").show();
+        $(".cx-content-model_edit").show();
+        get_editor();
+    });
+    
+    function get_editor(){
+        let nonce = $(".cx-content-model_edit .cx-content-modal_action-confirm").data('nonce');
+        let edit_id = $(".cx-content-model_edit .cx-content-modal_action-confirm").data('editid');
+        $.ajax({
+            url: ajaxurl,
+            data: {
+                _wpnonce: nonce,
+                action: "cx-geteditor",
+                edit_id: edit_id
+            },
+            type: "POST",
+            dataType: "JSON",
+            success: function (ret) {
+                $("#cx-content-editor").html(ret.editor);
+            },
+            erorr: function (ret) {
+                $("#cx-content-editor").html("<p>Unable to load Editor</p>");
+            },
+        });
+    }
+
+    $(".cx-contnet-model_edit .cx-content-modal_action-confirm").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $.ajax({
+            url: ajaxurl,
+            data: { action: "cx-editpost", _wpnonce: $(this).data('nonce'), post_id:$(this).data('id'), edit_id:$(this).data('editid') },
+            type: "POST",
+            dataType: "JSON",
+            success: function (ret) {
+                if(ret.status){
+                    $(".cx-content-modal-bg").hide();
+                    $(".cx-content-modal").hide();
+                    $("#content-post-"+$(this).data('id')).removeClass('content-post-hidden');
+                }
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                hidePopup();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+            erorr: function (ret) {
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+        });
+    });
+
+    $(".content-post_action-hide").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(".cx-content-modal_title").text($(this).data('title'));
+        $(".cx-content-modal_title_input").val($(this).data('title'));
+        $(".cx-contnet-model_hide .cx-content-modal_action-confirm").data("id", $(this).data('id'));
+        hidePopup();
+    });
+
+    $(".content-post_action-show").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(".cx-content-modal_title").text($(this).data('title'));
+        $(".cx-content-modal_title_input").val($(this).data('title'));
+        $(".cx-contnet-model_show .cx-content-modal_action-confirm").data("id", $(this).data('id'));
+        hidePopup();
+    });
+
+    $(".cx-content-modal-bg").click(function (e) {
+        e.preventDefault();
+        if($.contains($(".cx-content-modal"),e.target) == false){
+           // hidePopup();
+        }
+    });
+
+    $(".cx-content-modal_action-cancel").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hidePopup();
+    });
+
+    $(".cx-content-model-close").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hidePopup();
+    });
+
+
+    $(".cx-contnet-model_hide .cx-content-modal_action-confirm").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: ajaxurl,
+            data: { action: "cx-hidepost", _wpnonce: $(this).data('nonce'), post_id:$(this).data('id') },
+            type: "POST",
+            dataType: "JSON",
+            success: function (ret) {
+                if(ret.status){
+                    $(".cx-content-modal-bg").hide();
+                    $(".cx-content-modal").hide();
+                    $("#content-post-"+$(this).data('id')).addClass('content-post-hidden');
+                }
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                hidePopup();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+            erorr: function (ret) {
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                hidePopup();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+        });
+    });
+    
+    $(".cx-contnet-model_show .cx-content-modal_action-confirm").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: ajaxurl,
+            data: { action: "cx-showpost", _wpnonce: $(this).data('nonce'), post_id:$(this).data('id') },
+            type: "POST",
+            dataType: "JSON",
+            success: function (ret) {
+                if(ret.status){
+                    $(".cx-content-modal-bg").hide();
+                    $(".cx-content-modal").hide();
+                    $("#content-post-"+$(this).data('id')).removeClass('content-post-hidden');
+                }
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                hidePopup();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+            erorr: function (ret) {
+                $("#cx-message-bizink-client_contentmanager").text(ret.message).show();
+                hidePopup();
+                setTimeout(function () {
+                    $("#cx-message-bizink-client_contentmanager").hide();
+                }, 1000);
+            },
+        });
+    });
+
 });

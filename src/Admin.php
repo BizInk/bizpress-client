@@ -112,4 +112,58 @@ class Admin extends Base {
 		$message = __( 'Your Bizink suscription will expire on', 'bizink-client' ) .' '. date( get_option('date_format') ,strtotime($notice));
 		echo "<div class='notice notice-error'><p>{$message}</p></div>";
 	}
+
+	public function bizpress_edits_cpt() {
+		$labels = array(
+			'name'                  => _x( 'BizPress Resources', 'Post Type General Name', 'bizink-client' ),
+			'singular_name'         => _x( 'BizPress Resource', 'Post Type Singular Name', 'bizink-client' ),
+			'menu_name'             => __( 'Post Types', 'bizink-client' ),
+			'name_admin_bar'        => __( 'BizPress Resource', 'bizink-client' ),
+			'archives'              => __( 'BizPress Resource Archives', 'bizink-client' ),
+			'attributes'            => __( 'BizPress Resource Attributes', 'bizink-client' ),
+			'parent_item_colon'     => __( 'Parent Resource:', 'bizink-client' ),
+			'all_items'             => __( 'All BizPress Resources', 'bizink-client' ),
+			'add_new_item'          => __( 'Add New BizPress Resource', 'bizink-client' ),
+			'add_new'               => __( 'Add New', 'bizink-client' ),
+			'new_item'              => __( 'New Resource', 'bizink-client' ),
+			'edit_item'             => __( 'Edit Resource', 'bizink-client' ),
+			'update_item'           => __( 'Update Resource', 'bizink-client' ),
+			'view_item'             => __( 'View Resource', 'bizink-client' ),
+			'view_items'            => __( 'View Resources', 'bizink-client' ),
+			'search_items'          => __( 'Search BizPress Resources', 'bizink-client' ),
+			'not_found'             => __( 'Not found', 'bizink-client' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', 'bizink-client' ),
+			'featured_image'        => __( 'Featured Image', 'bizink-client' ),
+			'set_featured_image'    => __( 'Set featured image', 'bizink-client' ),
+			'remove_featured_image' => __( 'Remove featured image', 'bizink-client' ),
+			'use_featured_image'    => __( 'Use as featured image', 'bizink-client' ),
+			'insert_into_item'      => __( 'Insert into Resource', 'bizink-client' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this Resource', 'bizink-client' ),
+			'items_list'            => __( 'BizPress Resources list', 'bizink-client' ),
+			'items_list_navigation' => __( 'BizPress Resources list navigation', 'bizink-client' ),
+			'filter_items_list'     => __( 'Filter Resources list', 'bizink-client' ),
+		);
+		$args = array(
+			'label'                 => __( 'BizPress Resource', 'bizink-client' ),
+			'description'           => __( 'A BizPress Resource video or other BizPress Content used for Bizpress', 'bizink-client' ),
+			'labels'                => $labels,
+			'supports'              => array( 'title', 'editor', 'thumbnail' ),
+			'taxonomies'            => array( 'category', 'post_tag' ),
+			'hierarchical'          => false,
+			'public'                => false,
+			'show_ui'               => false,
+			'show_in_menu'          => false,
+			'menu_position'         => 5,
+			'show_in_admin_bar'     => false,
+			'show_in_nav_menus'     => false,
+			'can_export'            => false,
+			'has_archive'           => false,
+			'exclude_from_search'   => true,
+			'publicly_queryable'    => false,
+			'rewrite'               => false,
+			'capability_type'       => 'page',
+			'show_in_rest'          => false,
+		);
+		register_post_type( 'bizpress_resource', $args );
+	}
 }

@@ -271,7 +271,7 @@ function bizpress_landingpage_all(){
     }
 }
 
-function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
+function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
     $options = get_option( 'bizink-client_basic' );
 	if(empty($options['content_region'])){
 		$options['content_region'] = 'au';
@@ -283,11 +283,16 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '' ) {
 		$options['user_password'] = '';
 	}
 
-    $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+	if(!empty($paged)){
+		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
+	}
     $base_url = bizink_get_master_site_url();
     $content_region = $options['content_region'];
-    $taxonomy_topics = 'business-topics';
-	if ( 'business-lifecycle' == $post_type ) {
+    $taxonomy_topics = 'business-article-topics';
+	if ( 'business-content' == $post_type ) {
+		$taxonomy_topics = 'business-article-topics';
+	}
+	elseif ( 'business-lifecycle' == $post_type ) {
 		$taxonomy_topics = 'business-topics';
 	}
 	elseif ( 'xero-content' == $post_type ) {
@@ -485,11 +490,8 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
  * @author akash <alimranakash.bd@gmail.com>
  */
 function bizink_get_content_type( $curent_page_id ) {
-
 	$content_type = [];
-
 	$types = apply_filters( 'bizink-content-types', $content_type );
-
 	foreach ( $types as $type ) {
     	$content_page_id   = cxbc_get_option( 'bizink-client_basic', $type['key'] );
 

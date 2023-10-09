@@ -3,7 +3,7 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.3.1
-Stable tag: 1.5.9
+Stable tag: 1.6.0
 Requires PHP: 7.4
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -22,6 +22,13 @@ Display business content on your website that is automatically updated by the Bi
 - Bizpress XPM (Forms)
 
 == Changelog ==
+
+= 1.6.1 =
+* Added support for uses to hide & edit Bizpress Content 
+
+= 1.6.0 =
+* Default Image for posts that don't have a featured image set.
+* Bug fix for Business Content Topics
 
 = 1.5.9 =
 * Fix for some iFrame height issues
