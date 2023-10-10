@@ -68,17 +68,6 @@ class Admin extends Base {
 		add_rewrite_tag('%topic%', '([^&]+)', 'topic=');
 		add_rewrite_tag('%type%', '([^&]+)', 'type=');
 
-		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
-		if(!empty($business_page_id) && $business_page_id != ''){
-			$business_post = get_post( $business_page_id );
-			if(!empty($business_post)){
-				$business_slug = $business_post->post_name;
-				add_rewrite_tag('%'.$business_slug.'%', '([^&]+)', 'bizpress=');
-				add_rewrite_rule("^".$business_slug."/([a-z0-9-]+)[/]?$",'index.php?pagename=bizink-client-business&bizpress=$matches[1]','top');
-				add_rewrite_rule("^".$business_slug."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=bizink-client-business&topic=$matches[1]','top');
-				add_rewrite_rule("^".$business_slug."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=bizink-client-business&type=$matches[1]','top');
-			}
-		}
 		
 		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		if(!empty($xero_page_id) && $xero_page_id != ''){

@@ -149,7 +149,7 @@ class Front extends Base {
 				$query->set( 'p', $quickbooks_page_id );
 				$query->set( 'page_id', $quickbooks_page_id );
 			}
-			else if($business_page_id && $pageType = 'bizink-client-business'){
+			else if($business_page_id && $pageType = 'business-resources'){
 				$query->set( 'p', $business_page_id );
 				$query->set( 'page_id', $business_page_id );
 			}
@@ -220,7 +220,7 @@ class Front extends Base {
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' || 
-		$pagename == 'bizink-client-business' ||
+		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
 		$pagename == 'calculators') ){
@@ -265,7 +265,7 @@ class Front extends Base {
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'quickbooks-resources' ||
 			$pagename == 'myob-resources' || 
-			$pagename == 'bizink-client-business' || 
+		    $pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||
 			$pagename == 'payroll-glossary' ||
 			$pagename == 'calculators'){
@@ -326,7 +326,7 @@ class Front extends Base {
 			$pagename == 'xero-resources' ||
 			$pagename == 'quickbooks-resources' ||
 			$pagename == 'myob-resources' ||
-			$pagename == 'bizink-client-business' ||
+			$pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||
 			$pagename == 'payroll-glossary'
 			){
