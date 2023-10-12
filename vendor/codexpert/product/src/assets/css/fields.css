@@ -335,6 +335,12 @@
   color: red;
 }
 
+
+.cxbc-topic-icon i{
+  font-size: 1rem;
+  color: #333;
+}
+
 .cx-content-manager {
   display: grid;
   grid-template-columns: 1fr 8fr;

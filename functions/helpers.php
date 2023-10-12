@@ -538,3 +538,42 @@ if( ! function_exists( 'bizink_update_views' ) ) :
 		return; 
 	}
 endif;
+
+function bizink_bizpress_display_pagnation($numPages = 2,$page = 1){
+	ob_start();
+	?>
+	<div class="bizpress_pagnation" style="display: none;" data-page="<?php echo $page; ?>" data-totalpages="<?php echo $numPages; ?>">
+		<div class="bizpress_pagnation_links">
+			<a class="bizpress_pagnation_link bizpress_pagnation_link_prev" href="#prev" title="<?php _e('Previous','bizink-client'); ?>">&lt;</a>
+			<?php
+			for($i=0; $i < $numPages; $i++){
+				if($numPages < 10){
+				?>
+					<a data-page="<?php echo ($i+1); ?>" title="<?= __('Page '.($i+1),'bizink-client') ?>" href="#page-<?= $i+1 ?>" class="bizpress_pagnation_link bizpress_pagnation_link_page <?= $i+1 == $page ? 'active' : '' ?>"><?= $i+1 ?></a>
+				<?php
+				}
+				else{
+					if($page == $i || $page == $i-1 || $page == $i+1 || $page == $i+2){
+						?>
+						<a data-page="<?php echo ($i+1); ?>" title="<?= __('Page '.($i+1),'bizink-client') ?>" href="#page-<?= $i+1 ?>" class="bizpress_pagnation_link bizpress_pagnation_link_page <?= $i+1 == $page ? 'active' : '' ?>"><?= $i+1 ?></a>
+						<?php
+					}
+					elseif($page == $i-3 || $page == $i+3){
+						?>
+						<a data-page="<?php echo ($i+1); ?>" href="#page-<?= $i+1 ?>" class="bizpress_pagnation_link">...</a>
+						<?php
+					}
+					elseif($i == $numPages-1){
+						?>
+						<a data-page="<?php echo ($i+1); ?>" title="<?= __('Page '.($i+1),'bizink-client') ?>" href="#page-<?= $i+1 ?>" class="bizpress_pagnation_link bizpress_pagnation_link_page <?= $i+1 == $page ? 'active' : '' ?>"><?= $i+1 ?></a>
+						<?php
+					}
+				}
+			}
+			?>
+			<a class="bizpress_pagnation_link bizpress_pagnation_link_next" href="#next" title="<?php _e('Next','bizink-client'); ?>">&gt;</a>
+		</div>
+	</div>
+	<?php
+	ob_end_flush();
+}

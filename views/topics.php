@@ -102,6 +102,10 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "<div class='cxbc-topics-list'>";
 	$topic_coun = 0;
 	if(empty($query_value)){
+		$enableIcons = false;
+		if('business-content' == $post_type){
+			$enableIcons = true;
+		}
 		foreach ( $topics as $topic ) {	
 			if ( $topic_coun == 0 ) {
 				$taxonomy 	= $topic->taxonomy;
@@ -110,6 +114,9 @@ if (strpos($post_type, 'keydates') === false) {
 			$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
 
 			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
+			if($enableIcons && !empty($topic->icon)){
+				// echo '<div class="cxbc-topic-icon"><i class="'.$topic->icon.'"></i></div>';
+			}
 			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
 			echo "</div></a>";
 			$topic_coun++;
@@ -182,8 +189,22 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "<div class='cxbc-posts-list-bottom'>";
 
 	$post_count = count($posts);
+	$pages = ceil($post_count / 12);
 	$item = 0;
+
+	bizink_bizpress_display_pagnation($pages,1);
+
 	foreach ( $posts as $post ) {
+		if($item == 0){
+			echo "<div class='cxbc-posts-list-page' data-page='1'>";
+		}
+		elseif($item % 12 == 0){
+			echo "</div>";
+			echo "<div class='cxbc-posts-list-page' data-page='".(($item/12) + 1)."'>";
+		}
+		elseif($item == $post_count){
+			echo "</div>";
+		}
 		$item++;
 		if(isset($post->hidden) && $post->hidden){
 			continue; // Item is hidden move to next item
@@ -214,7 +235,7 @@ if (strpos($post_type, 'keydates') === false) {
 		<?php	
 	}
 	echo "</div>";
-
+	bizink_bizpress_display_pagnation($pages,1);
 }
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
