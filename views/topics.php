@@ -115,7 +115,7 @@ if (strpos($post_type, 'keydates') === false) {
 
 			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
 			if($enableIcons && !empty($topic->icon)){
-				// echo '<div class="cxbc-topic-icon"><i class="'.$topic->icon.'"></i></div>';
+				echo '<div class="cxbc-topic-icon"><i class="'.$topic->icon.'"></i></div>';
 			}
 			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
 			echo "</div></a>";

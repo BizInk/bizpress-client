@@ -135,7 +135,7 @@
 	margin-bottom: 15px;
 }
 .cxbc-posts-list-mid .cxbc-item-thumbnail {
-	height: 310px;
+	height: 300px;
 	object-fit: cover;
 }
 .cxbc-learn-more-btn {
@@ -150,7 +150,7 @@
 }
 .cxbc-item-thumbnail {
 	width: 100%;
-	height:260px;
+	height:230px;
 	object-fit: cover;
 	border-radius: 6px;
 	border:1px solid #333;
@@ -163,7 +163,7 @@
 	width: 40px;
 }
 .cxbc-single-post.cxbc-single-post-count-1 .cxbc-item-thumbnail {
-	height: 610px;
+	height: 600px;
 	object-fit: cover;
 }
 .cxbc-single-item .cxbc-item-thumbnail {
