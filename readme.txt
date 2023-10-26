@@ -3,7 +3,7 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.3.1
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 Requires PHP: 7.4
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -23,8 +23,11 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
-= 1.6.4 =
+= 1.6.5 =
 * Added Support for uses to hide & edit Bizpress Content
+
+= 1.6.4 =
+* Fix for width of the Resources page
 
 = 1.6.3 =
 * Fix for Quickbooks thumbnail images
