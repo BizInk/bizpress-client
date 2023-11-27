@@ -182,12 +182,6 @@ class Settings extends Fields {
 			// WP_PLUGIN_DIR 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $_POST['pluginUrl']);
-			/*
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-				'Authorization: Bearer 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',
-				'Accept: application/vnd.github.v3+json'
-			));
-			*/
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			$zipContents = curl_exec($ch);

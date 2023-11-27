@@ -102,6 +102,7 @@ class Front extends Base {
 		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+		$sage_page_id	= cxbc_get_option( 'bizink-client_basic', 'sage_content_page' );
 		$myob_page_id	= cxbc_get_option( 'bizink-client_basic', 'myob_content_page' );
 		$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
 		$payroll_page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
@@ -127,6 +128,9 @@ class Front extends Base {
 			if(!empty($quickbooks_page_id)){
 				$post = get_post( $quickbooks_page_id );
 			}
+			if(!empty($sage_page_id)){
+				$post = get_post( $sage_page_id );
+			}
 			if(!empty($keydates_page_id)){
 				$post = get_post( $keydates_page_id );
 			}
@@ -149,6 +153,10 @@ class Front extends Base {
 			else if($quickbooks_page_id  && $pageType == 'quickbooks-resources'){
 				$query->set( 'p', $quickbooks_page_id );
 				$query->set( 'page_id', $quickbooks_page_id );
+			}
+			else if($sage_page_id  && $pageType == 'sage-resources'){
+				$query->set( 'p', $sage_page_id );
+				$query->set( 'page_id', $sage_page_id );
 			}
 			else if($business_page_id && $pageType = 'business-resources'){
 				$query->set( 'p', $business_page_id );
@@ -221,6 +229,7 @@ class Front extends Base {
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' || 
+		$pagename == 'sage-resources' ||
 		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
@@ -265,6 +274,7 @@ class Front extends Base {
 			$pagename == 'keydates' ||
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'quickbooks-resources' ||
+			$pagename == 'sage-resources' ||
 			$pagename == 'myob-resources' || 
 		    $pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||
@@ -326,6 +336,7 @@ class Front extends Base {
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'xero-resources' ||
 			$pagename == 'quickbooks-resources' ||
+			$pagename == 'sage-resources' ||
 			$pagename == 'myob-resources' ||
 			$pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||

@@ -54,6 +54,7 @@ class Settings extends Base {
 			'bizpress-payroll' => false,
 			'bizpress-quickbooks-resources' => false,
 			'bizpress-xero-resources' => false,
+			'bizpress-sage-resources' => false
 		);
 		foreach($plugins as $key=>$plugin){
 			$pluginInfo .= "{$plugin['Name']} - Version:{$plugin['Version']} By:{$plugin['AuthorName']}\r\n";
@@ -90,6 +91,9 @@ class Settings extends Base {
 					break;
 				case 'bizpress-xero-resources/bizpress-xero-resources.php':
 					$bizpressPlugins['bizpress-xero-resources'] = true;
+					break;
+				case 'bizpress-sage-resources/bizpress-sage-resources.php':
+					$bizpressPlugins['bizpress-sage-resources'] = true;
 					break;
 			}
 		}
@@ -150,6 +154,7 @@ class Settings extends Base {
 			remove_filter('cx-settings-fields','xero_settings_fields');
 			remove_filter('cx-settings-fields','myob_settings_fields');
 			remove_filter('cx-settings-fields','quickbooks_settings_fields');
+			remove_filter('cx-settings-fields','sage_settings_fields');
 			remove_filter('cx-settings-fields','keydates_settings_fields');
 			remove_filter('cx-settings-fields','payroll_settings_fields');
 			remove_filter('cx-settings-fields','accounting_settings_fields');
@@ -413,6 +418,14 @@ class Settings extends Base {
 									'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
 									'plugin' => 'bizpress-quickbooks-resources/bizpress-quickbooks-resources.php',
 									'installed' => $bizpressPlugins['bizpress-quickbooks-resources']
+								],
+								[
+									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_sage.svg',
+									'name' => 'BizPress Sage Resources',
+									'description' => 'A libary of resources for Sage.',
+									'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
+									'plugin' => 'bizpress-sage-resources/bizpress-sage-resources.php',
+									'installed' => $bizpressPlugins['bizpress-sage-resources']
 								],
 								[
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_myob.svg',
