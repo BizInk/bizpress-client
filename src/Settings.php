@@ -423,7 +423,7 @@ class Settings extends Base {
 									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_sage.svg',
 									'name' => 'BizPress Sage Resources',
 									'description' => 'A libary of resources for Sage.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
+									'url' => 'https://docs.google.com/uc?export=download&id=1hrD3OqVd74XgOBfFFerX6APoJ-kCtAz-',
 									'plugin' => 'bizpress-sage-resources/bizpress-sage-resources.php',
 									'installed' => $bizpressPlugins['bizpress-sage-resources']
 								],
