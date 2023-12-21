@@ -59,6 +59,14 @@ elseif ( 'quickbooks-content' == $post_type ) {
 	}
 	$page_id =  cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
 }
+elseif ( 'sage-content' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'sage_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'sage_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Sage Resources', 'bizink-client');
+	}
+	$page_id =  cxbc_get_option( 'bizink-client_basic', 'sage_content_page' );
+}
 elseif ( 'payroll-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'payroll_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'payroll_desc' );
@@ -157,6 +165,9 @@ elseif ( 'xero-content' == $post_type ) {
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$taxonomy_topics = 'quickbooks-topics';
+}
+elseif ( 'sage-content' == $post_type ) {
+	$taxonomy_topics = 'sage-topics';
 }
 elseif ( 'myob-content' == $post_type ) {
 	$taxonomy_topics = 'myob-topics';

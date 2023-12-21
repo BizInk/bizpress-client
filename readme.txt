@@ -3,7 +3,7 @@ Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
 Tested up to: 6.4.2
-Stable tag: 1.6.6
+Stable tag: 1.6.7
 Requires PHP: 7.4
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -23,8 +23,11 @@ Display business content on your website that is automatically updated by the Bi
 
 == Changelog ==
 
-= 1.6.7 =
+= Next =
 * Added Support for uses to hide & edit Bizpress Content
+
+= 1.6.7 =
+* Fixed an issue with the Sage Resources title not displaing
 
 = 1.6.6 =
 * Support for sorting Sage Resources
