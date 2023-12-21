@@ -301,6 +301,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 	elseif ( 'myob-content' == $post_type ) {
 		$taxonomy_topics = 'myob-topics';
 	}
+	elseif ( 'sage-content' == $post_type ) {
+		$taxonomy_topics = 'sage-topics';
+	}
 	elseif ( 'quickbooks-content' == $post_type ) {
 		$taxonomy_topics = 'quickbooks-topics';
 	}
