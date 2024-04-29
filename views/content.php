@@ -21,13 +21,16 @@ if ( $response->status == 0 ) {
 	return;
 }
 
-$post = (array)$response->post;
+global $post;
+$postArray = (array)$response->post;
 $thumbnail = $response->thumbnail;
 
-extract( $post );
+extract( $postArray );
 
-$type 		= ucwords( str_replace( [ '-', '_' ], [ ' ' ], $post_type ) );
-$content 	= apply_filters( 'the_content', $post_content );
+$type = ucwords( str_replace( [ '-', '_' ], [ ' ' ], $post_type ) );
+$content = apply_filters( 'the_content', $post_content );
+$content = do_shortcode($content);
+
 
 if(!function_exists('luca')) {
 	get_header();

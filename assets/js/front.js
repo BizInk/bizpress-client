@@ -118,4 +118,6 @@ jQuery(function($){
 		create_triggers();
 	}
 
+	
+
 });

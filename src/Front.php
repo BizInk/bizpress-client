@@ -96,7 +96,7 @@ class Front extends Base {
 		if ( !$query->is_main_query() ){
 			return;
 		}
-
+		
 		$content = get_query_var( 'bizpress',false);
 		$attachment = get_query_var( 'attachment',false);
 		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
@@ -199,7 +199,7 @@ class Front extends Base {
 	}
 
 	public function the_post( $post ){
-		global $wp, $wp_query;
+		global $wp, $wp_query, $post;
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		$pagename = get_query_var('pagename');
 		$content = get_query_var( 'bizpress');

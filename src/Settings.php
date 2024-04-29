@@ -143,14 +143,6 @@ class Settings extends Base {
 					]
 				]
 			];
-			if(strtolower($current_user->user_login) == 'bizinkwpadmin'){
-				$settings['sections']['bizink-client_basic']['fields']['bizink_message'] = [
-					'id' => 'bizink_message',
-					'label' => __( 'Bizink', 'bizink-client' ),
-					'type' => 'admin_message',
-					'message' => __( 'Are you seting up a Bizink build website? Please install & activate Bizpress Luca or Bizpress Luca 2 if so.', 'bizink-client' ),
-				];
-			}
 			remove_filter('cx-settings-fields','xero_settings_fields');
 			remove_filter('cx-settings-fields','myob_settings_fields');
 			remove_filter('cx-settings-fields','quickbooks_settings_fields');
