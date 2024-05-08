@@ -96,10 +96,23 @@ class Admin extends Base {
 	}
 	
 	public function suscription_expiry_notice() {
-		$notice = get_option( '_cxbc_suscription_expiry' );
+		$notice = get_option( 'bizpress_subscriptions_expiry' ); //_cxbc_suscription_expiry
 		if ( $notice == '' ) return;
-		$message = __( 'Your Bizink suscription will expire on', 'bizink-client' ) .' '. date( get_option('date_format') ,strtotime($notice));
-		echo "<div class='notice notice-error'><p>{$message}</p></div>";
+		
+		$compareYear = date( 'Y' );
+		$compareMonth = date( 'm' );
+		$compareDay = date( 'd' );
+		if( $compareMonth > 1){
+			$compareMonth = $compareMonth - 1;
+		}
+		else{
+			$compareMonth = 12;
+			$compareYear = $compareYear - 1;
+		}
+		$compareDate = strtotime($compareYear.'-'.$compareMonth.'-'.$compareDay);
+		if( $compareDate > strtotime($notice) ) return;
+		$message = __( 'Your BizPress Suscription will renew on', 'bizink-client' ) .' '. date( get_option('date_format') ,strtotime($notice));
+		echo "<div class='notice notice-info is-dismissible'><p>{$message}</p></div>";
 	}
 
 	public function bizpress_edits_cpt() {

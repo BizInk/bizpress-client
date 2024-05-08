@@ -2,8 +2,8 @@
 Contributors: Bizink,Jayden Major
 Tags: Bizink, Bizpress, business content, marketing
 Requires at least: 5.6
-Tested up to: 6.4.3
-Stable tag: 1.6.9
+Tested up to: 6.5.3
+Stable tag: 1.7
 Requires PHP: 7.4
 
 Display business content on your website that is automatically updated by the Bizink team.
@@ -26,6 +26,9 @@ Display business content on your website that is automatically updated by the Bi
 = Next =
 * Added Support for uses to hide & edit Bizpress Content
 * Flexable iFrame video embeds
+
+= 1.7 =
+* Fix Permission Issue with the Bizink Login
 
 = 1.6.9 =
 * Remove Bizink Login Admin Message

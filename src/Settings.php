@@ -197,6 +197,100 @@ class Settings extends Base {
 		$content_manager_fields = apply_filters('bizpress_content_manager_fields',array());
 		$content_manager_hide = empty($content_manager_fields) ? true : false;
 
+		$bizpress_product = get_option('bizpress_product');
+		if(empty($bizpress_product)){
+			$bizpress_product = [
+				'bizpress' => true,
+				'bizpress_basic' => true,
+				'bizpress_standard' => false,
+				'bizpress_premium' => false
+			];
+		}
+		else{
+			$bizpress_product = (array) $bizpress_product;
+		}
+		$bispressPluginsScreen = [
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_glossary.svg',
+				'name' => 'BizPress Accounting & Business Glossary',
+				'description' => 'A glossary of accounting and business terms for your website. ',
+				'url' => 'https://docs.google.com/uc?export=download&id=1dCQ6oYn3zKlYxth6jd8vQoL1aWHPBjyw',
+				'plugin' => 'bizpress-business-terms-glossary/bizpress-business-terms-glossary.php',
+				'installed' => $bizpressPlugins['bizpress-business-terms-glossary']
+			],
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_keydates.svg',
+				'name' => 'BizPress KeyDates',
+				'description' => 'A glossary of Keydates.',
+				'url' => 'https://docs.google.com/uc?export=download&id=16722aKAIFz2ANO4bcGDY5Xvm4H9BIKDG',
+				'plugin' => 'bizpress-key-dates/bizpress-key-dates.php',
+				'installed' => $bizpressPlugins['bizpress-key-dates']
+			],
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_xero.svg',
+				'name' => 'BizPress Xero Resources',
+				'description' => 'A libary of resources for Xero.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1IIhd75FPrMgxC0fFa41FPo7b4sJJzt3L',
+				'plugin' => 'bizpress-xero-resources/bizpress-xero-resources.php',
+				'installed' => $bizpressPlugins['bizpress-xero-resources']
+			],
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_quickbooks.svg',
+				'name' => 'BizPress Quickbooks Resources',
+				'description' => 'A libary of resources for Quickbooks.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
+				'plugin' => 'bizpress-quickbooks-resources/bizpress-quickbooks-resources.php',
+				'installed' => $bizpressPlugins['bizpress-quickbooks-resources']
+			],
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_sage.svg',
+				'name' => 'BizPress Sage Resources',
+				'description' => 'A libary of resources for Sage.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1hrD3OqVd74XgOBfFFerX6APoJ-kCtAz-',
+				'plugin' => 'bizpress-sage-resources/bizpress-sage-resources.php',
+				'installed' => $bizpressPlugins['bizpress-sage-resources']
+			],
+			[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_myob.svg',
+				'name' => 'BizPress MYOB Resources',
+				'description' => 'A libary of resources for MYOB.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1-kNdLNTRmXBvpb-NEWzCfselUmqSjxET',
+				'plugin' => 'bizpress-myob-resources/bizpress-myob-resources.php',
+				'installed' => $bizpressPlugins['bizpress-myob-resources']
+			],
+			
+		];
+
+		if($bizpress_product['bizpress_standard'] || $bizpress_product['bizpress_premium']){ // Either give Standard Items
+			array_push($bispressPluginsScreen,[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_payroll.svg',
+				'name' => 'BizPress Payroll Glossary',
+				'description' => 'A libary of resources for your payroll company.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1vpd4pWseT0oR6Ie-SZyhiLVrXNmpGQ6L',
+				'plugin' => 'bizpress-payroll/bizpress-payroll.php',
+				'installed' => $bizpressPlugins['bizpress-payroll']
+			]);
+			array_push($bispressPluginsScreen,[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_caculators.svg',
+				'name' => 'BizPress Calculators',
+				'description' => 'A set of Calculators for your website.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1aN3beVHg2dyICNjnVgtJsq8r663TDDQo',
+				'plugin' => 'bizpress-calculators/bizpress-caculators.php',
+				'installed' => $bizpressPlugins['bizpress-calculators']
+			]);
+		}
+		
+		if($bizpress_product['bizpress_premium']){ // Give Premium Items
+			array_push($bispressPluginsScreen,[
+				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_blogs.svg',
+				'name' => 'BizPress Blogs',
+				'description' => 'A tool for impoting Blogs to your website.',
+				'url' => 'https://docs.google.com/uc?export=download&id=1Tz4JFRuD8ZRtluvtmPNUHpUKK7YOaBkM',
+				'plugin' => 'bizpress-blogs/bizpress-blogs.php',
+				'installed' => $bizpressPlugins['bizpress-blogs']
+			]);
+		}
+
 		$settings = [
 			'id'            => $this->slug,
 			'label'         => $this->name,
@@ -362,80 +456,7 @@ class Settings extends Base {
 							'label' => __( 'Bizink Addons', 'bizink-client' ),
 							'type' => 'plugin_install_grid',
 							'hidelabel' => true,
-							'plugins' => [
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_glossary.svg',
-									'name' => 'BizPress Accounting & Business Glossary',
-									'description' => 'A glossary of accounting and business terms for your website.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1dCQ6oYn3zKlYxth6jd8vQoL1aWHPBjyw',
-									'plugin' => 'bizpress-business-terms-glossary/bizpress-business-terms-glossary.php',
-									'installed' => $bizpressPlugins['bizpress-business-terms-glossary']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_keydates.svg',
-									'name' => 'BizPress KeyDates',
-									'description' => 'A glossary of Keydates.',
-									'url' => 'https://docs.google.com/uc?export=download&id=16722aKAIFz2ANO4bcGDY5Xvm4H9BIKDG',
-									'plugin' => 'bizpress-key-dates/bizpress-key-dates.php',
-									'installed' => $bizpressPlugins['bizpress-key-dates']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_payroll.svg',
-									'name' => 'BizPress Payroll Glossary',
-									'description' => 'A libary of resources for your payroll company.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1vpd4pWseT0oR6Ie-SZyhiLVrXNmpGQ6L',
-									'plugin' => 'bizpress-payroll/bizpress-payroll.php',
-									'installed' => $bizpressPlugins['bizpress-payroll']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_caculators.svg',
-									'name' => 'BizPress Calculators',
-									'description' => 'A set of Calculators for your website.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1aN3beVHg2dyICNjnVgtJsq8r663TDDQo',
-									'plugin' => 'bizpress-calculators/bizpress-caculators.php',
-									'installed' => $bizpressPlugins['bizpress-calculators']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_xero.svg',
-									'name' => 'BizPress Xero Resources',
-									'description' => 'A libary of resources for Xero.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1IIhd75FPrMgxC0fFa41FPo7b4sJJzt3L',
-									'plugin' => 'bizpress-xero-resources/bizpress-xero-resources.php',
-									'installed' => $bizpressPlugins['bizpress-xero-resources']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_quickbooks.svg',
-									'name' => 'BizPress Quickbooks Resources',
-									'description' => 'A libary of resources for Quickbooks.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1rBw2_13hh8vUnB7bS1LPzKSvVsQPOsu-',
-									'plugin' => 'bizpress-quickbooks-resources/bizpress-quickbooks-resources.php',
-									'installed' => $bizpressPlugins['bizpress-quickbooks-resources']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_sage.svg',
-									'name' => 'BizPress Sage Resources',
-									'description' => 'A libary of resources for Sage.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1hrD3OqVd74XgOBfFFerX6APoJ-kCtAz-',
-									'plugin' => 'bizpress-sage-resources/bizpress-sage-resources.php',
-									'installed' => $bizpressPlugins['bizpress-sage-resources']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_myob.svg',
-									'name' => 'BizPress MYOB Resources',
-									'description' => 'A libary of resources for MYOB.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1-kNdLNTRmXBvpb-NEWzCfselUmqSjxET',
-									'plugin' => 'bizpress-myob-resources/bizpress-myob-resources.php',
-									'installed' => $bizpressPlugins['bizpress-myob-resources']
-								],
-								[
-									'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_blogs.svg',
-									'name' => 'BizPress Blogs',
-									'description' => 'A tool for impoting Blogs to your website.',
-									'url' => 'https://docs.google.com/uc?export=download&id=1Tz4JFRuD8ZRtluvtmPNUHpUKK7YOaBkM',
-									'plugin' => 'bizpress-blogs/bizpress-blogs.php',
-									'installed' => $bizpressPlugins['bizpress-blogs']
-								]
-							]
+							'plugins' => $bispressPluginsScreen
 						]
 					]
 				]

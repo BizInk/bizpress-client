@@ -1,13 +1,9 @@
 {
     "name": "bizink/bizpress",
-    "keywords": ["wordpress", "theme"],
+    "keywords": ["wordpress", "plugin", "bizpress", "bizink", "content", "accounting", "bookkeeping"],
   	"homepage": "bizinkonline.com",
   	"type": "wordpress-plugin",
     "authors": [
-        {
-            "name": "codexpert",
-            "email": "hello@codexpert.io"
-        },
         {
             "name":"Bizink",
             "email": "hello@bizinkonline.com"
