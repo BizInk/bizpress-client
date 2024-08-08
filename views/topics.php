@@ -141,7 +141,7 @@ if (strpos($post_type, 'keydates') === false) {
 					$taxonomy 	= $topic->taxonomy;
 					$first_term = $topic->slug;
 				}
-				$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
+				$link = filter_SSL(add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) ));		
 				$selected = ($current_url == $link) ? 'selected' : '';
 				echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
 			}
@@ -223,7 +223,7 @@ if (strpos($post_type, 'keydates') === false) {
 		$postUrl = get_permalink($page_id) . $post->slug;
 		if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 			$page = get_post($page_id);
-			$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+			$postUrl = filter_SSL( add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url()) );
 		}
 		?>
 		<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
@@ -260,10 +260,10 @@ else{
 			echo "<ul>";
 			$post_count = 1;
 			foreach ( $posts as $post ) {
-				$postUrl = get_permalink($page_id) . $post->slug;
+				$postUrl = filter_SSL( get_permalink($page_id) . $post->slug );
 				if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 					$page = get_post($page_id);
-					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+					$postUrl = filter_SSL( add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url()) );
 				}
 
 				echo "<li class='cxbc-keydates-post-count-{$post_count}'>";

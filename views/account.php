@@ -58,7 +58,7 @@ if( !empty( $sorted_posts ) ):
                 echo '<p class="bizpress-glossary-paragraph">';
                     foreach ($value as $k => $v) {
                         $v->type = $post_type;
-                        printf( "<a class='bizpress-glossary-link' href='%s'>%s</a><br>", apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug , $v ) , $v->title );
+                        printf( "<a class='bizpress-glossary-link' href='%s'>%s</a><br>", filter_SSL(apply_filters( "cx_account_post_url", "https://bizinkcontent.com/accounting-terms/".$v->slug , $v )) , $v->title );
                     }
                 echo "</p>";
             printf( "</div>" );

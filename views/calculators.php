@@ -59,9 +59,9 @@ foreach ( $posts as $post ) {
 	if(isset($post->hidden) && $post->hidden){
 		continue; // Item is hidden move to next item
 	}
-	$postUrl = $post->slug;
+	$postUrl = filter_SSL($post->slug);
 	if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
-		$postUrl = add_query_arg('bizpress',$post->slug);
+		$postUrl = filter_SSL(add_query_arg('bizpress',$post->slug));
 	}
 	echo "<div class='cxbc-single-post cxbc-single-post-item-{$item} cxbc-single-post-count-{$post_count}'>";
 		echo "<a href='{$postUrl}'><div class='cxbc-single-post-content'>";
