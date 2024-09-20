@@ -57,7 +57,7 @@ echo "<div class='cxbc-type-list'>";
 foreach ( $posts as $post ) {
 	$postUrl = $slug . $post->slug;
 	if(defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true){
-		$postUrl = filter_SSL(add_query_arg('bizpress',$post->slug,$slug));
+		$postUrl = add_query_arg('bizpress',$post->slug,$slug);
 	}
 	echo "<a href='{$postUrl}'><div class='cxbc-single-type'>";
 	echo "<img alt='{$post->title}' class='cxbc-item-thumbnail' src='{$post->thumbnail}'>";

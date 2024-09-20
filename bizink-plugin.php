@@ -42,6 +42,7 @@ final class Plugin {
 		$this->plugin['server']		= apply_filters( 'bizink-client_server', 'https://my.codexpert.io' );
 		$this->plugin['min_php']	= '7.4';
 		$this->plugin['min_wp']		= '5.6';
+		
 	}
 
 	/**

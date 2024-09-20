@@ -202,8 +202,7 @@ class Settings extends Base {
 			$bizpress_product = [
 				'bizpress' => true,
 				'bizpress_basic' => true,
-				'bizpress_standard' => false,
-				'bizpress_premium' => false
+				'bizpress_standard' => true
 			];
 		}
 		else{
@@ -261,7 +260,7 @@ class Settings extends Base {
 			
 		];
 
-		if($bizpress_product['bizpress_standard'] || $bizpress_product['bizpress_premium']){ // Either give Standard Items
+		if($bizpress_product['bizpress_standard']){ // Either give Standard Items
 			array_push($bispressPluginsScreen,[
 				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_payroll.svg',
 				'name' => 'BizPress Payroll Glossary',
@@ -278,9 +277,6 @@ class Settings extends Base {
 				'plugin' => 'bizpress-calculators/bizpress-caculators.php',
 				'installed' => $bizpressPlugins['bizpress-calculators']
 			]);
-		}
-		
-		if($bizpress_product['bizpress_premium']){ // Give Premium Items
 			array_push($bispressPluginsScreen,[
 				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_blogs.svg',
 				'name' => 'BizPress Blogs',

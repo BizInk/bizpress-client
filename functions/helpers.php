@@ -18,7 +18,7 @@ function bizpress_anylitics_get_site_id(){
 	if(empty($bizpressOptions['content_region'])){
 		$bizpressOptions['content_region'] = 'all';
 	}
-	$version = '1.4.2'; // First version with this included
+	$version = '1.7.1';
 	if(!defined('CXBPC')){
 		$versionData = get_plugin_data(constant('CXBPC'))['Version'];
 		if(!empty($versionData)) $version = $versionData;
@@ -79,7 +79,7 @@ function bizpress_anylitics_get_site_id(){
 			'redirection' => 3,
 			'httpversion' => '1.1',
 		);
-		$responce = wp_remote_request($anyliticsURL."/site\/".$siteID ,$args);
+		$responce = wp_remote_request($anyliticsURL."/site/".$siteID ,$args);
 		$code = wp_remote_retrieve_response_code($responce);
 		if($code >= 200 && $code < 400){
 			$data = json_decode(wp_remote_retrieve_body($responce));

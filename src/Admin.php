@@ -24,6 +24,7 @@ class Admin extends Base {
 	public $name;
 	public $server;
 	public $version;
+	public $admin_url;
 
 	/**
 	 * Constructor function

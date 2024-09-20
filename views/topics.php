@@ -106,51 +106,36 @@ if(isset($_GET)){
 }
 
 if (strpos($post_type, 'keydates') === false) {
-	echo '<div class="topic-title"><h2>'.__('Browse by Topic','bizink-client').'</h2></div>';
-	echo "<div class='cxbc-topics-list'>";
-	$topic_coun = 0;
-	if(empty($query_value)){
-		$enableIcons = false;
-		if('business-content' == $post_type){
-			$enableIcons = true;
-		}
-		foreach ( $topics as $topic ) {	
-			if ( $topic_coun == 0 ) {
-				$taxonomy 	= $topic->taxonomy;
-				$first_term = $topic->slug;
-			}
-			$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );
-
-			echo "<a href='{$link}'><div class='cxbc-single-topic'>";
-			if($enableIcons && !empty($topic->icon)){
-				echo '<div class="cxbc-topic-icon"><i class="'.$topic->icon.'"></i></div>';
-			}
-			echo "<div class='cxbc-topic-title'>{$topic->name}</div>";
-			echo "</div></a>";
-			$topic_coun++;
-		}
-	}
-	else{
+	?>
+	<div class="topic-title">
+		<h2><?php _e('Browse by Topic','bizink-client'); ?> </h2>
+	</div>
+	<div class='cxbc-topics-list'>
+		<?php
+		$topic_coun = 0;
 		global $wp;
 		$current_url = home_url( $wp->request ).'/?'.$_SERVER['QUERY_STRING'];
 		$selected = '';
-		echo '<div class="topic-dropdown"><select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">';
-		echo "<option value=''>Browse other topics...</option>";	
-			foreach ( $topics as $topic ) {	
-				if ( $topic_coun == 0 ) {
-					$taxonomy 	= $topic->taxonomy;
-					$first_term = $topic->slug;
+		?>
+		<div class="topic-dropdown">
+			<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+				<option value=''><?php _e('Browse all topics...','bizink-client'); ?></option>
+				<?php
+				foreach ( $topics as $topic ) {	
+					if ( $topic_coun == 0 ) {
+						$taxonomy 	= $topic->taxonomy;
+						$first_term = $topic->slug;
+					}
+					$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
+					$selected = ($current_url == $link) ? 'selected' : '';
+					echo "<option value='{$link}'{$selected}>{$topic->name}</option>";
 				}
-				$link = filter_SSL(add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) ));		
-				$selected = ($current_url == $link) ? 'selected' : '';
-				echo "<option value='{$link}'{$selected}>{$topic->name}</option>";		
-			}
-		echo '</select></div>';
-		
-	}
+				?>
+			</select>
+		</div>
 	
-	echo "</div>";
-
+	</div>
+	<?php
 }
 
 $taxonomy_topics = 'business-article-topics';
@@ -203,50 +188,54 @@ if (strpos($post_type, 'keydates') === false) {
 	$pages = ceil($post_count / 12);
 	$item = 0;
 
-	bizink_bizpress_display_pagnation($pages,1);
+	if($post_count <= 0):
+		echo "<p>".__('No posts found for this topic.','bizink-client')."</p>";
+	else:
+		bizink_bizpress_display_pagnation($pages,1);
 
-	foreach ( $posts as $post ) {
-		if($item == 0){
-			echo "<div class='cxbc-posts-list-page' data-page='1'>";
-		}
-		elseif($item % 12 == 0){
-			echo "</div>";
-			echo "<div class='cxbc-posts-list-page' data-page='".(($item/12) + 1)."'>";
-		}
-		elseif($item == $post_count){
-			echo "</div>";
-		}
-		$item++;
-		if(isset($post->hidden) && $post->hidden){
-			continue; // Item is hidden move to next item
-		}
-		$postUrl = get_permalink($page_id) . $post->slug;
-		if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
-			$page = get_post($page_id);
-			$postUrl = filter_SSL( add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url()) );
-		}
-		?>
-		<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
-			<a href="<?= $postUrl ?>">
-				<div class="cxbc-single-post-content">
-					<?php 
-					$image = $post->thumbnail;
-					if(empty($image)){
-						$image = plugins_url( 'assets/img/default.png', CXBPC );
-					}
-					?>
-					<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $image; ?>">
-					<div class="cxbc-post-title">
-						<h4><?= $post->title ?></h4>
+		foreach ( $posts as $post ) {
+			if($item == 0){
+				echo "<div class='cxbc-posts-list-page' data-page='1'>";
+			}
+			elseif($item % 12 == 0){
+				echo "</div>";
+				echo "<div class='cxbc-posts-list-page' data-page='".(($item/12) + 1)."'>";
+			}
+			elseif($item == $post_count){
+				echo "</div>";
+			}
+			$item++;
+			if(isset($post->hidden) && $post->hidden){
+				continue; // Item is hidden move to next item
+			}
+			$postUrl = get_permalink($page_id) . $post->slug;
+			if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
+				$page = get_post($page_id);
+				$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+			}
+			?>
+			<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
+				<a href="<?= $postUrl ?>">
+					<div class="cxbc-single-post-content">
+						<?php 
+						$image = $post->thumbnail;
+						if(empty($image)){
+							$image = plugins_url( 'assets/img/default.png', CXBPC );
+						}
+						?>
+						<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $image; ?>">
+						<div class="cxbc-post-title">
+							<h4><?= $post->title ?></h4>
+						</div>
+						<div class="learn-more"><?php _e('Learn more','bizink-client'); ?></div>
 					</div>
-					<div class="learn-more"><?php _e('Learn more','bizink-client'); ?></div>
-				</div>
-			</a>
-		</div>
-		<?php	
-	}
-	echo "</div>";
-	bizink_bizpress_display_pagnation($pages,1);
+				</a>
+			</div>
+			<?php	
+		}
+		echo "</div>";
+		bizink_bizpress_display_pagnation($pages,1);
+	endif;
 }
 else{
 	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
@@ -260,10 +249,10 @@ else{
 			echo "<ul>";
 			$post_count = 1;
 			foreach ( $posts as $post ) {
-				$postUrl = filter_SSL( get_permalink($page_id) . $post->slug );
+				$postUrl =  get_permalink($page_id) . $post->slug;
 				if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 					$page = get_post($page_id);
-					$postUrl = filter_SSL( add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url()) );
+					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
 				}
 
 				echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
