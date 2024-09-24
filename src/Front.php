@@ -328,7 +328,8 @@ class Front extends Base {
 	}
 
 	public function the_content($contentData){
-		if ( is_singular() && in_the_loop() && is_main_query() ) {
+		// && in_the_loop() && is_main_query() 
+		if ( is_singular() ) {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename');
 			if($pagename == 'calculators' ||
@@ -471,15 +472,7 @@ class Front extends Base {
 			$main_slug 		= explode('type', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
-			
-			$d = get_query_var('bizpress_data');
-			if($d){
-				$data = $d;
-			}
-			else{
-				$data = bizink_get_single_content( 'content', $content );
-			}
-
+			$data = bizink_get_single_content( 'content', $content );
 	    	add_filter('body_class', function( $classes ){
 	    		$classes[] = 'bizink-page';
 	    		return $classes;

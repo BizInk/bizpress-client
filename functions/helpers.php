@@ -3,12 +3,12 @@ if( !function_exists( 'get_plugin_data' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
+
 /**
  * Bizpress Site ID
  */
 if( ! function_exists( 'bizpress_anylitics_get_site_id' ) ) :
 function bizpress_anylitics_get_site_id(){
-	$anyliticsURL = 'https://analytics.biz.press/api/v1';
 	$bizpressOptions = get_option('bizink-client_basic',false);
 	if($bizpressOptions == false){
 		// Bizpress not setup
@@ -35,9 +35,7 @@ function bizpress_anylitics_get_site_id(){
 		"region" => $bizpressOptions['content_region'],
 		"themeName" => get_stylesheet()
 	);
-	$siteDataHash = hash('sha256',implode(",",$siteData));
-	$savedSiteDataHash = get_option('siteDataHash');
-	if($savedSiteDataHash != $siteDataHash && $siteID == false){ // New Site
+	if($siteID == false){ // New Site
 		$args = array(
 			'body' => json_encode($siteData),
 			'headers' => [
@@ -49,12 +47,11 @@ function bizpress_anylitics_get_site_id(){
 			'redirection' => 3,
 			'httpversion' => '1.1',
 		);
-		$responce = wp_remote_post($anyliticsURL.'/site',$args);
+		$responce = wp_remote_post(BIZINK_ANALYTICS_URL .'/site',$args);
 		$code = wp_remote_retrieve_response_code($responce);
 		if($code >= 200 && $code < 400){
 			$data = json_decode(wp_remote_retrieve_body($responce));
 			if($data->id){
-				add_option('siteDataHash',$siteDataHash);
 				add_option('bizpress_site_id',$data->id);
 				$siteID = $data->id;
 			}
@@ -66,38 +63,46 @@ function bizpress_anylitics_get_site_id(){
 			return false; // Server or request error
 		}
 	}
-	else if($savedSiteDataHash != $siteDataHash && $siteID != false){ // Change of site details
-		$args = array(
-			'body' => json_encode($siteData),
-			'method' => 'PUT',
-			'headers' => [
-				'Cache-Control' => 'no-cache',
-				'Content-Type'  => 'application/json',
-				'Accept' 		=> 'application/json',
-			],
-			'timeout'     => 10,
-			'redirection' => 3,
-			'httpversion' => '1.1',
-		);
-		$responce = wp_remote_request($anyliticsURL."/site/".$siteID ,$args);
-		$code = wp_remote_retrieve_response_code($responce);
-		if($code >= 200 && $code < 400){
-			$data = json_decode(wp_remote_retrieve_body($responce));
-			if($data->id){
-				add_option('siteDataHash',$siteDataHash);
-			}
-			else{
-				return false; // Don't know how it would get here
-			}
-		}
-		else{
-			return false; // Server or request error
-		}
-	}
-	
+
 	return $siteID;
 }
 endif;
+
+function bizpress_update_site($siteID,$siteData){
+	$args = array(
+		'body' => json_encode($siteData),
+		'method' => 'PUT',
+		'headers' => [
+			'Cache-Control' => 'no-cache',
+			'Content-Type'  => 'application/json',
+			'Accept' 		=> 'application/json',
+		],
+		'timeout'     => 10,
+		'redirection' => 3,
+		'httpversion' => '1.1',
+	);
+	$responce = wp_remote_request(BIZINK_ANALYTICS_URL ."/site/".$siteID ,$args);
+	$code = wp_remote_retrieve_response_code($responce);
+	if($code >= 200 && $code < 400){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+function bizpress_schedule_siteupdate(){
+	// Schedules the event if it's NOT already scheduled.
+    if ( ! wp_next_scheduled ( 'bizpress_siteupdate_event' ) ) {
+        wp_schedule_event( time(), '2day', 'bizpress_siteupdate_event' );
+    }
+}
+add_action( 'init', 'bizpress_schedule_siteupdate' );
+
+function bizpress_siteupdate_event_hook(){
+	bizpress_update_site();
+}
+add_action( 'bizpress_siteupdate_event', 'bizpress_siteupdate_event_hook' );
 
 if( ! function_exists( 'cxbc_pri' ) ) :
 function cxbc_pri( $data ) {

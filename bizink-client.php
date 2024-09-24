@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.7.2
+ * Version: 1.7.3
  * Requires PHP: 7.4
  * Requires at least: 5.6
  * Text Domain: bizink-client
@@ -32,6 +32,6 @@ $myUpdateChecker->setBranch('master');
 // Using a private repository, specify the access token 
 $myUpdateChecker->setAuthentication('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');
 
-
+define('BIZINK_ANALYTICS_URL', 'https://analytics.biz.press/api/v1');
 /** Load The main plugin */
 require 'bizink-plugin.php';

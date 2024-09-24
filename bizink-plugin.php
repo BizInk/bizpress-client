@@ -95,7 +95,7 @@ final class Plugin {
 				$disableTemplateRedirect = true;
 			}
 			if(function_exists('luca') && $disableTemplateRedirect == false){
-				$front->action( 'template_redirect', 'template_redirect',10);
+				$front->action( 'template_redirect', 'template_redirect',1);
 			}
 			
 			$front->action( 'pre_get_posts', 'bizpress_pre_get_posts',1);
