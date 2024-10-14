@@ -77,7 +77,7 @@ final class Plugin {
 			$settings = new Settings( $this->plugin );
 			$settings->action( 'plugins_loaded', 'init_menu' );
 
-		else : // !is_admin() ?
+		else: // !is_admin() ?
 
 			/**
 			 * Front facing hooks
@@ -102,6 +102,11 @@ final class Plugin {
 			$front->filter( 'the_title', 'the_title',1);
 			$front->filter( 'the_content', 'the_content',1);
 			$front->filter( 'the_post' ,'the_post',1);
+
+			$front->filter( 'wpseo_title', 'the_title');
+			$front->filter( 'wpseo_opengraph_title', 'the_title');
+			$front->filter( 'wpseo_canonical', 'wpseo_canonical');
+			$front->filter( 'wpseo_opengraph_url', 'wpseo_canonical');
 			
 			$front->action( 'body_class', 'body_class' );
 

@@ -267,7 +267,8 @@ class Front extends Base {
 	}
 
 	public function the_title($post_title) {
-		if ( is_singular() && in_the_loop() && is_main_query() ) {
+		// && in_the_loop() && is_main_query()
+		if ( is_singular() ) {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename',false);
 			if($pagename == 'xero-resources' || 
@@ -484,6 +485,20 @@ class Front extends Base {
 	        die;
 	    }
 	    return $body;
+	}
+
+	public function wpseo_canonical($canonical){
+		global $wp;
+		$type 		= get_query_var( 'type' );
+		$topic 		= get_query_var( 'topic' );
+		$calculator = get_query_var('calculator');
+		$content	= get_query_var( 'bizpress');  // attachment
+		// $bizpressData = get_query_var('bizpress_data');
+		$current_url = home_url( add_query_arg( array(), $wp->request ) );
+		if($type || $topic || $calculator || $content){
+			$canonical = $current_url;
+		}
+		return $canonical;
 	}
 
 	public function body_class( $classes ){

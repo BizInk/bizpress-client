@@ -44,11 +44,11 @@ class Shortcode extends Base {
 
         if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
             $data = bizink_get_content( $content_type, 'topics' );
-            return cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+            return apply_filters('the_content',  cxbc_get_template( 'account', 'views', [ 'response' => $data ] ) );
         }
         else if($content_type == 'calculator-content'){
             $data = bizink_get_content( $content_type, 'calculators' );
-            return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
+            return apply_filters('the_content', cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] ) );
         }
         else{
             $data = get_transient("bizinktype_".$content_type);
@@ -57,7 +57,7 @@ class Shortcode extends Base {
 				set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
 			}
             $data = bizink_get_content( $content_type, 'topics' );
-            return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+            return apply_filters('the_content', cxbc_get_template( 'topics', 'views', [ 'response' => $data ] ) );
         }
     }
 
