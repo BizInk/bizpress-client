@@ -259,16 +259,29 @@ class Front extends Base {
 			data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 
 			$post->post_title = $data->post->post_title;
-			$post->post_content = $data->post->post_content . $anyliticsData;
+			$post->post_content =  apply_filters('the_content',$data->post->post_content). $anyliticsData;
 
 			$post->post_type = 'page';
 		}
 		return $post;
 	}
 
+	public function wpseo_title($title){
+		$content = get_query_var( 'bizpress');
+		if($content && is_singular()){
+			$data = get_transient("bizinkcontent_".md5($content));
+			if(empty($data)){
+				$data = bizink_get_single_content( 'content', $content );
+				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+			}
+			$title = $data->post->post_title;
+		}
+		return $title;
+	}
+
 	public function the_title($post_title) {
-		// && in_the_loop() && is_main_query()
-		if ( is_singular() ) {
+		// && in_the_loop()
+		if ( is_singular() && in_the_loop() ) {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename',false);
 			if($pagename == 'xero-resources' || 
@@ -316,7 +329,6 @@ class Front extends Base {
 						$data = bizink_get_content( $content_type, $type, $d );
 						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
-					//$data = bizink_get_content( $content_type, $type, $d );
 		
 					if( isset( $data->subscriptions_expiry ) ) {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -481,13 +493,13 @@ class Front extends Base {
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 	        }
-			echo cxbc_get_template( 'content', 'views', [ 'response' => $data ] );
+			echo apply_filters('the_content', cxbc_get_template( 'content', 'views', [ 'response' => $data ] ) );
 	        die;
 	    }
 	    return $body;
 	}
 
-	public function wpseo_canonical($canonical){
+	public function bizpress_wpseo_canonical($canonical){
 		global $wp;
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
