@@ -280,7 +280,7 @@ class Settings extends Base {
 			array_push($bispressPluginsScreen,[
 				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_blogs.svg',
 				'name' => 'BizPress Blogs',
-				'description' => 'A tool for impoting Blogs to your website.',
+				'description' => 'A tool for importing Blogs to your website.',
 				'url' => 'https://docs.google.com/uc?export=download&id=1Tz4JFRuD8ZRtluvtmPNUHpUKK7YOaBkM',
 				'plugin' => 'bizpress-blogs/bizpress-blogs.php',
 				'installed' => $bizpressPlugins['bizpress-blogs']
