@@ -124,10 +124,12 @@ final class Plugin {
 			$shortcode = new Shortcode( $this->plugin );
 			// Bizink Shortcode
 			$shortcode->register( 'bizink-content', 'bizink_content' );
+			$shortcode->register( 'bizink-title', 'bizpress_title' );
 			$shortcode->register( 'bizink-landing', 'bizink_landing' );
 
 			// Bizpress Shortcode
 			$shortcode->register( 'bizpress-content', 'bizink_content' );
+			$shortcode->register( 'bizpress-title', 'bizpress_title' );
 			$shortcode->register( 'bizpress-landing', 'bizink_landing' );
 
 		endif;

@@ -37,28 +37,134 @@ class Shortcode extends Base {
         $this->ncrypt   = ncrypt();
     }
 
-    public function bizink_content() {
+    public function bizpress_title($args = array(), $content = null, $tag = ''){
+        $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+        $bizpress_title_atts = shortcode_atts(
+            array(
+                'title' => get_the_title(),
+                'use_default' => 'true',
+            ), $atts, $tag
+        );
 
-        $curent_page_id = get_the_ID();
-        $content_type   = bizink_get_content_type( $curent_page_id );
+        $pagename = get_query_var('pagename');
+		$content = get_query_var( 'bizpress');
+		$type = get_query_var( 'type' );
+		$topic = get_query_var( 'topic' );
+		$calculator = get_query_var('calculator');
+		$type = '';
+		if($content){
+			$type = 'content';
+		}
+		else if($topic){
+			$type = 'topic';
+		}
+		else if($type){
+			$type = 'type';
+		}
+		else if($calculator){
+			$type = 'calculator';
+		}
 
-        if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
-            $data = bizink_get_content( $content_type, 'topics' );
-            return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+		if( !empty($content) && !empty($type) && (
+		$pagename == 'keydates' ||
+		$pagename == 'bizink-client-keydates' ||
+		$pagename == 'xero-resources' ||
+		$pagename == 'myob-resources' || 
+		$pagename == 'quickbooks-resources' || 
+		$pagename == 'sage-resources' ||
+		$pagename == 'business-resources' ||
+		$pagename == 'payroll-resources' ||
+		$pagename == 'payroll-glossary' ||
+		$pagename == 'calculators') ){
+            $data = get_transient("bizinkcontent_".md5($content));
+			if(empty($data)){
+				$data = bizink_get_single_content( 'content', $content );
+				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+			}
+			return apply_filters('the_title',$data->post->post_title);
         }
-        else if($content_type == 'calculator-content'){
-            $data = bizink_get_content( $content_type, 'calculators' );
-            return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
+        if($bizpress_title_atts['use_default'] == true || $bizpress_title_atts['use_default'] == 'true'){
+            return apply_filters('the_title',$bizpress_title_atts['title']);
         }
         else{
-            $data = get_transient("bizinktype_".$content_type);
-			if(empty($data)){
-				$data = bizink_get_content( $content_type, 'type');
-				set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
-			}
-            $data = bizink_get_content( $content_type, 'topics' );
-            return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+            return '';
         }
+    }
+
+    public function bizink_content() {
+
+		$pagename = get_query_var('pagename');
+		$content = get_query_var( 'bizpress');
+		$type = get_query_var( 'type' );
+		$topic = get_query_var( 'topic' );
+		$calculator = get_query_var('calculator');
+		$type = '';
+		if($content){
+			$type = 'content';
+		}
+		else if($topic){
+			$type = 'topic';
+		}
+		else if($type){
+			$type = 'type';
+		}
+		else if($calculator){
+			$type = 'calculator';
+		}
+
+		if( !empty($content) && !empty($type) && (
+		$pagename == 'keydates' ||
+		$pagename == 'bizink-client-keydates' ||
+		$pagename == 'xero-resources' ||
+		$pagename == 'myob-resources' || 
+		$pagename == 'quickbooks-resources' || 
+		$pagename == 'sage-resources' ||
+		$pagename == 'business-resources' ||
+		$pagename == 'payroll-resources' ||
+		$pagename == 'payroll-glossary' ||
+		$pagename == 'calculators') ){
+
+            $data = get_transient("bizinkcontent_".md5($content));
+			if(empty($data)){
+				$data = bizink_get_single_content( 'content', $content );
+				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+			}
+
+            $anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+			data-id="'.$data->post->ID.'"
+			data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+			data-single="true"
+			data-title="'.$data->post->post_title.'" 
+			data-slug="'.$data->post->post_name.'" 
+			data-posttype="'.$data->post->post_type.'"
+			data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+			data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+
+			return apply_filters('the_content',$data->post->post_content). $anyliticsData;
+        }
+        else{
+            $curent_page_id = get_the_ID();
+            $content_type   = bizink_get_content_type( $curent_page_id );
+
+            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
+                $data = bizink_get_content( $content_type, 'topics' );
+                return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+            }
+            else if($content_type == 'calculator-content'){
+                $data = bizink_get_content( $content_type, 'calculators' );
+                return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
+            }
+            else{
+                $data = get_transient("bizinktype_".$content_type);
+                if(empty($data)){
+                    $data = bizink_get_content( $content_type, 'type');
+                    set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
+                }
+                $data = bizink_get_content( $content_type, 'topics' );
+                return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+            }
+        }
+
     }
 
     public function bizink_landing( $args ) {

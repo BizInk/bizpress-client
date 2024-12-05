@@ -199,7 +199,7 @@ class Front extends Base {
 	}
 
 	public function the_post( $post ){
-		global $wp, $wp_query, $post;
+		global $wp, $wp_query;
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		$pagename = get_query_var('pagename');
 		$content = get_query_var( 'bizpress');
