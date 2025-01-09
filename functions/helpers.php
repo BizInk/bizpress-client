@@ -389,7 +389,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body);
-	if(defined('WP_DEBUG') && WP_DEBUG == true){
+	if(defined('WP_DEBUG') && WP_DEBUG == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true){
 		if(!empty($data->data)){
 			if($data->data->status > 399){
 				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
@@ -474,7 +474,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
-	if(defined('WP_DEBUG') && WP_DEBUG == true){
+	if(defined('WP_DEBUG') && WP_DEBUG == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true){
 		if(!empty($data->data)){
 			if($data->data->status > 399){
 				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
