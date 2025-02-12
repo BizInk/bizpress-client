@@ -195,7 +195,8 @@ class Settings extends Base {
 		];
 
 		$content_manager_fields = apply_filters('bizpress_content_manager_fields',array());
-		$content_manager_hide = empty($content_manager_fields) ? true : false;
+		//$content_manager_hide = empty($content_manager_fields);
+		$content_manager_hide = true; // Hidden - This is in BATA
 
 		$bizpress_product = get_option('bizpress_product');
 		if(empty($bizpress_product)){

@@ -71,6 +71,7 @@ class Shortcode extends Base {
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' || 
+        $pagename == 'freshbooks-resources' ||
 		$pagename == 'sage-resources' ||
 		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||
@@ -117,7 +118,8 @@ class Shortcode extends Base {
 		$pagename == 'bizink-client-keydates' ||
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
-		$pagename == 'quickbooks-resources' || 
+		$pagename == 'quickbooks-resources' ||
+        $pagename == 'freshbooks-resources' || 
 		$pagename == 'sage-resources' ||
 		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||

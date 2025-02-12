@@ -312,6 +312,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 	elseif ( 'quickbooks-content' == $post_type ) {
 		$taxonomy_topics = 'quickbooks-topics';
 	}
+	elseif ( 'freshbooks-content' == $post_type ) {
+		$taxonomy_topics = 'freshbooks-topics';
+	}
 	elseif ( 'payroll-content' == $post_type ) {
 		$taxonomy_topics = 'payroll-topics';
 	}
