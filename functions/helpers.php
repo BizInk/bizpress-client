@@ -361,6 +361,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 	$args = [
 		'rest_route'    => "/bizink-publisher/v1.1/{$api_endpoint}",
         'per_page'      => $per_paage,
+		'status'        => 'publish',
 		'post_type'     => $post_type,
 		'country'		=> $country,
         'region'		=> $content_region,
