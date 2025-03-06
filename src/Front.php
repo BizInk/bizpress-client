@@ -521,7 +521,8 @@ class Front extends Base {
 		if($type || $topic || $calculator || $content){
 			$canonical = $current_url;
 		}
-		return $canonical;
+		$ending = substr(get_option('permalink_structure'), -1) == '/' ? '/':'';
+		return $canonical.$ending;
 	}
 
 	public function body_class( $classes ){
