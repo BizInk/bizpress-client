@@ -103,8 +103,9 @@ final class Plugin {
 			$front->filter( 'the_content', 'the_content',1);
 			$front->filter( 'the_post' ,'the_post',1);
 
-			$front->filter( 'wpseo_title', 'wpseo_title');
-			$front->filter( 'wpseo_opengraph_title', 'wpseo_title');
+			$front->filter( 'wpseo_title', 'bizpress_wpseo_title');
+			$front->filter( 'wpseo_metadesc', 'bizpress_wpseo_metadesc');
+			$front->filter( 'wpseo_opengraph_title', 'bizpress_wpseo_title');
 			$front->filter( 'wpseo_canonical', 'bizpress_wpseo_canonical');
 			$front->filter( 'wpseo_opengraph_url', 'bizpress_wpseo_canonical');
 			

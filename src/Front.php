@@ -275,7 +275,7 @@ class Front extends Base {
 		return $post;
 	}
 
-	public function wpseo_title($title){
+	public function bizpress_wpseo_title($title){
 		$content = get_query_var( 'bizpress');
 		if($content && is_singular()){
 			$data = get_transient("bizinkcontent_".md5($content));
@@ -286,6 +286,19 @@ class Front extends Base {
 			$title = $data->post->post_title;
 		}
 		return $title;
+	}
+
+	public function bizpress_wpseo_metadesc($desc){
+		$content = get_query_var( 'bizpress');
+		if($content && is_singular()){
+			$data = get_transient("bizinkcontent_".md5($content));
+			if(empty($data)){
+				$data = bizink_get_single_content( 'content', $content );
+				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+			}
+			$desc = $data->post->post_excerpt ? $data->post->post_excerpt : $data->post->post_title;
+		}
+		return $desc;
 	}
 
 	public function the_title($post_title) {
