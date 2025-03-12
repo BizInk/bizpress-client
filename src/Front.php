@@ -525,6 +525,7 @@ class Front extends Base {
 
 	public function bizpress_wpseo_canonical($canonical){
 		global $wp;
+		$ending = '';
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
@@ -533,8 +534,8 @@ class Front extends Base {
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		if($type || $topic || $calculator || $content){
 			$canonical = $current_url;
+			$ending = substr(get_option('permalink_structure'), -1) == '/' ? '/':'';
 		}
-		$ending = substr(get_option('permalink_structure'), -1) == '/' ? '/':'';
 		return $canonical.$ending;
 	}
 
