@@ -1,4 +1,9 @@
 jQuery(function($){
+
+	$('.bizpress-calculator .bizpress-iframe-calculator').each(function(index, el) {
+		
+	});
+
 	var height = 0;
 	$('.cxbc-posts-list .cxbc-post-title').each(function(index, el) {
 		if ( height < $(this).height() ) {
@@ -66,7 +71,6 @@ jQuery(function($){
 			e.preventDefault();
 			let page = parseInt($('.bizpress_pagnation').data('page')) + 1;
 			let totalpages = $('.bizpress_pagnation').data('totalpages');
-			console.log("BisPress New Page: "+page);
 			if(page <= totalpages){
 				$('.bizpress_pagnation').data('page',page);
 				$('.bizpress_pagnation_link_page').removeClass('active');

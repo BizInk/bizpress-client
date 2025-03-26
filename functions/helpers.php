@@ -589,3 +589,27 @@ function bizink_bizpress_display_pagnation($numPages = 2,$page = 1){
 	<?php
 	ob_end_flush();
 }
+
+if(!function_exists('bizpress_get_regons')){
+	function bizpress_get_regons(){
+		global $bizink_bace,$bizinkcontent_client;
+		if(get_transient('bizpress_blog_regions')){
+			return get_transient('bizpress_blog_regions');
+		}
+		$regionUrl = add_query_arg(array( '_fields' => 'id,name,slug','count' ),wp_slash($bizink_bace.'region'));
+		$response = wp_remote_get($regionUrl,$bizinkcontent_client);
+		$status = wp_remote_retrieve_response_code($response);
+		if($status < 400){
+			$body = json_decode(wp_remote_retrieve_body( $response ));
+			set_transient('bizpress_blog_regions', $body, DAY_IN_SECONDS * 5);
+			return $body;
+		}
+		else{
+			return array(
+				'status' => 'error',
+				'type' => 'fetch_error_regions',
+				'message' => 'There was an error fetching the regions.'
+			);
+		}
+	}
+}
