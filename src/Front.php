@@ -68,7 +68,7 @@ class Front extends Base {
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
 		wp_localize_script( $this->slug.'-front', 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
-		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/fontawesome.min.css", CXBPC ), '', $this->version, 'all' );
+		//wp_enqueue_style( $this->slug, plugins_url( "/assets/css/fontawesome.min.css", CXBPC ), '', $this->version, 'all' );
 	}
 
 	public function query_vars( $query_vars ) {

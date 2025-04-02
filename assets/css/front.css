@@ -464,26 +464,29 @@ iframe#myframe {
 
 .bizpress-glossary {
 	list-style:none;
-	max-width: 800px;
-	margin:auto;
+	width: 100%;
 }
-.bizpress-glossary .bizpress-glossary-component:nth-child(even){
+.bizpress-glossary .bizpress-glossary-components{
 	background-color: #edf2f6;
+	padding:1rem;
+	display: none;
 }
-.bizpress-glossary .bizpress-glossary-component{
-	padding:1rem 2rem;
+.bizpress-glossary .bizpress-glossary-components.active{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
 }
-.bizpress-glossary .bizpress-glossary-component h2.bizpress-glossary-title {
+.bizpress-glossary .bizpress-glossary-components .bizpress-glossary-component h2.bizpress-glossary-title {
 	text-transform:uppercase;
 	font-size:3rem;
 	color:#213B78;
 }
-.bizpress-glossary .bizpress-glossary-component .bizpress-glossary-paragraph {
+.bizpress-glossary .bizpress-glossary-components .bizpress-glossary-component .bizpress-glossary-paragraph {
 	list-style:none;
 	padding-left: 0px;
 }
-.bizpress-glossary .bizpress-glossary-component .bizpress-glossary-paragraph .bizpress-glossary-link{
-	font-size:1.1rem;
+.bizpress-glossary .bizpress-glossary-components .bizpress-glossary-component .bizpress-glossary-link{
+	font-size:0.8rem;
 	text-decoration: none;
 	font-weight:normal;
 	color:#213B78;
@@ -497,4 +500,59 @@ iframe#myframe {
 .bizpress-calculator .bizpress-iframe-calculator{
 	width:100%;
 	height: 600px;
+}
+.bizpress-glossary .bizpress-glossary-header{
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+.bizpress-glossary .bizpress-glossary-header::before, .bizpress-glossary .bizpress-glossary-header::after{
+	margin-top: 1rem;
+	color: #474d58;
+	margin-bottom: 1rem;
+	position: absolute;
+	display: block;
+	width: 30px;
+	height: 30px;
+}
+.bizpress-glossary .bizpress-glossary-header::before{
+	content: '<';
+	left: 0;
+}
+.bizpress-glossary .bizpress-glossary-header::after{
+	content: '>';	
+	right: 0;
+}
+.bizpress-glossary .bizpress-glossary-header::before:hover,.bizpress-glossary .bizpress-glossary-header::after:hover{
+	color: #18303f;
+}
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list{
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	transition: transform .8s;
+}
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list .bizpress-glossary-header-item{
+	list-style: none;
+	padding: 0.2rem 1.3rem;
+	text-decoration: none;
+	border-bottom: 4px solid #b5bdc2;
+	color: #b5bdc2;
+	font-size: 0.7rem;
+	text-align: center;
+}
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list .bizpress-glossary-header-item:hover{
+	border-color: #474d58;
+	color: #474d58;
+}
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list .bizpress-glossary-header-item.active{
+	border-color: #18303f;
+	color: #18303f;
+}
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list .bizpress-glossary-header-item.empty,
+.bizpress-glossary .bizpress-glossary-header .bizpress-glossary-header-list .bizpress-glossary-header-item:hover.empty{
+	border-color: #596a75;
+	color: #596a75;
 }
