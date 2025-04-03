@@ -32,6 +32,7 @@ Display business content on your website that is automatically updated by the Bi
 * New Layout for Glossary
 * Remove Old Font Awesome css and fonts
 * New Icons accross BizPress
+* Updater Fix
 
 = 1.8.6 =
 * Css for Calculator

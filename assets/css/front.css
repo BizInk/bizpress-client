@@ -492,8 +492,19 @@ iframe#myframe {
 	color:#213B78;
 	margin-bottom: 0px;
 	padding-bottom:0px;
+	position: relative;
 }
+.bizpress-glossary .bizpress-glossary-components .bizpress-glossary-component .bizpress-glossary-link::before{
+	content: '';
+	background-image: url(../img/icons/arrow-right.svg);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	position: relative;
+	top: 0;
+	left: 0;
 
+}
 .bizpress-calculator{
 	margin:auto;
 }
