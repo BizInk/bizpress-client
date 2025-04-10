@@ -1,8 +1,67 @@
 jQuery(function($){
 
-	$('.bizpress-calculator .bizpress-iframe-calculator').each(function(index, el) {
-		
+	$('.bizpress-glossary .bizpress-glossary-header-before').click(function(e) {
+		e.preventDefault();
+		var id = $(this).parent().parent().data('id');
+		var current_tab = parseInt($(this).parent().parent().data('selected')) + -1;
+		if( current_tab == null || current_tab < 0 ){
+			current_tab = 0;
+		}
+		change_glossary_display(id, current_tab);
+		$(this).parent().parent().data('selected',current_tab);
+		console.log("Before: Tab: "+current_tab+' id: '+id);
 	});
+	$('.bizpress-glossary .bizpress-glossary-header-after').click(function(e) {
+		e.preventDefault();
+		var id = $(this).parent().parent().data('id');
+		var current_tab = parseInt($(this).parent().parent().data('selected')) + 1;
+		var last_item = parseInt($(this).parent().parent().data('last'));
+		if( current_tab == null || current_tab > last_item ){
+			current_tab = last_item;
+		}
+		change_glossary_display(id, current_tab);
+		$(this).parent().parent().data('selected',current_tab);
+		console.log("After: Tab: "+current_tab+' id: '+id);
+	});
+
+	$('.bizpress-glossary  .bizpress-glossary-header-list .bizpress-glossary-header-item ').click(function(e) {
+		e.preventDefault();
+		var id = $(this).parent().parent().parent().data('id');
+		var current_tab = parseInt($(this).data('tab'));
+		var last_item = parseInt($(this).parent().parent().data('last'));
+		if( current_tab == null || current_tab < 0 ){
+			current_tab = 0;
+		}
+		if( current_tab == null || current_tab > last_item ){
+			current_tab = last_item;
+		}
+
+		change_glossary_display(id, current_tab);
+		$(this).parent().parent().parent().data('selected',current_tab);
+		console.log("Item: Tab: "+current_tab+' id: '+id);
+		$('.bizpress-glossary .bizpress-glossary-header-list .bizpress-glossary-header-item').removeClass('active');
+		$(this).addClass('active');
+	});
+
+	function change_glossary_display(glossary_id, changeTo = 0){
+		console.log("change_glossary_display: "+changeTo+' glossary_id: '+glossary_id);
+		$('.bizpress-glossary .bizpress-glossary-header-list .bizpress-glossary-header-item.active').removeClass('active');
+		$('.bizpress-glossary .bizpress-glossary-content .bizpress-glossary-components.active').removeClass('active');
+
+		$('#'+glossary_id+' .bizpress-glossary-header-list .bizpress-glossary-header-item').each(function(index, el) {
+			if( $(this).data('tab') == changeTo ){
+				$(this).addClass('active');
+			}
+		});
+
+		$('#'+glossary_id+' .bizpress-glossary-content .bizpress-glossary-components').each(function(index, el) {
+			if( $(this).data('tab') == changeTo ){
+				$(this).addClass('active');
+			}
+		});
+
+	}
+
 
 	var height = 0;
 	$('.cxbc-posts-list .cxbc-post-title').each(function(index, el) {

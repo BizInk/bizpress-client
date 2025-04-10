@@ -3,7 +3,6 @@ if( !function_exists( 'get_plugin_data' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
 
-
 /**
  * Bizpress Site ID
  */
@@ -250,17 +249,24 @@ function ncrypt() {
 }
 endif;
 
+function bizpress_getoptions(){
+	$options = get_option( 'bizink-client_basic' );
+	if(empty($options)){
+		$options = array(
+			'user_email' => '',
+			'user_password' => '',
+			'content_region' => 'au',
+		);
+
+	}
+	return $options;
+}
+
 function bizpress_landingpage_all(){
 	//$data = get_transient("bizpress_landingpages");
 	$args = bizink_url_authontication();
 	$base_url = bizink_get_master_site_url();
-	$options = get_option( 'bizink-client_basic' );
-    if(empty($options['user_email'])){
-		$options['user_email'] = '';
-	}
-	if(empty($options['user_password'])){
-		$options['user_password'] = '';
-	}
+	$options = bizpress_getoptions();
 	$url = add_query_arg( [ 
         'email'         => $options['user_email'],
         'password'      => ncrypt()->encrypt( $options['user_password'] ),
@@ -277,17 +283,7 @@ function bizpress_landingpage_all(){
 }
 
 function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
-    $options = get_option( 'bizink-client_basic' );
-	if(empty($options['content_region'])){
-		$options['content_region'] = 'au';
-	}
-	if(empty($options['user_email'])){
-		$options['user_email'] = '';
-	}
-	if(empty($options['user_password'])){
-		$options['user_password'] = '';
-	}
-
+    $options = bizpress_getoptions();
 	if(!empty($paged)){
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 	}
@@ -393,14 +389,6 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body);
-	if(defined('WP_DEBUG') && WP_DEBUG == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true){
-		if(!empty($data->data)){
-			if($data->data->status > 399){
-				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
-				echo '<p><b>Message:</b> '.$data->message.'</p>';
-			}
-		}
-	}
 	if(!empty($data->product)){
 		update_option('bizpress_product', $data->product);
 	}
@@ -411,19 +399,9 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 }
 
 function bizink_get_single_content( $api_endpoint, $slug = '' ) {
-    $key            = 'bizink-client_basic';
-    $options        = get_option( $key );
+    $options        = bizpress_getoptions();
     $paged          = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
     $base_url 		= bizink_get_master_site_url();
-	if(empty($options['content_region'])){
-		$options['content_region'] = 'au';
-	}
-	if(empty($options['user_email'])){
-		$options['user_email'] = '';
-	}
-	if(empty($options['user_password'])){
-		$options['user_password'] = '';
-	}
 	$keydate_country = 'AU';
 	switch(strtolower($options['content_region'])){
 		case 'ca':
@@ -478,14 +456,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
     $request    = wp_remote_get( $url, bizink_url_authontication() );
     $body       = wp_remote_retrieve_body( $request );
     $data       = json_decode( $body );
-	if(defined('WP_DEBUG') && WP_DEBUG == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true && defined('WP_DEBUG_DISPLAY') && WP_DEBUG_DISPLAY == true){
-		if(!empty($data->data)){
-			if($data->data->status > 399){
-				echo '<p><b>Bizpress Error:</b> '.$data->code.' - '.$data->data->status.'</p>';
-				echo '<p><b>Message:</b> '.$data->message.'</p>';
-			}
-		}
-	}
 	if(!empty($data->product)){
 		update_option('bizpress_product', $data->product);
 	}
@@ -497,9 +467,6 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 
 /**
  * bizink content type
- *
- * @return type
- * @author akash <alimranakash.bd@gmail.com>
  */
 function bizink_get_content_type( $curent_page_id ) {
 	$content_type = [];
@@ -515,9 +482,6 @@ function bizink_get_content_type( $curent_page_id ) {
 
 /**
  * Master site url
- *
- * @return url
- * @author akash <alimranakash.bd@gmail.com>
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
@@ -528,8 +492,6 @@ endif;
 /**
  * API Authontication details
  *
- * @return array
- * @author ace <ace@bizinkonline.com>
  */
 if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()

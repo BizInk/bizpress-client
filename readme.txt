@@ -28,13 +28,13 @@ Display business content on your website that is automatically updated by the Bi
 * Added Support for uses to hide & edit BizPress Content
 * Flexable iFrame video embeds
 
-= 1.8.8 =
+= 1.8.7 =
 * New Layout for Glossary
 * Remove Old Font Awesome css and fonts
 * New Icons accross BizPress
 * Updater Fix
-
-= 1.8.7 =
+* Fix Warnings
+* Bug Fix
 * Updater Fix
 
 = 1.8.6 =

@@ -4,7 +4,6 @@ namespace codexpert\Bizink_Client;
 /**
  * Main class for the plugin
  * @package Plugin
- * @author codexpert <hello@codexpert.io>
  */
 final class Plugin {
 	

@@ -68,7 +68,6 @@ class Front extends Base {
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
 		wp_localize_script( $this->slug.'-front', 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
-		//wp_enqueue_style( $this->slug, plugins_url( "/assets/css/fontawesome.min.css", CXBPC ), '', $this->version, 'all' );
 	}
 
 	public function query_vars( $query_vars ) {
@@ -191,18 +190,24 @@ class Front extends Base {
 			}
 			
 			$data = get_transient("bizinkcontent_".md5($content));
+			if(!empty($data->status) && ($data->status == 500 || $data->status == 403) ){
+				$data = null;
+			}
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
 				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
+
+			if(!empty($data) && !empty($data->post)){
+				$query->set('post_title',$data->post->post_title ?? '');
+				$query->set('title',$data->post->post_title ?? '');
+				$query->set('post_content',$data->post->post_content ?? '');
+				$query->set('post_date',$data->post->post_date ?? '');
+				$query->set('post_name',$data->post->post_name ?? '');
+				$query->set('post_date_gmt',$data->post->post_date_gmt ?? '');
+				set_query_var('bizpress_data',$data ?? '');
+			}
 			
-			$query->set('post_title',$data->post->post_title);
-			$query->set('title',$data->post->post_title);
-			$query->set('post_content',$data->post->post_content);
-			$query->set('post_date',$data->post->post_date);
-			$query->set('post_name',$data->post->post_name);
-			$query->set('post_date_gmt',$data->post->post_date_gmt);
-			set_query_var('bizpress_data',$data);
 		}
 	}
 
