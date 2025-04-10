@@ -257,7 +257,15 @@ function bizpress_getoptions(){
 			'user_password' => '',
 			'content_region' => 'au',
 		);
-
+	}
+	if(empty($options['user_email'])){
+		$options['user_email'] = '';
+	}
+	if(empty($options['user_password'])){
+		$options['user_password'] = '';
+	}
+	if(empty($options['content_region'])){
+		$options['content_region'] = 'au';
 	}
 	return $options;
 }
