@@ -374,6 +374,14 @@ class Settings extends Base {
 							'shortcode' => '[bizpress-content]',
 							'copy' => true
 						],
+						'cache' => [
+							'id'      => 'cache',
+							'label'     => __( 'Cache', 'bizink-client' ),
+							'button'     => __( 'Clear Cache', 'bizink-client' ),
+							'type'      => 'admin_button',
+							'desc'      => __( 'Clear BizPress caches and load fresh content on next load.', 'bizink-client' ),
+							'required'	=> false,
+						]
 					]
 				],
 				'bizink-client_content'	=> [

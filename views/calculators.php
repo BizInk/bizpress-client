@@ -48,7 +48,6 @@ echo "<h2>{$default_title}</h2>";
 echo "<p>{$default_desc}</p>";
 echo "</div>";
 
-//$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
 echo "<div class='cxbc-posts-list'>";
 echo "<div class='cxbc-posts-list-bottom'>";
 

@@ -301,7 +301,8 @@ class Front extends Base {
 				$data = bizink_get_single_content( 'content', $content );
 				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
-			$desc = $data->post->post_excerpt ? $data->post->post_excerpt : $data->post->post_title;
+			$desc = ($data->post->post_excerpt && mb_strlen($data->post->post_excerpt) != 0) ? $data->post->post_excerpt : $data->post->post_title;
+			
 		}
 		return $desc;
 	}
@@ -433,7 +434,7 @@ class Front extends Base {
 					data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
 					data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 
-					$contentData =  $data->post->post_content ? $data->post->post_content : $contentData;
+					$contentData = $data->post->post_content ? $data->post->post_content : $contentData;
 					$contentData = $contentData . $anyliticsData;
 				}
 			}

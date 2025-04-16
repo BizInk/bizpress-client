@@ -180,7 +180,6 @@ if (strpos($post_type, 'keydates') === false) {
 	echo "<p>{$term_desc}</p>";
 	echo "</div>";
 
-	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
 	echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-bottom'>";
 
@@ -243,7 +242,6 @@ else{
 		echo "<p>Key lodgement and payment dates for this financial year are: </p>";
 	echo "</div>";
 
-	$next_icon 	= plugins_url( 'assets/img/next-icon.png', CXBPC );
 	echo "<div class='cxbc-posts-list'>";
 		echo "<div class='cxbc-posts-list-top'>";
 			echo "<ul>";

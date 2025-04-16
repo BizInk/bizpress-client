@@ -316,6 +316,28 @@ abstract class Fields extends Base {
 		return $html;
 	}
 
+	public function field_admin_button($field, $section, $scope){
+		$label 				= $field['label'];
+		$button			= $field['button'];
+		$action 			= $field['action'] ? $field['action'] : 'admin_button';
+		if(empty($button)){
+			$button = 'No Button';
+		}
+		$id 			= "{$section['id']}-{$field['id']}";
+		$class 			= "cx-field-{$field['type']}";
+		$class 			.= isset( $field['class'] ) ? $field['class'] : '';
+		$_nonce = wp_create_nonce('cx-button');
+		$html = "<div class='{$class}' id='{$id}'><button data-nonce='{$_nonce}' class=\"button admin_button button-info button-small\">{$button}</button></div>";
+
+		/**
+		 	$_nonce = wp_create_nonce('cx-createpage');
+			$html .= "<button id=\"selectbutton-{$name}\" data-nonce='{$_nonce}' data-select=\"#select-{$name}\" data-post_type='".$default_page['post_type']."' data-post_status='".$default_page['post_status']."' data-post_content='".$default_page['post_content']."' data-post_title='".$default_page['post_title']."' class=\"button button-primary selectbutton cx-createpage\" type=\"button\">".__("Create Page")."</button>";
+			$html .= "</div>";
+		 */
+
+		return $html;
+	}
+
 	public function field_admin_message($field, $section, $scope){
 		$label 				= $field['label'];
 		$message			= $field['message'];
