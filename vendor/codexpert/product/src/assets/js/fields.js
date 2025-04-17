@@ -36,6 +36,39 @@ jQuery(function ($) {
         $(target).show();
         localStorage.setItem("active_cx_tab", target);
     });
+    $(".cx-button").click(function (e) {
+        e.preventDefault();
+        var button = $(this);
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            dataType: "JSON",
+            data: { 
+                action: "cx-button",
+                _wpnonce: $(this).data("nonce")
+            },
+            success: function (ret) {
+                if (ret.status == 1) {
+                    $(button).hide();
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-green'>"+__('Page Created')+"</div>");
+                    $($(button).data("select")).append($('<option>', {
+                        value: ret.page_id,
+                        text: ret.page.post_title
+                    }));
+                    //$($(button).data("select")).append("<option value='"+ret.page_id+"'>"+ret.page.post_title+"</option>");
+                    $($(button).data("select")).val(ret.page_id);
+
+                }
+                else{
+                    $(button).before("<div class='cx-plugin-install-grid-item-status cx-plugin-install-grid-item-status-red'>Error: "+ret.message+"</div>");
+                }
+            },
+            error: function (ret) {
+                console.log(ret);
+                alert("Something went wrong. Please try again later.");
+            }
+        });
+    });
     $(".cx-createpage").click(function (e) {
         e.preventDefault();
         var button = $(this);
