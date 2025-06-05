@@ -579,10 +579,16 @@ iframe#myframe {
 	padding: 1.2rem 0;
 }
 
+.bizpress_card_container{
+	width: 100%;
+	margin: auto;
+}
+.bizpress_card_container .bizpress_card{
+	margin: auto;
+}
 .bizpress_card{
     position: relative;
-    display: flex;
-    flex-direction: column;
+	margin: auto;
     min-width: 0;
     color: #000;
     word-wrap: break-word;
@@ -591,4 +597,67 @@ iframe#myframe {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 6px;
 	padding: 1rem;
+}
+.bizpress-resource-grid{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+}
+
+.bizpress-resource-grid .bizpress-resource-type-link .bizpress-resource-type-icon{
+	padding:0.5rem;
+}
+
+.bizpress-resource-type-link{
+	text-decoration: none;
+}
+
+.bizpress-resource-type{
+	background-color: #fefefe;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding: 1rem;
+	text-align: center;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.bizpress-resource-type:hover{
+	transform: translateY(-5px);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	background-color: #eee;
+}
+
+.bizpress-resource-type .bizpress-resource-type-icon{
+	text-align: center;
+}
+
+.bizpress-resource-type .bizpress-resource-type-icon svg,
+.bizpress-resource-type .bizpress-resource-type-icon img{
+	max-width: 180px;
+	max-height: 180px;
+	aspect-ratio: 1/1;
+	margin: auto;
+}
+
+.bizpress-resource-type-link, .bizpress-resource-type-link:focus{
+	color: #fff;
+}
+
+.bizpress-resource-type .bizpress-resource-type-title{
+	text-align: center;
+	font-size: 1.5rem;
+	color: #000;
+	margin-top: 0.5rem;
+}
+
+.bizpress_template_link{
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	background-color: #14428c;
+	color: #fff;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+.bizpress_template_link:hover{
+	background-color: #0274be;
+	color: #fff;
 }

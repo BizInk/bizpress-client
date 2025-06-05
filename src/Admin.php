@@ -169,4 +169,8 @@ class Admin extends Base {
 		);
 		register_post_type( 'bizpress_resource', $args );
 	}
+
+	function bizpress_clear_cache(){
+		
+	}
 }

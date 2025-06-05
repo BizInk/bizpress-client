@@ -1,5 +1,4 @@
 <?php 
-
 extract( $args );
 
 if ( empty($responce) && empty($args['response']) ) {
@@ -9,7 +8,6 @@ if ( empty($responce) && empty($args['response']) ) {
 	}
 	return;
 }
-
 
 if ( $response->status == 0 ) {
 	if(empty($response->message)){
@@ -31,9 +29,9 @@ $type = ucwords( str_replace( [ '-', '_' ], [ ' ' ], $post_type ) );
 $content = apply_filters( 'the_content', $post_content );
 $content = do_shortcode($content);
 
-
 if(!function_exists('luca')) {
 	get_header();
+	echo '<main id="main" role="main" class="bizpress-content-layout">';
 }
 else{
 	get_template_part('templates/head');
@@ -44,29 +42,29 @@ else{
 	if ( array_key_exists( 'bizink-client-luca-header' , $GLOBALS['wp_filter']) ) {
 		echo apply_filters( 'bizink-client-luca-header', $type);
 	}
-	echo '<main class="main"><div class="section">';
+	echo '<main class="main"><div class="section bizpress-content-layout">';
 	echo '<div class="container">';
 }
+?>
+	<div class="container">
+		<div id='primary' class='cxbc-content-area content-area primary'>
+			<?php
+			if(!function_exists('luca')) {
+				echo "<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>";
+			}
+			?>
 
-echo '<main id="main" role="main" class="bizpress-content-layout">';
-echo '<div class="container">';
-echo "<div id='primary' class='cxbc-content-area content-area primary'>";
-if(!function_exists('luca')) {
-	echo "<header class='entry-header'><h1 class='entry-title'>{$type}</h1></header>";
-}
-//<img class='cxbc-item-thumbnail' src='{$thumbnail}'>
-echo "
-	<div class='ast-article-single'>
-		<div class='cxbc-single-item cxbc-single-item-{$ID}'>
-			<h2 class='cxbc-item-title'>{$post_title}</h2>
-			{$content}
+			<div class='ast-article-single'>
+				<div class='cxbc-single-item cxbc-single-item-<?php echo $ID; ?>'>
+					<h2 class='cxbc-item-title'><?php echo $post_title; ?></h2>
+					<?php echo $content; ?>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>";
-
-echo '</div></div>';
-
+<?php
 if(!function_exists('luca')) {
+	echo '</main>';
 	get_footer();
 }
 else{

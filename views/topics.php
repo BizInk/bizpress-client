@@ -51,6 +51,14 @@ elseif ( 'xero-content' == $post_type ) {
 	}
 	$page_id =  cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 }
+elseif( 'resources' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'resources_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'resources_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Resources', 'bizink-client');
+	}
+	$page_id =  cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
+}
 elseif ( 'quickbooks-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
 	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_desc' );
@@ -163,6 +171,9 @@ elseif ( 'payroll-content' == $post_type ) {
 elseif ( 'qbo-content' == $post_type ) {
 	$taxonomy_topics = 'qbo-topics';
 }
+elseif ( 'resources' == $post_type ) {
+	$taxonomy_topics = 'resources-topics';
+}
 elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
 }
@@ -182,8 +193,12 @@ if (strpos($post_type, 'keydates') === false) {
 
 	echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-bottom'>";
-
-	$post_count = count($posts);
+	if(empty($posts)){
+		$post_count = 0;
+	}
+	else{
+		$post_count = count($posts);
+	}
 	$pages = ceil($post_count / 12);
 	$item = 0;
 
@@ -207,10 +222,26 @@ if (strpos($post_type, 'keydates') === false) {
 			if(isset($post->hidden) && $post->hidden){
 				continue; // Item is hidden move to next item
 			}
-			$postUrl = get_permalink($page_id) . $post->slug;
+
+			
+
+			if ( 'resources' == $post_type ) {
+				$resource = get_query_var('resource');
+				$postUrl =  get_permalink($page_id) . $resource.'/'. $post->slug;
+			}
+			else{
+				$postUrl =  get_permalink($page_id) . $post->slug;
+			}
+			
 			if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 				$page = get_post($page_id);
-				$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+				if ( 'resources' == $post_type ) {
+					$resource = get_query_var('resource');
+					$postUrl = add_query_arg(array('bizpress' => $post->slug,'resource' => $resource,'pagename' => $page->page_name),get_home_url());
+				}
+				else{
+					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+				}
 			}
 			?>
 			<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
@@ -248,6 +279,7 @@ else{
 			$post_count = 1;
 			foreach ( $posts as $post ) {
 				$postUrl =  get_permalink($page_id) . $post->slug;
+								
 				if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 					$page = get_post($page_id);
 					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
@@ -263,10 +295,12 @@ else{
 }
 
 $dataTopic = isset($_GET[$taxonomy_topics]) ? trim($_GET[$taxonomy_topics]) : "false";
-echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-data-title="'.$default_title.'" 
-data-url="'. get_permalink( get_the_ID() ) .'" 
-data-posttype="'.$post_type.'"
-data-topics="'.$dataTopic.'"
-data-types="'. $taxonomy_topics . '" ></div>';
+if( BIZPRESS_ANALYTICS == true ){
+	echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
+	data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+	data-title="'.$default_title.'" 
+	data-url="'. get_permalink( get_the_ID() ) .'" 
+	data-posttype="'.$post_type.'"
+	data-topics="'.$dataTopic.'"
+	data-types="'. $taxonomy_topics . '" ></div>';
+}

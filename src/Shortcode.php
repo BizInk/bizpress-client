@@ -76,6 +76,8 @@ class Shortcode extends Base {
 		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
+        $pagename == 'businessterms' ||
+        $pagename == 'resources' ||
 		$pagename == 'calculators') ){
             $data = get_transient("bizinkcontent_".md5($content));
 			if(empty($data)){
@@ -99,6 +101,7 @@ class Shortcode extends Base {
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
+        $resource = get_query_var('resource');
 		$type = '';
 		if($content){
 			$type = 'content';
@@ -124,6 +127,8 @@ class Shortcode extends Base {
 		$pagename == 'business-resources' ||
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
+        $pagename == 'businessterms' ||
+        $pagename == 'resources' ||
 		$pagename == 'calculators') ){
 
             $data = get_transient("bizinkcontent_".md5($content));
@@ -148,9 +153,23 @@ class Shortcode extends Base {
             $curent_page_id = get_the_ID();
             $content_type   = bizink_get_content_type( $curent_page_id );
 
-            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' ){
+            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' || $content_type == 'business-terms'){
                 $data = bizink_get_content( $content_type, 'topics' );
                 return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+            }
+            else if($content_type == 'resources'){
+                if($resource){
+                    $data = bizink_get_content( $content_type, 'types', $resource );
+                    $data->topics = (array) $data->types;
+                    $data->posts = $data->topics[$resource]->posts;
+                    unset($data->types);
+                    return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+                }
+                else{
+                    $data = bizink_get_content( $content_type, 'types' );
+                    return cxbc_get_template( 'resources', 'views', [ 'response' => $data ] );
+                }
+                
             }
             else if($content_type == 'calculator-content'){
                 $data = bizink_get_content( $content_type, 'calculators' );

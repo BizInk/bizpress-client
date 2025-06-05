@@ -8,6 +8,11 @@ if( !function_exists( 'get_plugin_data' ) ) {
  */
 if( ! function_exists( 'bizpress_anylitics_get_site_id' ) ) :
 function bizpress_anylitics_get_site_id(){
+	if(defined('BIZPRESS_ANALYTICS') && BIZPRESS_ANALYTICS == false){
+		// Analytics disabled
+		return false;
+	}
+
 	$bizpressOptions = get_option('bizink-client_basic',false);
 	if($bizpressOptions == false){
 		// Bizpress not setup
@@ -68,6 +73,10 @@ function bizpress_anylitics_get_site_id(){
 endif;
 
 function bizpress_update_site($siteID,$siteData){
+	if(defined('BIZPRESS_ANALYTICS') && BIZPRESS_ANALYTICS == false){
+		// Analytics disabled
+		return false;
+	}
 	$args = array(
 		'body' => json_encode($siteData),
 		'method' => 'PUT',
@@ -124,7 +133,6 @@ function cxbc_get_posts( $args = [], $show_heading = true, $show_cached = true )
 
 	//	'orderby' => 'title',
 	//	'order'   => 'DESC',
-	//print_r($posts);
 	$defaults = [
 		'post_type'         => 'post',
 		'posts_per_page'    => -1,
@@ -289,44 +297,13 @@ function bizpress_landingpage_all(){
         return json_decode( wp_remote_retrieve_body( $response ) );
     }
 }
-
-function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
-    $options = bizpress_getoptions();
+function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged = null, $term = 'business-article-topics'){
+	$options = bizpress_getoptions();
 	if(!empty($paged)){
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 	}
     $base_url = bizink_get_master_site_url();
     $content_region = $options['content_region'];
-    $taxonomy_topics = 'business-article-topics';
-	if ( 'business-content' == $post_type ) {
-		$taxonomy_topics = 'business-article-topics';
-	}
-	elseif ( 'business-lifecycle' == $post_type ) {
-		$taxonomy_topics = 'business-topics';
-	}
-	elseif ( 'xero-content' == $post_type ) {
-		$taxonomy_topics = 'xero-topics';
-	}
-	elseif ( 'myob-content' == $post_type ) {
-		$taxonomy_topics = 'myob-topics';
-	}
-	elseif ( 'sage-content' == $post_type ) {
-		$taxonomy_topics = 'sage-topics';
-	}
-	elseif ( 'quickbooks-content' == $post_type ) {
-		$taxonomy_topics = 'quickbooks-topics';
-	}
-	elseif ( 'freshbooks-content' == $post_type ) {
-		$taxonomy_topics = 'freshbooks-topics';
-	}
-	elseif ( 'payroll-content' == $post_type ) {
-		$taxonomy_topics = 'payroll-topics';
-	}
-	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {
-		$taxonomy_topics = 'region';
-	}
-
-    $term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : '';
 	$country = 'AU';
 	switch($options['content_region']){
 		case 'ca':
@@ -404,6 +381,75 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 		update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
 	}
     return $data;
+}
+function bizink_get_content_types($post_type, $api_endpoint, $slug = '', $paged = null){
+	$taxonomy_topics = 'business-article-type';
+	if ( 'business-content' == $post_type ) {
+		$taxonomy_topics = 'business-article-type';
+	}
+	elseif ( 'business-lifecycle' == $post_type ) {
+		$taxonomy_topics = 'business-type';
+	}
+	elseif ( 'xero-content' == $post_type ) {
+		$taxonomy_topics = 'xero-type';
+	}
+	elseif ( 'myob-content' == $post_type ) {
+		$taxonomy_topics = 'myob-type';
+	}
+	elseif ( 'sage-content' == $post_type ) {
+		$taxonomy_topics = 'sage-type';
+	}
+	elseif ( 'quickbooks-content' == $post_type ) {
+		$taxonomy_topics = 'quickbooks-type';
+	}
+	elseif ( 'freshbooks-content' == $post_type ) {
+		$taxonomy_topics = 'freshbooks-type';
+	}
+	elseif ( 'payroll-content' == $post_type ) {
+		$taxonomy_topics = 'payroll-type';
+	}
+	elseif ( 'resources' == $post_type || 'resources-content' == $post_type ) {
+		$taxonomy_topics = 'resources-types';
+	}
+	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {
+		$taxonomy_topics = 'region';
+	}
+	return bizink_get_content_base( $post_type, $api_endpoint, $slug, $paged, $taxonomy_topics );
+}
+
+function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
+    $taxonomy_topics = 'business-article-topics';
+	if ( 'business-content' == $post_type ) {
+		$taxonomy_topics = 'business-article-topics';
+	}
+	elseif ( 'business-lifecycle' == $post_type ) {
+		$taxonomy_topics = 'business-topics';
+	}
+	elseif ( 'xero-content' == $post_type ) {
+		$taxonomy_topics = 'xero-topics';
+	}
+	elseif ( 'myob-content' == $post_type ) {
+		$taxonomy_topics = 'myob-topics';
+	}
+	elseif ( 'sage-content' == $post_type ) {
+		$taxonomy_topics = 'sage-topics';
+	}
+	elseif ( 'quickbooks-content' == $post_type ) {
+		$taxonomy_topics = 'quickbooks-topics';
+	}
+	elseif ( 'freshbooks-content' == $post_type ) {
+		$taxonomy_topics = 'freshbooks-topics';
+	}
+	elseif ( 'payroll-content' == $post_type ) {
+		$taxonomy_topics = 'payroll-topics';
+	}
+	elseif ( 'resources' == $post_type || 'resources-content' == $post_type ) {
+		$taxonomy_topics = 'resources-topics';
+	}
+	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {
+		$taxonomy_topics = 'region';
+	}
+	return bizink_get_content_base( $post_type, $api_endpoint, $slug, $paged, $taxonomy_topics );
 }
 
 function bizink_get_single_content( $api_endpoint, $slug = '' ) {
@@ -493,7 +539,8 @@ function bizink_get_content_type( $curent_page_id ) {
  */
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
-	return 'https://bizinkcontent.com/';
+	//return 'https://bizinkcontent.com/';
+	return 'http://bizpresspublish.localhost/';
 }
 endif;
 
