@@ -552,7 +552,7 @@ if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()
 {
 	return array(
-		'timeout' => 10,
+		'timeout' => 20,
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',

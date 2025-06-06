@@ -160,10 +160,16 @@ class Shortcode extends Base {
             else if($content_type == 'resources'){
                 if($resource){
                     $data = bizink_get_content( $content_type, 'types', $resource );
-                    $data->topics = (array) $data->types;
-                    $data->posts = $data->topics[$resource]->posts;
-                    unset($data->types);
-                    return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+                    if(!empty($data)){
+                        $data->topics = (array)$data->types;
+                        $data->posts = $data->topics[$resource]->posts;
+                        unset($data->types);
+                        return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+                    }
+                    else{
+                        return "";
+                    }
+                    
                 }
                 else{
                     $data = bizink_get_content( $content_type, 'types' );
