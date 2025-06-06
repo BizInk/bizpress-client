@@ -242,6 +242,7 @@ class Front extends Base {
 				set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 			}
 
+			
 			if(!empty($data) && !empty($data->post)){
 				
 				$query->set('post_title',$data->post->post_title ?? '');
@@ -285,10 +286,15 @@ class Front extends Base {
 			$d = $type;
 			$type = 'calculator';
 		}
+		else if($resource && !$content){
+			$d = $resource;
+			$type = 'topics';
+		}
 		else if($resource){
 			$d = $resource;
 			$type = 'resource';
 		}
+		
 		
 		if( $type != '' && (
 		$pagename == 'keydates' ||
@@ -309,6 +315,8 @@ class Front extends Base {
 			$main_slug 		= explode($type, $current_url );
 			$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
+
+
 			/* // Disabled caching for now
 			$data = get_transient("bizink'.$type.'_".md5($d));
 			if(empty($data)){
@@ -316,6 +324,9 @@ class Front extends Base {
 				set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 			}
 			*/
+
+			
+			
 			$data = bizink_get_content( $content_type, $type, $d );
 			set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 
@@ -445,7 +456,10 @@ class Front extends Base {
 					if( isset( $data->subscriptions_expiry ) ) {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 					}
-					$post_title =  $data->post->post_title ? $data->post->post_title : $post_title;
+
+					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
+						$post_title = $data->post->post_title;
+					}
 				}
 			}
 		}

@@ -443,7 +443,7 @@ function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = nul
 	elseif ( 'payroll-content' == $post_type ) {
 		$taxonomy_topics = 'payroll-topics';
 	}
-	elseif ( 'resources' == $post_type || 'resources-content' == $post_type ) {
+	elseif ( 'resource' == $post_type || 'resources' == $post_type || 'resources-content' == $post_type ) {
 		$taxonomy_topics = 'resources-topics';
 	}
 	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {
