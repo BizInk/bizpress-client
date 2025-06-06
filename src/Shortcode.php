@@ -115,6 +115,9 @@ class Shortcode extends Base {
 		else if($calculator){
 			$type = 'calculator';
 		}
+        else if($resource){
+            $type = 'type';
+        }
 
 		if( !empty($content) && !empty($type) && (
 		$pagename == 'keydates' ||
@@ -157,7 +160,7 @@ class Shortcode extends Base {
                 $data = bizink_get_content( $content_type, 'topics' );
                 return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
             }
-            else if($content_type == 'resources'){
+            else if($content_type == 'resources' || $content_type == 'resource'){
                 if($resource){
                     $data = bizink_get_content( $content_type, 'types', $resource );
                     if(!empty($data)){
