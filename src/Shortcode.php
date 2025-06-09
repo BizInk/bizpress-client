@@ -115,8 +115,11 @@ class Shortcode extends Base {
 		else if($calculator){
 			$type = 'calculator';
 		}
+        else if($resource && !$content){
+			$type = 'type';
+		}
         else if($resource){
-            $type = 'type';
+            $type = 'resource';
         }
 
 		if( !empty($content) && !empty($type) && (
@@ -131,7 +134,7 @@ class Shortcode extends Base {
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
         $pagename == 'businessterms' ||
-        $pagename == 'resources' ||
+        $pagename == 'resources' || $pagename == 'resource' ||
 		$pagename == 'calculators') ){
 
             $data = get_transient("bizinkcontent_".md5($content));
@@ -156,7 +159,7 @@ class Shortcode extends Base {
             $curent_page_id = get_the_ID();
             $content_type   = bizink_get_content_type( $curent_page_id );
 
-            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary' || $content_type == 'business-terms'){
+            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary'){
                 $data = bizink_get_content( $content_type, 'topics' );
                 return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
             }

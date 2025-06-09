@@ -111,7 +111,7 @@ class Front extends Base {
 		$resource_page_id = cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
 	
 
-		if($attachment && !$content && !$resource){
+		if($attachment && (!$content || !$resource)){
 			$post = null;
 
 			if(!empty($business_page_id)){
@@ -258,7 +258,7 @@ class Front extends Base {
 
 	public function the_post( $post ){
 		if(empty($post)){
-			return $post;
+			//return $post;
 		}
 		global $wp, $wp_query;
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
@@ -316,19 +316,12 @@ class Front extends Base {
 			$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
 
-
-			/* // Disabled caching for now
 			$data = get_transient("bizink'.$type.'_".md5($d));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, $type, $d );
 				set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 			}
-			*/
-
 			
-			
-			$data = bizink_get_content( $content_type, $type, $d );
-			set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 
 			if( isset( $data->subscriptions_expiry ) ) {
 				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );

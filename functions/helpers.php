@@ -75,7 +75,7 @@ endif;
 function bizpress_update_site($siteID,$siteData){
 	if(defined('BIZPRESS_ANALYTICS') && BIZPRESS_ANALYTICS == false){
 		// Analytics disabled
-		return false;
+		//return false;
 	}
 	$args = array(
 		'body' => json_encode($siteData),
@@ -366,21 +366,33 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 	}
 
 	if(!empty($term)){
-		$args['term'] = $term;
+		$args['term'] = isset( $_GET[ $term ] ) ? $_GET[ $term ] : $term;
+		if ( 'resources' == $post_type || 'resources-content' == $post_type ) {
+			$args['term'] = $term;
+		}
 	}
 
     $url = add_query_arg( $args, wp_slash( $base_url ) );
-
-    $request    = wp_remote_get( $url, bizink_url_authontication() );
-    $body       = wp_remote_retrieve_body( $request );
-    $data       = json_decode( $body);
-	if(!empty($data->product)){
-		update_option('bizpress_product', $data->product);
+	$requestArgs = bizink_url_authontication();
+    $request    = wp_remote_request( $url, $requestArgs );
+	if ( !is_wp_error( $request ) && ($request['response']['code'] == 200 || $request['response']['code'] == 201) ) {
+		$body = wp_remote_retrieve_body( $request );
+		$data = json_decode( $body);
+		if(!empty($data->product)){
+			update_option('bizpress_product', $data->product);
+		}
+		if(!empty($data->subscriptions_expiry)){
+			update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
+		}
+		return $data;
 	}
-	if(!empty($data->subscriptions_expiry)){
-		update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
+	else{
+		if(defined('WP_DEBUG') && WP_DEBUG == true){
+			echo 'Error: ' . $request->get_error_message();
+		}
+		return null;
 	}
-    return $data;
+    
 }
 function bizink_get_content_types($post_type, $api_endpoint, $slug = '', $paged = null){
 	$taxonomy_topics = 'business-article-type';
@@ -417,7 +429,7 @@ function bizink_get_content_types($post_type, $api_endpoint, $slug = '', $paged 
 	return bizink_get_content_base( $post_type, $api_endpoint, $slug, $paged, $taxonomy_topics );
 }
 
-function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
+function bizink_get_content_new( $post_type, $api_endpoint, $slug = '', $paged = null ) {
     $taxonomy_topics = 'business-article-topics';
 	if ( 'business-content' == $post_type ) {
 		$taxonomy_topics = 'business-article-topics';
@@ -485,7 +497,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	if(function_exists('luca')){
 		$luca = true;
 	}
-	elseif(in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
+	else if(in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
 		$luca = true;
 	}
 
@@ -507,15 +519,25 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 
     $url = add_query_arg( $args, wp_slash( $base_url ) );
 
-    $request    = wp_remote_get( $url, bizink_url_authontication() );
-    $body       = wp_remote_retrieve_body( $request );
-    $data       = json_decode( $body );
-	if(!empty($data->product)){
-		update_option('bizpress_product', $data->product);
+    $request = wp_remote_request( $url, bizink_url_authontication() );
+
+	if ( !is_wp_error( $request ) && ($request['response']['code'] == 200 || $request['response']['code'] == 201) ) {
+		$body = wp_remote_retrieve_body( $request );
+		$data = json_decode( $body );
+		if(!empty($data->product)){
+			update_option('bizpress_product', $data->product);
+		}
+		if(!empty($data->subscriptions_expiry)){
+			update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
+		}
 	}
-	if(!empty($data->subscriptions_expiry)){
-		update_option('bizpress_subscriptions_expiry', $data->subscriptions_expiry);
+	else {
+		if(defined('WP_DEBUG') && WP_DEBUG == true){
+			echo 'Error: ' . $request->get_error_message();
+		}
+		$data = null;
 	}
+    
     return $data;
 }
 
@@ -532,6 +554,7 @@ function bizink_get_content_type( $curent_page_id ) {
 	        return $type['type'];
 	    }
 	}
+	
 }
 
 /**
@@ -540,7 +563,6 @@ function bizink_get_content_type( $curent_page_id ) {
 if( ! function_exists( 'bizink_get_master_site_url' ) ) :
 function bizink_get_master_site_url() {
 	return 'https://bizinkcontent.com/';
-	//return 'http://bizpresspublish.localhost/';
 }
 endif;
 
@@ -551,8 +573,12 @@ endif;
 if( ! function_exists( 'bizink_url_authontication' ) ) :
 function bizink_url_authontication()
 {
+	global $wp_version;
 	return array(
-		'timeout' => 20,
+		'timeout' => 10,
+		'method' => 'GET',
+		'sslverify' => false,
+		'user-agent'  => 'WordPress/' . $wp_version . '; ' . home_url(),
 		'httpversion' => '1.1',
 		'headers' => array(
 		  'Content-Type' => 'application/json',

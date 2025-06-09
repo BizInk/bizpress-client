@@ -1,6 +1,13 @@
 <?php
 extract($args);
 
+if(gettype($responce) == 'string'){
+    echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
+    if (defined('WP_DEBUG') && WP_DEBUG == true) {
+        _e('Got a String for $responce in views/topics.php '.$responce, 'bizink-client');
+    }
+}
+
 if (empty($responce) && empty($args['response'])) {
     echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
     if (defined('WP_DEBUG') && WP_DEBUG == true) {
