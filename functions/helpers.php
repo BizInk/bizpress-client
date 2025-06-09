@@ -297,6 +297,7 @@ function bizpress_landingpage_all(){
         return json_decode( wp_remote_retrieve_body( $response ) );
     }
 }
+
 function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged = null, $term = 'business-article-topics'){
 	$options = bizpress_getoptions();
 	if(!empty($paged)){
@@ -367,7 +368,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 
 	if(!empty($term)){
 		$args['term'] = isset( $_GET[ $term ] ) ? $_GET[ $term ] : $term;
-		if ( 'resources' == $post_type || 'resources-content' == $post_type ) {
+		if ( 'resources' == $post_type ) {
 			$args['term'] = $term;
 		}
 	}
@@ -429,7 +430,7 @@ function bizink_get_content_types($post_type, $api_endpoint, $slug = '', $paged 
 	return bizink_get_content_base( $post_type, $api_endpoint, $slug, $paged, $taxonomy_topics );
 }
 
-function bizink_get_content_new( $post_type, $api_endpoint, $slug = '', $paged = null ) {
+function bizink_get_content( $post_type, $api_endpoint, $slug = '', $paged = null ) {
     $taxonomy_topics = 'business-article-topics';
 	if ( 'business-content' == $post_type ) {
 		$taxonomy_topics = 'business-article-topics';
@@ -455,7 +456,7 @@ function bizink_get_content_new( $post_type, $api_endpoint, $slug = '', $paged =
 	elseif ( 'payroll-content' == $post_type ) {
 		$taxonomy_topics = 'payroll-topics';
 	}
-	elseif ( 'resource' == $post_type || 'resources' == $post_type || 'resources-content' == $post_type ) {
+	elseif ( 'resources' == $post_type ) {
 		$taxonomy_topics = 'resources-topics';
 	}
 	elseif ( 'payroll-glossary' == $post_type || 'accounting-terms' == $post_type || 'business-terms' == $post_type || 'calculators' == $post_type ) {

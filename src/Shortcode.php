@@ -51,6 +51,7 @@ class Shortcode extends Base {
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
+        $resource = get_query_var('resource');
 		$type = '';
 		if($content){
 			$type = 'content';
@@ -64,6 +65,12 @@ class Shortcode extends Base {
 		else if($calculator){
 			$type = 'calculator';
 		}
+        else if($resource && !$content){
+			$type = 'type';
+		}
+        else if($resource){
+            $type = 'resource';
+        }
 
 		if( !empty($content) && !empty($type) && (
 		$pagename == 'keydates' ||
@@ -134,7 +141,7 @@ class Shortcode extends Base {
 		$pagename == 'payroll-resources' ||
 		$pagename == 'payroll-glossary' ||
         $pagename == 'businessterms' ||
-        $pagename == 'resources' || $pagename == 'resource' ||
+        $pagename == 'resources' ||
 		$pagename == 'calculators') ){
 
             $data = get_transient("bizinkcontent_".md5($content));

@@ -99,6 +99,7 @@ class Front extends Base {
 		$content = get_query_var( 'bizpress',false);
 		$resource = get_query_var( 'resource',false);
 		$attachment = get_query_var( 'attachment',false);
+
 		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
 		$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
 		$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
@@ -109,9 +110,8 @@ class Front extends Base {
 		$payroll_page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
 		$payroll_glossary_id = cxbc_get_option( 'bizink-client_basic', 'payroll_glossary_page' );
 		$resource_page_id = cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
-	
 
-		if($attachment && (!$content || !$resource)){
+		if($attachment && ( !$content || !$resource )){
 			$post = null;
 
 			if(!empty($business_page_id)){
@@ -220,17 +220,12 @@ class Front extends Base {
 			}
 		}
 		else if( $resource ){
-			if(!empty($resource_page_id)){
-				$post = get_post( $resource_page_id );
-			}
-			$query->set( 'post_type', 'page' );
 			$pageType = get_query_var('pagename','page');
-			if($resource_page_id && $pageType = 'resources'){
+			$query->set( 'post_type', 'page' );
+			if(!empty($resource_page_id) && $pageType = 'resources'){
+				$post = get_post( $resource_page_id );
 				$query->set( 'p', $resource_page_id );
 				$query->set( 'page_id', $resource_page_id );
-			}
-			else{
-				return;
 			}
 
 			$data = get_transient("bizinkresource_".md5($resource));
@@ -257,9 +252,6 @@ class Front extends Base {
 	}
 
 	public function the_post( $post ){
-		if(empty($post)){
-			//return $post;
-		}
 		global $wp, $wp_query;
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		$pagename = get_query_var('pagename');
@@ -329,14 +321,14 @@ class Front extends Base {
 
 			if(BIZPRESS_ANALYTICS == true){
 				$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-			data-id="'.$data->post->ID.'"
-			data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-			data-single="true"
-			data-title="'.$data->post->post_title.'" 
-			data-slug="'.$data->post->post_name.'" 
-			data-posttype="'.$data->post->post_type.'"
-			data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-			data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+				data-id="'.$data->post->ID.'"
+				data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+				data-single="true"
+				data-title="'.$data->post->post_title.'" 
+				data-slug="'.$data->post->post_name.'" 
+				data-posttype="'.$data->post->post_type.'"
+				data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+				data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 			}
 			else{
 				$anyliticsData = '';
@@ -485,7 +477,7 @@ class Front extends Base {
 				$content = get_query_var( 'bizpress');
 				$calculator = get_query_var('calculator');
 				$current_url = home_url( add_query_arg( array(), $wp->request ) );
-				if ( $topic || $type || $content || $calculator || $resource) {
+				if ( $topic || $type || $content || $calculator || $resource ) {
 					$type = '';
 					if($topic){
 						$d = $topic;
@@ -518,7 +510,6 @@ class Front extends Base {
 						$data = bizink_get_content( $content_type, $type, $d );
 						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
-					//$data = bizink_get_content( $content_type, $type, $d );
 
 					if( isset( $data->subscriptions_expiry ) ) {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -526,14 +517,14 @@ class Front extends Base {
 
 					if(BIZPRESS_ANALYTICS == true){
 						$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data" 
-					data-id="'.$data->post->ID.'"
-					data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-					data-single="true"
-					data-title="'.$data->post->post_title.'" 
-					data-slug="'.$data->post->post_name.'" 
-					data-posttype="'.$data->post->post_type.'"
-					data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-					data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
+						data-id="'.$data->post->ID.'"
+						data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
+						data-single="true"
+						data-title="'.$data->post->post_title.'" 
+						data-slug="'.$data->post->post_name.'" 
+						data-posttype="'.$data->post->post_type.'"
+						data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
+						data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 					}
 					else{
 						$anyliticsData = '';
@@ -583,7 +574,6 @@ class Front extends Base {
 				$data = bizink_get_content( $content_type, 'post', $topic );
 				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
-	        //$data = bizink_get_content( $content_type, 'types', $topic );
 
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -603,7 +593,6 @@ class Front extends Base {
 				$data = bizink_get_content( $content_type, 'types', $topic );
 				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
-	        //$data = bizink_get_content( $content_type, 'types', $topic );
 
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -623,7 +612,6 @@ class Front extends Base {
 				$data = bizink_get_content( $content_type, 'type', $type );
 				set_transient( "bizinktype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
 			}
-	        //$data = bizink_get_content( $content_type, 'type', $type );
 
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -632,22 +620,6 @@ class Front extends Base {
 	        die;
 	    }
 		
-		if ( $content ) {
-			$main_slug 		= explode('type', $current_url );
-	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
-			$content_type   = bizink_get_content_type( $main_slug_id );
-			$data = bizink_get_single_content( 'content', $content );
-	    	add_filter('body_class', function( $classes ){
-	    		$classes[] = 'bizink-page';
-	    		return $classes;
-	    	});
-	        if( isset( $data->subscriptions_expiry ) ) {
-	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
-	        }
-			echo apply_filters('the_content', cxbc_get_template( 'content', 'views', [ 'response' => $data ] ) );
-	        die;
-	    }
-
 		if ( $resource ) {
 			$main_slug 		= explode('resource', $current_url );
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
@@ -663,6 +635,23 @@ class Front extends Base {
 			echo apply_filters('the_content', cxbc_get_template( 'content', 'views', [ 'response' => $data ] ) );
 	        die;
 	    }
+
+		if ( $content ) {
+			$main_slug 		= explode('type', $current_url );
+	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
+			$content_type   = bizink_get_content_type( $main_slug_id );
+			$data = bizink_get_single_content( 'content', $content );
+	    	add_filter('body_class', function( $classes ){
+	    		$classes[] = 'bizink-page';
+	    		return $classes;
+	    	});
+	        if( isset( $data->subscriptions_expiry ) ) {
+	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+	        }
+			echo apply_filters('the_content', cxbc_get_template( 'content', 'views', [ 'response' => $data ] ) );
+	        die;
+	    }
+		
 	    return $body;
 	}
 
