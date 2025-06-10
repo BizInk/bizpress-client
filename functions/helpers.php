@@ -389,7 +389,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 	}
 	else{
 		if(defined('WP_DEBUG') && WP_DEBUG == true){
-			echo 'Error: ' . $request->get_error_message();
+			echo 'Error: '; print_r($request );
 		}
 		return null;
 	}
@@ -534,7 +534,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	}
 	else {
 		if(defined('WP_DEBUG') && WP_DEBUG == true){
-			echo 'Error: ' . $request->get_error_message();
+			echo 'Error: '; print_r($request );
 		}
 		$data = null;
 	}

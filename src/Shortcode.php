@@ -166,23 +166,44 @@ class Shortcode extends Base {
             $curent_page_id = get_the_ID();
             $content_type   = bizink_get_content_type( $curent_page_id );
 
-            if($content_type == 'business-terms' || $content_type == 'accounting-terms' || $content_type == 'payroll-glossary'){
-                $data = bizink_get_content( $content_type, 'topics' );
+            if($content_type == 'business-terms' || $content_type == 'accounting-terms'){
+                $data = get_transient("bizinkterms_".$content_type);
+                if(empty($data)){
+                    $data = bizink_get_content( $content_type, 'topics' );
+                    set_transient( "bizinkterms_".$content_type, $data, DAY_IN_SECONDS);
+                }
                 return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
+            }
+            else if($content_type == 'payroll' || $content_type == 'payroll-resources'){
+                $data = get_transient("bizinkpayrolltype_".$content_type);
+                if(empty($data)){
+                    $data = bizink_get_content( $content_type, 'topics');
+                    set_transient( "bizinkpayrolltype_".$content_type, $data, DAY_IN_SECONDS);
+                }
+                return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+            }
+            else if($content_type == 'payroll-glossary'){
+                $data = get_transient("bizinkpayroll_".$content_type);
+                if(empty($data)){
+                    $data = bizink_get_content( $content_type, 'topics' );
+                    set_transient( "bizinkpayroll_".$content_type, $data, DAY_IN_SECONDS);
+                }
+                return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
             }
             else if($content_type == 'resources'){
                 if($resource){
-                    $data = bizink_get_content( $content_type, 'types', $resource );
-                    if(!empty($data)){
+                    $data = get_transient("bizinkresourcetype_".$content_type);
+                    if(empty($data)){
+                        $data = bizink_get_content( $content_type, 'types', $resource );
+                        set_transient( "bizinkresourcetype_".$content_type, $data, DAY_IN_SECONDS);
+                    }
+                    if(!empty($data->types)){
                         $data->topics = (array)$data->types;
+                    }
+                    if(!empty($data->posts)){
                         $data->posts = $data->topics[$resource]->posts;
-                        unset($data->types);
-                        return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
                     }
-                    else{
-                        return "";
-                    }
-                    
+                    return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
                 }
                 else{
                     $data = bizink_get_content( $content_type, 'types' );
@@ -194,18 +215,10 @@ class Shortcode extends Base {
                 $data = bizink_get_content( $content_type, 'calculators' );
                 return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
             }
-            else if($content_type == 'payroll' || $content_type == 'payroll-resources'){
-                $data = get_transient("bizinktype_".$content_type);
-                if(empty($data)){
-                    $data = bizink_get_content( $content_type, 'topics');
-                    set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
-                }
-                return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
-            }
             else{
                 $data = get_transient("bizinktype_".$content_type);
                 if(empty($data)){
-                    $data = bizink_get_content( $content_type, 'type'); // Type
+                    $data = bizink_get_content( $content_type, 'topics'); // Type
                     set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
                 }
                 //$data = bizink_get_content( $content_type, 'topics' );

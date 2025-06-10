@@ -199,12 +199,11 @@ if (strpos($post_type, 'keydates') === false) {
 	else{
 		$post_count = count($posts);
 	}
+
 	$pages = ceil($post_count / 12);
 	$item = 0;
 
-	if($post_count <= 0):
-		echo "<p>".__('No posts found for this topic.','bizink-client')."</p>";
-	else:
+	if($post_count < 0):
 		bizink_bizpress_display_pagnation($pages,1);
 
 		foreach ( $posts as $post ) {
@@ -277,18 +276,24 @@ else{
 		echo "<div class='cxbc-posts-list-top'>";
 			echo "<ul>";
 			$post_count = 1;
-			foreach ( $posts as $post ) {
-				$postUrl =  get_permalink($page_id) . $post->slug;
-								
-				if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
-					$page = get_post($page_id);
-					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
-				}
+			if(!empty($posts)){
+				foreach ( $posts as $post ) {
+					$postUrl =  get_permalink($page_id) . $post->slug;
+									
+					if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
+						$page = get_post($page_id);
+						$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+					}
 
-				echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
-				echo "<a href='{$postUrl}'>{$post->title}</a>";
-				echo "</li>";
+					echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
+					echo "<a href='{$postUrl}'>{$post->title}</a>";
+					echo "</li>";
+				}
 			}
+			else{
+				_e('No posts found for this topic.','bizink-client');
+			}
+			
 			echo "</ul>";
 		echo "</div>";
 	echo "</div>";

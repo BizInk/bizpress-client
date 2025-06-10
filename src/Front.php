@@ -392,10 +392,10 @@ class Front extends Base {
 			$pagename == 'myob-resources' || 
 		    $pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||
-			$pagename == 'payroll-glossary' ||
-			$pagename == 'businessterms' ||
-			$pagename == 'business-terms' ||
-			$pagename == 'resources' ||
+			//$pagename == 'payroll-glossary' ||
+			//$pagename == 'businessterms' ||
+			//$pagename == 'business-terms' ||
+			//$pagename == 'resources' ||
 			$pagename == 'calculators'){
 
 				$resource = get_query_var('resource');
@@ -465,10 +465,10 @@ class Front extends Base {
 			$pagename == 'sage-resources' ||
 			$pagename == 'myob-resources' ||
 			$pagename == 'business-resources' ||
-			$pagename == 'payroll-resources' ||
-			$pagename == 'payroll-glossary' ||
-			$pagename == 'business-terms' ||
-			$pagename == 'resources' ||
+			//$pagename == 'payroll-resources' ||
+			//$pagename == 'payroll-glossary' ||
+			//$pagename == 'business-terms' ||
+			//$pagename == 'resources' ||
 			$pagename == 'businessterms'
 			){
 				$resource = get_query_var('resource');
