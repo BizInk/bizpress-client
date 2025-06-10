@@ -2,10 +2,10 @@
 
 extract($args);
 
-if ( empty($responce) && empty($args['response']) ) {
+if ( empty($response) && empty($args['response']) ) {
 	echo "<p>". __( 'Something went wrong. The data for this page could not be found.', 'bizink-client' ) ."</p>";
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		_e('Got a Null for $responce in views/topics.php', 'bizink-client' );
+		_e('Got a Null for $response in views/topics.php', 'bizink-client' );
 	}
 	return;
 }
@@ -50,14 +50,6 @@ elseif ( 'xero-content' == $post_type ) {
 		$default_title = __('Xero Resources', 'bizink-client');
 	}
 	$page_id =  cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
-}
-elseif( 'resources' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'resources_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'resources_desc' );
-	if(empty($default_title) && $default_title != ""){
-		$default_title = __('Resources', 'bizink-client');
-	}
-	$page_id =  cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
 }
 elseif ( 'quickbooks-content' == $post_type ) {
 	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
@@ -106,6 +98,14 @@ elseif (strpos($post_type, 'keydates') !== false) {
 		$default_title = __('Key Dates', 'bizink-client');
 	}
 	$page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+}
+elseif( 'resources' == $post_type ) {
+	$default_title 	= cxbc_get_option( 'bizink-client_content', 'resources_title' );
+	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'resources_desc' );
+	if(empty($default_title) && $default_title != ""){
+		$default_title = __('Resources', 'bizink-client');
+	}
+	$page_id =  cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
 }
 
 //dropdown after single topics

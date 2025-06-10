@@ -170,7 +170,7 @@ class Shortcode extends Base {
                 $data = bizink_get_content( $content_type, 'topics' );
                 return  cxbc_get_template( 'account', 'views', [ 'response' => $data ] );
             }
-            else if($content_type == 'resources' || $content_type == 'resource'){
+            else if($content_type == 'resources'){
                 if($resource){
                     $data = bizink_get_content( $content_type, 'types', $resource );
                     if(!empty($data)){
@@ -194,13 +194,21 @@ class Shortcode extends Base {
                 $data = bizink_get_content( $content_type, 'calculators' );
                 return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
             }
+            else if($content_type == 'payroll' || $content_type == 'payroll-resources'){
+                $data = get_transient("bizinktype_".$content_type);
+                if(empty($data)){
+                    $data = bizink_get_content( $content_type, 'topics');
+                    set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
+                }
+                return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
+            }
             else{
                 $data = get_transient("bizinktype_".$content_type);
                 if(empty($data)){
-                    $data = bizink_get_content( $content_type, 'type');
+                    $data = bizink_get_content( $content_type, 'type'); // Type
                     set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
                 }
-                $data = bizink_get_content( $content_type, 'topics' );
+                //$data = bizink_get_content( $content_type, 'topics' );
                 return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
             }
         }

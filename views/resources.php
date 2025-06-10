@@ -1,22 +1,23 @@
 <?php
-
 extract($args);
 
-if(gettype($responce) == 'string'){
-	echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
-	if (defined('WP_DEBUG') && WP_DEBUG == true) {
-		_e('Got a String for $responce in views/resources.php '.$responce, 'bizink-client');
-	}
-}
-
-if (empty($responce) && empty($args['response'])) {
+if (empty($response) && empty($args['response'])) {
 	echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
 	if (defined('WP_DEBUG') && WP_DEBUG == true) {
 		_e('Got a Null for $responce in views/resources.php', 'bizink-client');
 	}
 	return;
-} else if (!empty($response->data) && ($response->data->status > 299 || $response->data->status < 200)) {
+} 
+else if (!empty($response->data) && ($response->data->status > 299 || $response->data->status < 200)) {
 	echo "<p>" . __('Sorry there was an error. There was an error retrieving the data for this page.', 'bizink-client') . "</p>";
+	return;
+}
+
+if(!empty($response) && gettype($response) == 'string'){
+	echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
+	if (defined('WP_DEBUG') && WP_DEBUG == true) {
+		_e('Got a String for $responce in views/resources.php '.$response, 'bizink-client');
+	}
 	return;
 }
 

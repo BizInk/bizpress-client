@@ -6,10 +6,10 @@
 extract( $args );
 //convert posts in array
 
-if ( empty($responce) && empty($args['response']) ) {
+if ( empty($response) && empty($args['response']) ) {
 	echo "<p>". __( 'Something went wrong. The data for this page could not be found.', 'bizink-client' ) ."</p>";
 	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		_e('Got a Null for $responce in views/topics.php', 'bizink-client' );
+		_e('Got a Null for $response in views/topics.php', 'bizink-client' );
 	}
 	return;
 }

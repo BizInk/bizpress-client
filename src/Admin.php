@@ -167,7 +167,7 @@ class Admin extends Base {
 			'capability_type'       => 'page',
 			'show_in_rest'          => false,
 		);
-		register_post_type( 'bizpress_resource', $args );
+		// register_post_type( 'bizpress_resource', $args );
 	}
 
 	function bizpress_clear_cache(){
