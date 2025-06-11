@@ -203,7 +203,7 @@ if (strpos($post_type, 'keydates') === false) {
 	$pages = ceil($post_count / 12);
 	$item = 0;
 
-	if($post_count < 0):
+	if($post_count > 0):
 		bizink_bizpress_display_pagnation($pages,1);
 
 		foreach ( $posts as $post ) {
@@ -221,7 +221,6 @@ if (strpos($post_type, 'keydates') === false) {
 			if(isset($post->hidden) && $post->hidden){
 				continue; // Item is hidden move to next item
 			}
-
 			
 
 			if ( 'resources' == $post_type ) {
@@ -264,6 +263,8 @@ if (strpos($post_type, 'keydates') === false) {
 		}
 		echo "</div>";
 		bizink_bizpress_display_pagnation($pages,1);
+	else:
+		echo "<p class='cxbc-no-posts'>".__('No posts found for this topic.','bizink-client')."</p>";
 	endif;
 }
 else{

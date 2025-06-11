@@ -216,11 +216,12 @@ class Shortcode extends Base {
                 return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
             }
             else{
-                $data = get_transient("bizinktype_".$content_type);
-                if(empty($data)){
+                $data = get_transient("bizinktopics_".$content_type);
+                if(empty($data) || ( empty($data->topics) && empty($data->types) && empty($data->posts) )){
                     $data = bizink_get_content( $content_type, 'topics'); // Type
-                    set_transient( "bizinktype_".$content_type, $data, DAY_IN_SECONDS);
+                    set_transient( "bizinktopics_".$content_type, $data, DAY_IN_SECONDS);
                 }
+                
                 //$data = bizink_get_content( $content_type, 'topics' );
                 return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );
             }

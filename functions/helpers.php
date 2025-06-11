@@ -367,7 +367,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 	}
 
 	if(!empty($term)){
-		$args['term'] = isset( $_GET[ $term ] ) ? $_GET[ $term ] : $term;
+		$args['term'] = isset( $_GET[ $term ] ) ? $_GET[ $term ] : '';
 		if ( 'resources' == $post_type ) {
 			$args['term'] = $term;
 		}
@@ -376,6 +376,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
     $url = add_query_arg( $args, wp_slash( $base_url ) );
 	$requestArgs = bizink_url_authontication();
     $request    = wp_remote_request( $url, $requestArgs );
+	
 	if ( !is_wp_error( $request ) && ($request['response']['code'] == 200 || $request['response']['code'] == 201) ) {
 		$body = wp_remote_retrieve_body( $request );
 		$data = json_decode( $body);
