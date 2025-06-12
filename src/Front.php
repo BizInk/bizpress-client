@@ -149,7 +149,36 @@ class Front extends Base {
 			}
 		}
 
-		if ( $content ) {
+		if( $resource ){
+			$pageType = get_query_var('pagename','page');
+			$query->set( 'post_type', 'page' );
+			if(!empty($resource_page_id) && $pageType = 'resources'){
+				$post = get_post( $resource_page_id );
+				$query->set( 'p', $resource_page_id );
+				$query->set( 'page_id', $resource_page_id );
+			}
+
+			$data = get_transient("bizinkresource_".md5($resource));
+			if(empty($data->status)){
+				$data = null;
+			}
+			if(empty($data)){
+				$data = bizink_get_content_types( 'resource','topics', $resource );
+				set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+			}
+			
+			if(!empty($data) && !empty($data->post)){
+				
+				$query->set('post_title',$data->post->post_title ?? '');
+				$query->set('title',$data->post->post_title ?? '');
+				$query->set('post_content',$data->post->post_content ?? '');
+				$query->set('post_date',$data->post->post_date ?? '');
+				$query->set('post_name',$data->post->post_name ?? '');
+				$query->set('post_date_gmt',$data->post->post_date_gmt ?? '');
+				set_query_var('bizpress_data',$data ?? '');
+			}
+		}
+		else if ( $content ) {
 			$query->set( 'post_type', 'page' );
 			$pageType = get_query_var('pagename','page');
 			if($xero_page_id && $pageType == 'xero-resources'){
@@ -219,37 +248,8 @@ class Front extends Base {
 				set_query_var('bizpress_data',$data ?? '');
 			}
 		}
-		/*
-		else if( $resource ){
-			$pageType = get_query_var('pagename','page');
-			$query->set( 'post_type', 'page' );
-			if(!empty($resource_page_id) && $pageType = 'resources'){
-				$post = get_post( $resource_page_id );
-				$query->set( 'p', $resource_page_id );
-				$query->set( 'page_id', $resource_page_id );
-			}
-
-			$data = get_transient("bizinkresource_".md5($resource));
-			if(empty($data->status)){
-				$data = null;
-			}
-			if(empty($data)){
-				$data = bizink_get_content_types( 'resource','topics', $resource );
-				set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
-			}
-			
-			if(!empty($data) && !empty($data->post)){
-				
-				$query->set('post_title',$data->post->post_title ?? '');
-				$query->set('title',$data->post->post_title ?? '');
-				$query->set('post_content',$data->post->post_content ?? '');
-				$query->set('post_date',$data->post->post_date ?? '');
-				$query->set('post_name',$data->post->post_name ?? '');
-				$query->set('post_date_gmt',$data->post->post_date_gmt ?? '');
-				set_query_var('bizpress_data',$data ?? '');
-			}
-		}
-		*/
+		
+		
 	}
 
 	public function the_post( $post ){
@@ -441,11 +441,60 @@ class Front extends Base {
 	}
 
 	public function the_title($post_title) {
-		// && in_the_loop()
+		global $wp, $wp_query;
 		if ( is_singular() && in_the_loop() ) {
-			global $wp, $wp_query;
 			$pagename = get_query_var('pagename',false);
-			if($pagename == 'xero-resources' || 
+			$content = get_query_var( 'bizpress');
+			$type = '/';
+			if($pagename == 'resources'){
+				$resource = get_query_var('resource');
+
+				$wp_query->is_404 = false;
+				$current_url = home_url( add_query_arg( array(), $wp->request ) );
+				$main_slug 		= explode($type, $current_url );
+				$main_slug_id 	= url_to_postid( $main_slug[0] );
+				$content_type   = bizink_get_content_type( $main_slug_id );
+				
+				if($resource && $content){
+					$d = $content;
+					$type = 'type';
+
+					$data = get_transient("bizink'.$type.'_".md5($d));
+					if(empty($data)){
+						$data = bizink_get_content( $content_type, $type, $d );
+						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+					}
+		
+					if( isset( $data->subscriptions_expiry ) ) {
+						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
+					}
+
+					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
+						$post_title = $data->post->post_title;
+					}
+
+				}
+				else if($resource && !$content){
+					$type = 'resource';
+
+					$data = get_transient("bizinkresource_".md5($resource));
+					if(empty($data->status)){
+						$data = null;
+					}
+					if(empty($data)){
+						$data = bizink_get_content_types( 'resource','topics', $resource );
+						set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+					}
+					
+					print_r($data);
+
+					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
+						return $data->post->post_title;
+					}
+				}
+				
+			}
+			else if($pagename == 'xero-resources' || 
 			$pagename == 'keydates' ||
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'quickbooks-resources' ||
@@ -453,22 +502,18 @@ class Front extends Base {
 			$pagename == 'sage-resources' ||
 			$pagename == 'myob-resources' || 
 		    $pagename == 'business-resources' ||
-			//$pagename == 'payroll-resources' ||
+			$pagename == 'payroll-resources' ||
 			//$pagename == 'payroll-glossary' ||
 			//$pagename == 'businessterms' ||
 			//$pagename == 'business-terms' ||
-			//$pagename == 'resources' ||
 			$pagename == 'calculators'){
 
-				$resource = get_query_var('resource');
 				$type = get_query_var( 'type' );
 				$topic = get_query_var( 'topic' );
-				$content = get_query_var( 'bizpress');
 				$calculator = get_query_var('calculator');
 				$current_url = home_url( add_query_arg( array(), $wp->request ) );
-				if ( $topic || $type || $content || $calculator || $resource) {
+				if ( $topic || $type || $content || $calculator) {
 					
-					$type = '/';
 					if($content){
 						$d = $content;
 						$type = 'content';
@@ -485,10 +530,7 @@ class Front extends Base {
 						$d = $type;
 						$type = 'calculator';
 					}
-					else if($resource){
-						$d = $resource;
-						$type = 'resource';
-					}
+					
 					$wp_query->is_404 = false; 
 					$main_slug 		= explode($type, $current_url );
 					$main_slug_id 	= url_to_postid( $main_slug[0] );
@@ -556,6 +598,10 @@ class Front extends Base {
 					else if($calculator){
 						$d = $type;
 						$type = 'calculator';
+					}
+					else if($resource && !$content){
+						$d = $content;
+						$type = 'type';
 					}
 					else if($resource){
 						$d = $resource;
