@@ -382,6 +382,10 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 		if ( 'resources' == $post_type ) {
 			$args['term'] = $term;
 		}
+
+		if($args['term'] == ''){
+			unset($args['term']);
+		}
 	}
 
     $url = add_query_arg( $args, wp_slash( $base_url ) );
@@ -401,7 +405,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 	}
 	else{
 		if(defined('WP_DEBUG') && WP_DEBUG == true){
-			echo 'Error: '; print_r($request );
+			echo 'Request Error: Code: ' . $request['response']['code'] . ' - ' . $request['response']['message']. ' - URL: ' . $url.'<br />';
 		}
 		return null;
 	}
@@ -546,7 +550,7 @@ function bizink_get_single_content( $api_endpoint, $slug = '' ) {
 	}
 	else {
 		if(defined('WP_DEBUG') && WP_DEBUG == true){
-			echo 'Error: '; print_r($request );
+			echo 'Request Error: Code: ' . $request['response']['code'] . ' - ' . $request['response']['message']. ' - URL: ' . $url.'<br />';
 		}
 		$data = null;
 	}
