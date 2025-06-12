@@ -405,7 +405,13 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 	}
 	else{
 		if(defined('WP_DEBUG') && WP_DEBUG == true){
-			echo 'Request Error: Code: ' . $request['response']['code'] . ' - ' . $request['response']['message']. ' - URL: ' . $url.'<br />';
+			if(is_wp_error( $request )){
+				echo 'Request Error: ' . $request->get_error_message() . ' - URL: ' . $url.'<br />';
+			}
+			else{
+				echo 'Request Error: Code: ' . $request['response']['code'] . ' - ' . $request['response']['message']. ' - URL: ' . $url.'<br />';
+			}
+			
 		}
 		return null;
 	}
