@@ -219,6 +219,7 @@ class Front extends Base {
 				set_query_var('bizpress_data',$data ?? '');
 			}
 		}
+		/*
 		else if( $resource ){
 			$pageType = get_query_var('pagename','page');
 			$query->set( 'post_type', 'page' );
@@ -229,14 +230,13 @@ class Front extends Base {
 			}
 
 			$data = get_transient("bizinkresource_".md5($resource));
-			if(!empty($data->status) && ($data->status == 500 || $data->status == 403) ){
+			if(empty($data->status)){
 				$data = null;
 			}
 			if(empty($data)){
 				$data = bizink_get_content_types( 'resource','topics', $resource );
 				set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 			}
-
 			
 			if(!empty($data) && !empty($data->post)){
 				
@@ -249,6 +249,7 @@ class Front extends Base {
 				set_query_var('bizpress_data',$data ?? '');
 			}
 		}
+		*/
 	}
 
 	public function the_post( $post ){
@@ -260,7 +261,58 @@ class Front extends Base {
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
+		$attachment = get_query_var( 'attachment',false);
 		$type = '';
+
+		if(empty($post) ){
+			$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
+			$xero_page_id = cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
+			$quickbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+			$freshbooks_page_id	= cxbc_get_option( 'bizink-client_basic', 'freshbooks_content_page' );
+			$sage_page_id	= cxbc_get_option( 'bizink-client_basic', 'sage_content_page' );
+			$myob_page_id	= cxbc_get_option( 'bizink-client_basic', 'myob_content_page' );
+			$keydates_page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
+			$payroll_page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
+			$payroll_glossary_id = cxbc_get_option( 'bizink-client_basic', 'payroll_glossary_page' );
+			$resource_page_id = cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
+
+			if($attachment && ( !$content || !$resource )){
+				$post = null;
+
+				if(!empty($business_page_id)){
+					$post = get_post( $business_page_id );
+				}
+				if(!empty($payroll_page_id)){
+					$post = get_post( $payroll_page_id );
+				}
+				if(!empty($payroll_glossary_id)){
+					$post = get_post( $payroll_glossary_id );
+				}
+				if(!empty($xero_page_id)){
+					$post = get_post( $xero_page_id );
+				}
+				if(!empty($myob_page_id)){
+					$post = get_post( $myob_page_id );
+				}
+				if(!empty($quickbooks_page_id)){
+					$post = get_post( $quickbooks_page_id );
+				}
+				if(!empty($freshbooks_page_id)){
+					$post = get_post( $freshbooks_page_id );
+				}
+				if(!empty($sage_page_id)){
+					$post = get_post( $sage_page_id );
+				}
+				if(!empty($keydates_page_id)){
+					$post = get_post( $keydates_page_id );
+				}
+				if(!empty($resource_page_id)){
+					$post = get_post( $resource_page_id );
+				}
+			}
+		}
+		
+		
 
 		if($content){
 			$d = $content;
@@ -281,8 +333,9 @@ class Front extends Base {
 		else if($resource && !$content){
 			$d = $resource;
 			$type = 'topics';
+			return $post;
 		}
-		else if($resource){
+		else if($resource && $content){
 			$d = $resource;
 			$type = 'resource';
 		}
@@ -308,12 +361,12 @@ class Front extends Base {
 			$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
 
+
 			$data = get_transient("bizink'.$type.'_".md5($d));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, $type, $d );
 				set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 			}
-			
 
 			if( isset( $data->subscriptions_expiry ) ) {
 				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -333,26 +386,34 @@ class Front extends Base {
 			else{
 				$anyliticsData = '';
 			}
+			if(!empty($data->post->post_title)){
+				$post->post_title = $data->post->post_title;
+			}
 			
-			$post->post_title = $data->post->post_title;
-
 			$buttonData = '';
-			if($data->post->post_type == 'resources'){
-				foreach($data->types as $key => $type){
-					if( ($type == 'Templates' || $type == 'Template' || $type == 'template' || $type == 'templates') && !empty($data->post->document_download_url)){
-						$buttonData = '<div class="bizpress_template_container"><a target="_blank" href="'.$data->post->document_download_url.'" class="bizpress_template_link" data-id="'.$data->post->ID.'" data-slug="'.$data->post->post_name.'">'.__('Download Resource','bizink-client').'</a></div>';
+			if(!empty($data->post->post_type)){
+				if($data->post->post_type == 'resources'){
+					foreach($data->types as $key => $type){
+						if( ($type == 'Templates' || $type == 'Template' || $type == 'template' || $type == 'templates') && !empty($data->post->document_download_url)){
+							$buttonData = '<div class="bizpress_template_container"><a target="_blank" href="'.$data->post->document_download_url.'" class="bizpress_template_link" data-id="'.$data->post->ID.'" data-slug="'.$data->post->post_name.'">'.__('Download Resource','bizink-client').'</a></div>';
+						}
 					}
 				}
 			}
-
-			$post->post_content =  apply_filters('the_content',$buttonData . $data->post->post_content). $anyliticsData;
+			
+			if(!empty($post) && !empty($post->post_content)){
+				$post->post_content =  apply_filters('the_content',$buttonData . $data->post->post_content). $anyliticsData;
+			}
+			
 			$post->post_type = 'page';
 		}
+
 		return $post;
 	}
 
 	public function bizpress_wpseo_title($title){
 		$content = get_query_var( 'bizpress');
+		$resource = get_query_var( 'resource');
 		if($content && is_singular()){
 			$data = get_transient("bizinkcontent_".md5($content));
 			if(empty($data)){
@@ -366,6 +427,7 @@ class Front extends Base {
 
 	public function bizpress_wpseo_metadesc($desc){
 		$content = get_query_var( 'bizpress');
+		$resource = get_query_var( 'resource');
 		if($content && is_singular()){
 			$data = get_transient("bizinkcontent_".md5($content));
 			if(empty($data)){
@@ -391,7 +453,7 @@ class Front extends Base {
 			$pagename == 'sage-resources' ||
 			$pagename == 'myob-resources' || 
 		    $pagename == 'business-resources' ||
-			$pagename == 'payroll-resources' ||
+			//$pagename == 'payroll-resources' ||
 			//$pagename == 'payroll-glossary' ||
 			//$pagename == 'businessterms' ||
 			//$pagename == 'business-terms' ||

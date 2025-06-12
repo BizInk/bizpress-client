@@ -319,7 +319,7 @@ abstract class Fields extends Base {
 	public function field_admin_button($field, $section, $scope){
 		$label 			= $field['label'];
 		$button			= $field['button'];
-		$action 		= $field['action'] ? $field['action'] : 'admin_button';
+		$action 		= isset($field['action']) ? $field['action'] : 'admin_button';
 		if(empty($button)){
 			$button = 'No Button';
 		}
@@ -327,7 +327,7 @@ abstract class Fields extends Base {
 		$class = "cx-field-{$field['type']}";
 		$class .= isset( $field['class'] ) ? $field['class'] : '';
 		$_nonce = wp_create_nonce('cx-button');
-		$html = "<div class='{$class}' id='{$id}'><button data-nonce='{$_nonce}' data-action='{$action}'class=\"button cx-button admin_button button-info button-small\">{$button}</button></div>";
+		$html = "<div class='{$class}' id='{$id}'><button data-nonce='{$_nonce}' data-action='{$action}' class=\"button cx-button admin_button button-info button-small\">{$button}</button></div>";
 		return $html;
 	}
 

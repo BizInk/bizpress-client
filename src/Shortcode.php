@@ -192,15 +192,15 @@ class Shortcode extends Base {
             }
             else if($content_type == 'resources'){
                 if($resource){
-                    $data = get_transient("bizinkresourcetype_".$content_type);
+                    $data = get_transient("bizinkresourcetype_".$content_type.'_'.$resource);
                     if(empty($data)){
                         $data = bizink_get_content( $content_type, 'types', $resource );
-                        set_transient( "bizinkresourcetype_".$content_type, $data, DAY_IN_SECONDS);
+                        set_transient( "bizinkresourcetype_".$content_type.'_'.$resource, $data, DAY_IN_SECONDS);
                     }
                     if(!empty($data->types)){
                         $data->topics = (array)$data->types;
                     }
-                    if(!empty($data->posts)){
+                    if(empty($data->posts)){
                         $data->posts = $data->topics[$resource]->posts;
                     }
                     return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );

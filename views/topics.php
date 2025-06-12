@@ -22,7 +22,6 @@ if(empty($response) == false){
 	}
 }
 
-
 $topics 		= $response->topics;
 $posts 			= $response->posts;
 $post_type 		= $response->post_type;
@@ -113,7 +112,7 @@ if(isset($_GET)){
 	$query_value = $_GET;	
 }
 
-if (strpos($post_type, 'keydates') === false) {
+if (strpos($post_type, 'keydates') === false && 'resources' != $post_type) {
 	?>
 	<div class="topic-title">
 		<h2><?php _e('Browse by Topic','bizink-client'); ?> </h2>
@@ -181,10 +180,17 @@ $structure = get_option( 'permalink_structure' );
 
 if (strpos($post_type, 'keydates') === false) {
 
-	$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : (isset($first_term) ? $first_term : 'business-topics'); 
-	$single_term 	= $topics->$term;
-	$term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
-	$term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
+	if ( 'resources' == $post_type ) { // Possible remove this when we add topics to resources
+		$term_name 	= $default_title;
+		$term_desc 	= $default_desc;
+	}
+	else{
+		$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : (isset($first_term) ? $first_term : 'business-topics'); 
+		$single_term 	= $topics->$term;
+		$term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
+		$term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
+	}
+	
 
 	echo "<div class='cxbc-topics-heading'>";
 	echo "<h2>{$term_name}</h2>";

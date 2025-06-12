@@ -279,22 +279,33 @@ function bizpress_getoptions(){
 }
 
 function bizpress_landingpage_all(){
-	//$data = get_transient("bizpress_landingpages");
+	$data = get_transient("bizpress_landingpages");
+	if(!empty($data) && gettype($data) == 'string'){
+		return json_decode($data);
+	}
+
 	$args = bizink_url_authontication();
 	$base_url = bizink_get_master_site_url();
 	$options = bizpress_getoptions();
-	$url = add_query_arg( [ 
-        'email'         => $options['user_email'],
-        'password'      => ncrypt()->encrypt( $options['user_password'] ),
-        'luca'		    => function_exists('luca') ? true : false
-    ], wp_slash( $base_url.'wp-json/wp/v2/landing' ) );
+	$url = '';
+	if(function_exists('luca') || in_array('bizpress-luca-2/bizpress-luca-2.php', apply_filters('active_plugins', get_option('active_plugins'))) ){
+		$url = add_query_arg(array('luca'=> true), wp_slash( $base_url.'wp-json/wp/v2/landing' ) );
+	}
+	else{
+		$url = add_query_arg( array( 
+			'email'         => $options['user_email'],
+			'password'      => ncrypt()->encrypt( $options['user_password'] ),
+			'luca'		    => false
+		), wp_slash( $base_url.'wp-json/wp/v2/landing' ) );
+	}
     $response = wp_remote_get( $url, $args );
     if ( is_wp_error( $response ) ) {
         return $response;
     } 
     else {
-		set_transient( "bizpress_landingpages", $response, (DAY_IN_SECONDS * 2) );
-        return json_decode( wp_remote_retrieve_body( $response ) );
+		$body = wp_remote_retrieve_body( $response );
+		set_transient( "bizpress_landingpages", $body, (DAY_IN_SECONDS * 2) );
+        return json_decode($body);
     }
 }
 
