@@ -485,8 +485,6 @@ class Front extends Base {
 						$data = bizink_get_content_types( 'resource','topics', $resource );
 						set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 					}
-					
-					print_r($data);
 
 					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
 						return $data->post->post_title;
