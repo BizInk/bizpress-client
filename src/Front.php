@@ -558,6 +558,8 @@ class Front extends Base {
 		if ( is_singular() ) {
 			global $wp, $wp_query;
 			$pagename = get_query_var('pagename');
+			$content = get_query_var( 'bizpress');
+			$type = '/';
 
 			if($pagename == 'resources'){
 				$resource = get_query_var('resource');
@@ -633,11 +635,10 @@ class Front extends Base {
 			){
 				$type = get_query_var( 'type' );
 				$topic = get_query_var( 'topic' );
-				$content = get_query_var( 'bizpress');
+				
 				$calculator = get_query_var('calculator');
 				$current_url = home_url( add_query_arg( array(), $wp->request ) );
 				if ( $topic || $type || $content || $calculator ) {
-					$type = '';
 					if($topic){
 						$d = $topic;
 						$type = 'topic';
@@ -682,7 +683,7 @@ class Front extends Base {
 						data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
 						data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 					}
-					
+
 					$buttonData = '';
 					if($data->post->post_type == 'resources'){
 						foreach($data->types as $key => $type){
