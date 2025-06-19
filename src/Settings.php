@@ -162,14 +162,16 @@ class Settings extends Base {
 		$pageItems = [];
 		if(!empty($landingpage_data)):
 			foreach($landingpage_data as $page){
-				if(!empty($page->slug) && !empty($page->title) && !empty($page->title->rendered)){
-					$pageItems[$page->slug] = [
-						'id' => $page->slug,
-						'label' => $page->title->rendered,
-						'type' => 'admin_shortcode',
-						'shortcode' => '[bizpress-landing id="'.$page->slug.'"]',
-						'copy' => true
-					];
+				if(!empty($page)){
+					if(!empty($page->slug) && !empty($page->title) && !empty($page->title->rendered)){
+						$pageItems[$page->slug] = [
+							'id' => $page->slug,
+							'label' => $page->title->rendered,
+							'type' => 'admin_shortcode',
+							'shortcode' => '[bizpress-landing id="'.$page->slug.'"]',
+							'copy' => true
+						];
+					}
 				}
 			}
 		else:
