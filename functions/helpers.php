@@ -315,9 +315,8 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 	}
     $base_url = bizink_get_master_site_url();
-    $content_region = $options['content_region'];
 	$country = 'AU';
-	switch($options['content_region']){
+	switch(strtolower($options['content_region'])){
 		case 'ca':
 			$country = 'CA';
 			break;
@@ -339,6 +338,9 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 			$country = 'AU';
 			break;			
 	}
+	if($country != strtoupper($options['content_region'])){
+		$country = strtoupper($options['content_region']);
+	}
 	$country = apply_filters( 'bizink-keydates-country', $country );
 
 	$luca = false;
@@ -357,7 +359,7 @@ function bizink_get_content_base($post_type, $api_endpoint, $slug = '', $paged =
 		'status'        => 'publish',
 		'post_type'     => $post_type,
 		'country'		=> $country,
-        'region'		=> $content_region,
+        'region'		=> $options['content_region'],
 	];
 
 	if($luca){
@@ -604,7 +606,6 @@ function bizink_url_authontication()
 	return array(
 		'timeout' => 10,
 		'method' => 'GET',
-		'sslverify' => false,
 		'user-agent'  => 'WordPress/' . $wp_version . '; ' . home_url(),
 		'httpversion' => '1.1',
 		'headers' => array(

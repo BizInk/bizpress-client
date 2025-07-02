@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.9
+ * Version: 1.9.1
  * Requires PHP: 7.4
  * Requires at least: 6.0
  * Text Domain: bizink-client

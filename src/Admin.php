@@ -95,6 +95,15 @@ class Admin extends Base {
 			
 		}
 	}
+
+	public function enqueue_scripts() {
+		wp_enqueue_script( 'bizink-client-admin', CXBPC_URL . '/assets/js/admin.js', array( 'jquery' ), $this->version, true );
+
+		wp_localize_script( 'bizink-client-admin', 'BizPressClient', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'bizpress_client_nonce' ),
+		) );		
+	}
 	
 	public function suscription_expiry_notice() {
 		$notice = get_option( 'bizpress_subscriptions_expiry' ); //_cxbc_suscription_expiry
@@ -172,5 +181,18 @@ class Admin extends Base {
 
 	function bizpress_clear_cache(){
 		
+		global $wpdb;
+
+		// Delete all normal transients
+		$wpdb->query(
+			"DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_bizpress%'"
+		);
+
+		// Delete all transient timeouts
+		$wpdb->query(
+			"DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_bizpress%'"
+		);
+
+		wp_die();
 	}
 }

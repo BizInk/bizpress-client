@@ -317,8 +317,7 @@ abstract class Fields extends Base {
 	}
 
 	public function field_admin_button($field, $section, $scope){
-		$label 			= $field['label'];
-		$button			= $field['button'];
+		$button			= $field['button'] ? $field['button'] : $field['label'];
 		$action 		= isset($field['action']) ? $field['action'] : 'admin_button';
 		if(empty($button)){
 			$button = 'No Button';

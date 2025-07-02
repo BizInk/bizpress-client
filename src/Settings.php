@@ -383,6 +383,7 @@ class Settings extends Base {
 							'label'     => __( 'Cache', 'bizink-client' ),
 							'button'     => __( 'Clear Cache', 'bizink-client' ),
 							'type'      => 'admin_button',
+							'action'    => 'bizpress_clear_cache',
 							'desc'      => __( 'Clear BizPress caches and load fresh content on next load.', 'bizink-client' ),
 							'required'	=> false,
 						]

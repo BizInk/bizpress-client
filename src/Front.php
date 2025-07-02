@@ -158,13 +158,13 @@ class Front extends Base {
 				$query->set( 'page_id', $resource_page_id );
 			}
 
-			$data = get_transient("bizinkresource_".md5($resource));
+			$data = get_transient("bizpressresource_".md5($resource));
 			if(empty($data->status)){
 				$data = null;
 			}
 			if(empty($data)){
 				$data = bizink_get_content_types( 'resource','topics', $resource );
-				set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpressresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 			}
 			
 			if(!empty($data) && !empty($data->post)){
@@ -229,13 +229,13 @@ class Front extends Base {
 				return;
 			}
 			
-			$data = get_transient("bizinkcontent_".md5($content));
+			$data = get_transient("bizpresscontent_".md5($content));
 			if(!empty($data->status) && ($data->status == 500 || $data->status == 403) ){
 				$data = null;
 			}
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
-				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 			if(!empty($data) && !empty($data->post)){
@@ -362,10 +362,10 @@ class Front extends Base {
 			$content_type   = bizink_get_content_type( $main_slug_id );
 
 
-			$data = get_transient("bizink'.$type.'_".md5($d));
+			$data = get_transient("bizpress".$type."_".md5($d));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, $type, $d );
-				set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 			if( isset( $data->subscriptions_expiry ) ) {
@@ -415,10 +415,10 @@ class Front extends Base {
 		$content = get_query_var( 'bizpress');
 		$resource = get_query_var( 'resource');
 		if($content && is_singular()){
-			$data = get_transient("bizinkcontent_".md5($content));
+			$data = get_transient("bizpresscontent_".md5($content));
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
-				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
 			$title = $data->post->post_title;
 		}
@@ -429,10 +429,10 @@ class Front extends Base {
 		$content = get_query_var( 'bizpress');
 		$resource = get_query_var( 'resource');
 		if($content && is_singular()){
-			$data = get_transient("bizinkcontent_".md5($content));
+			$data = get_transient("bizpresscontent_".md5($content));
 			if(empty($data)){
 				$data = bizink_get_single_content( 'content', $content );
-				set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
 			$desc = ($data->post->post_excerpt && mb_strlen($data->post->post_excerpt) < 2) ? $data->post->post_excerpt : $data->post->post_title;
 			
@@ -459,19 +459,19 @@ class Front extends Base {
 					$d = $content;
 					$type = 'type';
 
-					$data = get_transient("bizinkcontent_".md5($content));
+					$data = get_transient("bizpresscontent_".md5($content));
 					if(!empty($data->status) && ($data->status == 500 || $data->status == 403) ){
 						$data = null;
 					}
 					if(empty($data)){
 						$data = bizink_get_single_content( 'content', $content );
-						set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 					}
 					/**
-					$data = get_transient("bizink'.$type.'_".md5($d));
+					$data = get_transient("bizpress".$type."_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+						set_transient("bizpress".$type.".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 					*/
 
@@ -487,13 +487,13 @@ class Front extends Base {
 				else if($resource && !$content){
 					$type = 'resource';
 
-					$data = get_transient("bizinkresource_".md5($resource));
+					$data = get_transient("bizpressresource_".md5($resource));
 					if(empty($data->status)){
 						$data = null;
 					}
 					if(empty($data)){
 						$data = bizink_get_content_types( 'resource','topics', $resource );
-						set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpressresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 					}
 
 					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
@@ -544,10 +544,10 @@ class Front extends Base {
 					$main_slug_id 	= url_to_postid( $main_slug[0] );
 					$content_type   = bizink_get_content_type( $main_slug_id );
 		
-					$data = get_transient("bizink'.$type.'_".md5($d));
+					$data = get_transient("bizpress".$type."_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 		
 					if( isset( $data->subscriptions_expiry ) ) {
@@ -584,20 +584,20 @@ class Front extends Base {
 					$d = $content;
 					$type = 'type';
 
-					$data = get_transient("bizinkcontent_".md5($content));
+					$data = get_transient("bizpresscontent_".md5($content));
 					if(!empty($data->status) && ($data->status == 500 || $data->status == 403) ){
 						$data = null;
 					}
 					if(empty($data)){
 						$data = bizink_get_single_content( 'content', $content );
-						set_transient( "bizinkcontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 					}
 
 					/**
-					$data = get_transient("bizink'.$type.'_".md5($d));
+					$data = get_transient("bizpress".$type."_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 					 */
 		
@@ -613,13 +613,13 @@ class Front extends Base {
 				else if($resource && !$content){
 					$type = 'resource';
 
-					$data = get_transient("bizinkresource_".md5($resource));
+					$data = get_transient("bizpressresource_".md5($resource));
 					if(empty($data->status)){
 						$data = null;
 					}
 					if(empty($data)){
 						$data = bizink_get_content_types( 'resource','topics', $resource );
-						set_transient( "bizinkresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpressresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
 					}
 
 					$contentData = !empty($data->post->post_content) ? $data->post->post_content : $contentData;
@@ -682,10 +682,10 @@ class Front extends Base {
 					$main_slug_id 	= url_to_postid( $main_slug[0] );
 					$content_type   = bizink_get_content_type( $main_slug_id );
 
-					$data = get_transient("bizink'.$type.'_".md5($d));
+					$data = get_transient("bizpress".$type."_".md5($d));
 					if(empty($data)){
 						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizink'.$type.'_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+						set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
 					}
 
 					if( isset( $data->subscriptions_expiry ) ) {
@@ -745,10 +745,10 @@ class Front extends Base {
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
 
-			$data = get_transient("bizinktopic_".md5($topic));
+			$data = get_transient("bizpresstopic_".md5($topic));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'post', $topic );
-				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresstopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 	        if( isset( $data->subscriptions_expiry ) ) {
@@ -764,10 +764,10 @@ class Front extends Base {
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
 
-			$data = get_transient("bizinktopic_".md5($topic));
+			$data = get_transient("bizpresstopic_".md5($topic));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'types', $topic );
-				set_transient( "bizinktopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresstopic_".md5($topic), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 	        if( isset( $data->subscriptions_expiry ) ) {
@@ -783,10 +783,10 @@ class Front extends Base {
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
 
-			$data = get_transient("bizinktype_".md5($type));
+			$data = get_transient("bizpresstype_".md5($type));
 			if(empty($data)){
 				$data = bizink_get_content( $content_type, 'type', $type );
-				set_transient( "bizinktype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
+				set_transient( "bizpresstype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
 			}
 
 	        if( isset( $data->subscriptions_expiry ) ) {
