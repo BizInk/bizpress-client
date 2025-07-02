@@ -97,8 +97,7 @@ class Admin extends Base {
 	}
 
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'bizink-client-admin', CXBPC_URL . '/assets/js/admin.js', array( 'jquery' ), $this->version, true );
-
+		wp_enqueue_script( 'bizink-client-admin', plugins_url( "/assets/js/admin.js", CXBPC ), array( 'jquery' ), $this->version, true );
 		wp_localize_script( 'bizink-client-admin', 'BizPressClient', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce'    => wp_create_nonce( 'bizpress_client_nonce' ),
