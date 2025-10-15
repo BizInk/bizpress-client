@@ -311,8 +311,6 @@ class Front extends Base {
 				}
 			}
 		}
-		
-		
 
 		if($content){
 			$d = $content;
@@ -340,7 +338,6 @@ class Front extends Base {
 			$type = 'resource';
 		}
 		
-		
 		if( $type != '' && (
 		$pagename == 'keydates' ||
 		$pagename == 'bizink-client-keydates' ||
@@ -360,7 +357,6 @@ class Front extends Base {
 			$main_slug 		= explode($type, $current_url );
 			$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
-
 
 			$data = get_transient("bizpress".$type."_".md5($d));
 			if(empty($data)){

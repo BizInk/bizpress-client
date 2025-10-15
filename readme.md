@@ -6,16 +6,27 @@ BizPress is Bizink's collection of WordPress plugins.
 
 ### Client Plugins
 
+#### Main Plugin
 - [BizPress](https://github.com/BizInk/bizpress-client)
+
+#### Content Plugins
+- [BizPress - Blogs](https://github.com/BizInk/bizpress-blogs)
+- [BizPress - Calculators](https://github.com/BizInk/bizpress-calculators)
 - [BizPress - Accounting Glossary](https://github.com/BizInk/bizpress-accounting-glossary)
 - [BizPress - Business Terms Glossary](https://github.com/BizInk/bizpress-business-terms-glossary)
 - [BizPress - Key Dates](https://github.com/BizInk/bizpress-key-dates)
+
+- [BizPress - Payroll](https://github.com/BizInk/bizpress-payroll)
+- [BizPress - Resources](https://github.com/BizInk/bizpress-resources)
+- [BizPress - Business Resources](https://github.com/BizInk/bizpress-business-resources)
+
 - [BizPress - Xero Resources](https://github.com/BizInk/bizpress-xero-resources)
 - [BizPress - Quickbooks Resources](https://github.com/BizInk/bizpress-quickbooks-resources)
-- [BizPress - Sage Resources](https://github.com/BizInk/bizpress-sage-resources)
-- [BizPress - Business Resources](https://github.com/BizInk/bizpress-business-resources)
-- [Bizpress - Payroll](https://github.com/BizInk/bizpress-payroll)
-- [Bizpress - XPM](https://github.com/BizInk/bizpress-xpm)
+- [BizPress - MYOB Resources](https://github.com/BizInk/bizpress-myob-resources)
+- [BizPress - Sage Resources](https://github.com/BizInk/bizpress-sage)
+- [BizPress - Freshbooks Resources](https://github.com/BizInk/bizpress-freshbooks-resources)
+
+- [BizPress - XPM](https://github.com/BizInk/bizpress-xpm)
 
 ### Client Site Plugins
 
@@ -26,6 +37,10 @@ BizPress is Bizink's collection of WordPress plugins.
 
 - [Bizpress - WC](https://github.com/BizInk/bizink-wc) - Validates User logins this is on the Bizink site
 - [Bizpress - Publisher](https://github.com/BizInk/bizink-publisher) - The content publisher on bizinkcontent.com
+
+### Other BizPress
+
+- [BizPress - Chrome Addon](https://github.com/BizInk/bizpress-chrome-plugin)
 
 ## How to update the plugin
 

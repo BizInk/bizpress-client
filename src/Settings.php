@@ -54,7 +54,7 @@ class Settings extends Base {
 			'bizpress-payroll' => false,
 			'bizpress-quickbooks-resources' => false,
 			'bizpress-xero-resources' => false,
-			'bizpress-sage-resources' => false
+			'bizpress-sage' => false
 		);
 		foreach($plugins as $key=>$plugin){
 			$pluginInfo .= "{$plugin['Name']} - Version:{$plugin['Version']} By:{$plugin['AuthorName']}\r\n";
@@ -92,8 +92,8 @@ class Settings extends Base {
 				case 'bizpress-xero-resources/bizpress-xero-resources.php':
 					$bizpressPlugins['bizpress-xero-resources'] = true;
 					break;
-				case 'bizpress-sage-resources/bizpress-sage-resources.php':
-					$bizpressPlugins['bizpress-sage-resources'] = true;
+				case 'bizpress-sage/bizpress-sage-resources.php':
+					$bizpressPlugins['bizpress-sage'] = true;
 					break;
 			}
 		}
@@ -251,8 +251,8 @@ class Settings extends Base {
 				'name' => 'BizPress Sage Resources',
 				'description' => 'A libary of resources for Sage.',
 				'url' => 'https://docs.google.com/uc?export=download&id=1hrD3OqVd74XgOBfFFerX6APoJ-kCtAz-',
-				'plugin' => 'bizpress-sage-resources/bizpress-sage-resources.php',
-				'installed' => $bizpressPlugins['bizpress-sage-resources']
+				'plugin' => 'bizpress-sage/bizpress-sage-resources.php',
+				'installed' => $bizpressPlugins['bizpress-sage']
 			],
 			[
 				'thumbnail' => plugin_dir_url(CXBPC).'assets/img/bizpress_myob.svg',
@@ -313,6 +313,10 @@ class Settings extends Base {
 					]
 				],
 		 */
+
+		//$seoFields = [];
+		//$seoFields = apply_filters('bizpress_seo_settings_fields',$seoFields);
+		
 		$settings = [
 			'id'            => $this->slug,
 			'label'         => $this->name,
@@ -395,9 +399,7 @@ class Settings extends Base {
 					'icon'      => 'dashicons-admin-tools',
 					'color'		=> '#4c3f93',
 					'sticky'	=> true,
-					'fields'    => [
-								
-					]
+					'fields'    => []
 				],
 				'bizink-client_landingpages' => [
 					'id' 	=> 'bizink-client_landingpages',
@@ -454,6 +456,14 @@ class Settings extends Base {
 						]
 					]
 				],
+				'bizpress_seo' => [
+					'id'        => 'bizpress_seo',
+					'label'     => __( 'SEO', 'bizink-client' ),
+					'icon'      => 'dashicons-chart-area',
+					'color'		=> '#4c3f93',
+					'sticky'	=> true,
+					'fields'    => []
+				],
 				'bizpress_plugins' => [
 					'id'        => 'bizink-addons',
 					'label'     => __( 'Addons', 'bizink-client' ),
@@ -462,7 +472,7 @@ class Settings extends Base {
 					'sticky'	=> false,
 					'submit_button' => false,
 					'reset_button' => false,
-					'fields'    => [
+					'fields'  => [
 						'plugin_install_grid' => [
 							'id' => 'plugin_install_grid',
 							'label' => __( 'Bizink Addons', 'bizink-client' ),
@@ -471,9 +481,14 @@ class Settings extends Base {
 							'plugins' => $bispressPluginsScreen
 						]
 					]
-				]
+				],
+				
 			],
 		];
+
+		if(empty($settings['sections']['bizpress_seo']['fields'])) {
+			// unset($settings['sections']['bizpress_seo']);
+		}
 
 		if($luca) {
 			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);

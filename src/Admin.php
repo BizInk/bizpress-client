@@ -183,14 +183,10 @@ class Admin extends Base {
 		global $wpdb;
 
 		// Delete all normal transients
-		$wpdb->query(
-			"DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_bizpress%'"
-		);
+		$wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_bizpress%'");
 
 		// Delete all transient timeouts
-		$wpdb->query(
-			"DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_bizpress%'"
-		);
+		$wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_bizpress%'");
 
 		wp_die();
 	}
