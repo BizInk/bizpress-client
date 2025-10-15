@@ -486,10 +486,6 @@ class Settings extends Base {
 			],
 		];
 
-		if(empty($settings['sections']['bizpress_seo']['fields'])) {
-			// unset($settings['sections']['bizpress_seo']);
-		}
-
 		if($luca) {
 			unset($settings['sections']['bizink-client_basic']['fields']['user_email']);
 			unset($settings['sections']['bizink-client_basic']['fields']['user_password']);
