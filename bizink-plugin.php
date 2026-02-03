@@ -65,8 +65,6 @@ final class Plugin {
 			$admin->activate('bizpress_activate_deactivate');
 			$admin->deactivate('bizpress_activate_deactivate');
 			$admin->action( 'admin_enqueue_scripts', 'enqueue_scripts' );
-			//$admin->action('wp_ajax_bizpress_page','bizpress_create_page');
-			$admin->action('wp_ajax_bizpress_clear_cache','bizpress_clear_cache');
 			$admin->action('init','bizpress_edits_cpt');
 			
 			/**

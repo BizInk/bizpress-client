@@ -51,7 +51,7 @@ class Shortcode extends Base {
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
-        $resource = get_query_var('resource');
+        $resource = get_query_var('resources');
 		$type = '';
 		if($content){
 			$type = 'content';
@@ -108,7 +108,7 @@ class Shortcode extends Base {
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
-        $resource = get_query_var('resource');
+        $resource = get_query_var('resources');
 		$type = '';
 		if($content){
 			$type = 'content';

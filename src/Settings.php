@@ -291,31 +291,7 @@ class Settings extends Base {
 				'installed' => $bizpressPlugins['bizpress-blogs']
 			]);
 		}
-		/**
-		 * 
-		 'bizink-client_contentmanager' => [
-					'id'	=> 'bizink-client_contentmanager',
-					'label' => __( 'Content Manager', 'bizink-client' ),
-					'icon'	=> 'dashicons-media-document',
-					'color'	=> '#4c3f93',
-					'sticky'	=> false,
-					'submit_button' => false,
-					'reset_button' => false,
-					'hide' => $content_manager_hide,
-					'fields' => [
-						'content_manager' => [
-							'id' => 'content_manager',
-							'hidelabel' => true,
-							'label' => __( 'Content Manager', 'bizink-client' ),
-							'type' => 'content_manager',
-							'fields' => $content_manager_fields
-						]
-					]
-				],
-		 */
 
-		//$seoFields = [];
-		//$seoFields = apply_filters('bizpress_seo_settings_fields',$seoFields);
 		
 		$settings = [
 			'id'            => $this->slug,
@@ -381,15 +357,6 @@ class Settings extends Base {
 							'type' => 'admin_shortcode',
 							'shortcode' => '[bizpress-content]',
 							'copy' => true
-						],
-						'cache' => [
-							'id'      => 'cache',
-							'label'     => __( 'Cache', 'bizink-client' ),
-							'button'     => __( 'Clear Cache', 'bizink-client' ),
-							'type'      => 'admin_button',
-							'action'    => 'bizpress_clear_cache',
-							'desc'      => __( 'Clear BizPress caches and load fresh content on next load.', 'bizink-client' ),
-							'required'	=> false,
 						]
 					]
 				],

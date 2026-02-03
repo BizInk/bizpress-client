@@ -97,7 +97,7 @@ class Front extends Base {
 		}
 		
 		$content = get_query_var( 'bizpress',false);
-		$resource = get_query_var( 'resource',false);
+		$resource = get_query_var( 'resources',false);
 		$attachment = get_query_var( 'attachment',false);
 
 		$business_page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
@@ -257,7 +257,7 @@ class Front extends Base {
 		$current_url = home_url( add_query_arg( array(), $wp->request ) );
 		$pagename = get_query_var('pagename');
 		$content = get_query_var( 'bizpress');
-		$resource = get_query_var( 'resource');
+		$resource = get_query_var( 'resources');
 		$type = get_query_var( 'type' );
 		$topic = get_query_var( 'topic' );
 		$calculator = get_query_var('calculator');
@@ -335,7 +335,7 @@ class Front extends Base {
 		}
 		else if($resource && $content){
 			$d = $resource;
-			$type = 'resource';
+			$type = 'resources';
 		}
 		
 		if( $type != '' && (
@@ -409,7 +409,7 @@ class Front extends Base {
 
 	public function bizpress_wpseo_title($title){
 		$content = get_query_var( 'bizpress');
-		$resource = get_query_var( 'resource');
+		$resource = get_query_var( 'resources');
 		if($content && is_singular()){
 			$data = get_transient("bizpresscontent_".md5($content));
 			if(empty($data)){
@@ -423,7 +423,7 @@ class Front extends Base {
 
 	public function bizpress_wpseo_metadesc($desc){
 		$content = get_query_var( 'bizpress');
-		$resource = get_query_var( 'resource');
+		$resource = get_query_var( 'resources');
 		if($content && is_singular()){
 			$data = get_transient("bizpresscontent_".md5($content));
 			if(empty($data)){
@@ -443,7 +443,7 @@ class Front extends Base {
 			$content = get_query_var( 'bizpress');
 			$type = '/';
 			if($pagename == 'resources'){
-				$resource = get_query_var('resource');
+				$resource = get_query_var('resources');
 
 				$wp_query->is_404 = false;
 				$current_url = home_url( add_query_arg( array(), $wp->request ) );
@@ -568,7 +568,7 @@ class Front extends Base {
 			$type = '/';
 
 			if($pagename == 'resources'){
-				$resource = get_query_var('resource');
+				$resource = get_query_var('resources');
 
 				$wp_query->is_404 = false;
 				$current_url = home_url( add_query_arg( array(), $wp->request ) );
@@ -607,7 +607,7 @@ class Front extends Base {
 
 				}
 				else if($resource && !$content){
-					$type = 'resource';
+					$type = 'resources';
 
 					$data = get_transient("bizpressresource_".md5($resource));
 					if(empty($data->status)){
