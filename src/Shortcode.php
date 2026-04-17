@@ -75,6 +75,7 @@ class Shortcode extends Base {
 		if( !empty($content) && !empty($type) && (
 		$pagename == 'keydates' ||
 		$pagename == 'bizink-client-keydates' ||
+        $pagename == 'business-content' ||
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' || 
@@ -132,6 +133,7 @@ class Shortcode extends Base {
 		if( !empty($content) && !empty($type) && (
 		$pagename == 'keydates' ||
 		$pagename == 'bizink-client-keydates' ||
+        $pagename == 'business-content' ||
 		$pagename == 'xero-resources' ||
 		$pagename == 'myob-resources' || 
 		$pagename == 'quickbooks-resources' ||
@@ -192,11 +194,12 @@ class Shortcode extends Base {
             }
             else if($content_type == 'resources'){
                 if($resource){
-                    $data = get_transient("bizpressresourcetype_".$content_type.'_'.$resource);
-                    if(empty($data)){
-                        $data = bizink_get_content( $content_type, 'types', $resource );
-                        set_transient( "bizpressresourcetype_".$content_type.'_'.$resource, $data, DAY_IN_SECONDS);
-                    }
+                    $data = bizink_get_content( $content_type, 'types', $resource );
+                    // $data = get_transient("bizpressresourcetype_".$content_type.'_'.$resource);
+                    // if(empty($data)){
+                    //     $data = bizink_get_content( $content_type, 'types', $resource );
+                    //     set_transient( "bizpressresourcetype_".$content_type.'_'.$resource, $data, DAY_IN_SECONDS);
+                    // }
                     if(!empty($data->types)){
                         $data->topics = (array)$data->types;
                     }
@@ -216,11 +219,12 @@ class Shortcode extends Base {
                 return cxbc_get_template( 'calculators', 'views', [ 'response' => $data ] );
             }
             else{
-                $data = get_transient("bizpresstopics_".$content_type);
-                if(empty($data) || ( empty($data->topics) && empty($data->types) && empty($data->posts) )){
-                    $data = bizink_get_content( $content_type, 'topics'); // Type
-                    set_transient( "bizpresstopics_".$content_type, $data, DAY_IN_SECONDS);
-                }
+                $data = bizink_get_content( $content_type, 'topics');
+                // $data = get_transient("bizpresstopics_".$content_type);
+                // if(empty($data) || ( empty($data->topics) && empty($data->types) && empty($data->posts) )){
+                //     $data = bizink_get_content( $content_type, 'topics'); // Type
+                //     set_transient( "bizpresstopics_".$content_type, $data, DAY_IN_SECONDS);
+                // }
                 
                 //$data = bizink_get_content( $content_type, 'topics' );
                 return cxbc_get_template( 'topics', 'views', [ 'response' => $data ] );

@@ -341,6 +341,7 @@ class Front extends Base {
 		if( $type != '' && (
 		$pagename == 'keydates' ||
 		$pagename == 'bizink-client-keydates' ||
+		$pagename == 'business-content' ||
 		$pagename == 'xero-resources' ||
 		$pagename == 'freshbooks-resources' ||
 		$pagename == 'myob-resources' || 
@@ -358,11 +359,12 @@ class Front extends Base {
 			$main_slug_id 	= url_to_postid( $main_slug[0] );
 			$content_type   = bizink_get_content_type( $main_slug_id );
 
-			$data = get_transient("bizpress".$type."_".md5($d));
-			if(empty($data)){
-				$data = bizink_get_content( $content_type, $type, $d );
-				set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
-			}
+			$data = bizink_get_content( $content_type, $type, $d );
+			// $data = get_transient("bizpress".$type."_".md5($d));
+			// if(empty($data)){
+			// 	$data = bizink_get_content( $content_type, $type, $d );
+			// 	set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+			// }
 
 			if( isset( $data->subscriptions_expiry ) ) {
 				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -483,14 +485,16 @@ class Front extends Base {
 				else if($resource && !$content){
 					$type = 'resource';
 
-					$data = get_transient("bizpressresource_".md5($resource));
-					if(empty($data->status)){
-						$data = null;
-					}
-					if(empty($data)){
-						$data = bizink_get_content_types( 'resource','topics', $resource );
-						set_transient( "bizpressresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
-					}
+					$data = bizink_get_content_types( 'resource','topics', $resource );
+
+					// $data = get_transient("bizpressresource_".md5($resource));
+					// if(empty($data->status)){
+					// 	$data = null;
+					// }
+					// if(empty($data)){
+					// 	$data = bizink_get_content_types( 'resource','topics', $resource );
+					// 	set_transient( "bizpressresource_".md5($resource), $data, (DAY_IN_SECONDS * 2) );
+					// }
 
 					if(!empty($data) && !empty($data->post) && !empty($data->post->post_title)){
 						return $data->post->post_title;
@@ -507,6 +511,7 @@ class Front extends Base {
 			$pagename == 'myob-resources' || 
 		    $pagename == 'business-resources' ||
 			$pagename == 'payroll-resources' ||
+			$pagename == 'business-content' ||
 			//$pagename == 'payroll-glossary' ||
 			//$pagename == 'businessterms' ||
 			//$pagename == 'business-terms' ||
@@ -539,12 +544,14 @@ class Front extends Base {
 					$main_slug 		= explode($type, $current_url );
 					$main_slug_id 	= url_to_postid( $main_slug[0] );
 					$content_type   = bizink_get_content_type( $main_slug_id );
-		
-					$data = get_transient("bizpress".$type."_".md5($d));
-					if(empty($data)){
-						$data = bizink_get_content( $content_type, $type, $d );
-						set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
-					}
+					
+					$data = bizink_get_content( $content_type, $type, $d );
+
+					// $data = get_transient("bizpress".$type."_".md5($d));
+					// if(empty($data)){
+					// 	$data = bizink_get_content( $content_type, $type, $d );
+					// 	set_transient( "bizpress".$type."_".md5($d), $data, (DAY_IN_SECONDS * 2) );
+					// }
 		
 					if( isset( $data->subscriptions_expiry ) ) {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
@@ -637,6 +644,7 @@ class Front extends Base {
 				
 			}
 			if($pagename == 'calculators' ||
+			$pagename == 'business-content' ||
 			$pagename == 'keydates' ||
 			$pagename == 'bizink-client-keydates' ||
 			$pagename == 'xero-resources' ||
@@ -727,7 +735,7 @@ class Front extends Base {
 
 	public function template_redirect($body) {
 		global $wp, $wp_query;
-		$resource = get_query_var('resource');
+		$resource = get_query_var('resources');
 		$type 		= get_query_var( 'type' );
 		$topic 		= get_query_var( 'topic' );
 		$content	= get_query_var( 'bizpress');   // attachment
@@ -779,11 +787,13 @@ class Front extends Base {
 	    	$main_slug_id 	= url_to_postid( $main_slug[0] );
 	    	$content_type   = bizink_get_content_type( $main_slug_id );
 
-			$data = get_transient("bizpresstype_".md5($type));
-			if(empty($data)){
-				$data = bizink_get_content( $content_type, 'type', $type );
-				set_transient( "bizpresstype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
-			}
+			$data = bizink_get_content( $content_type, 'type', $type );
+
+			// $data = get_transient("bizpresstype_".md5($type));
+			// if(empty($data)){
+			// 	$data = bizink_get_content( $content_type, 'type', $type );
+			// 	set_transient( "bizpresstype_".md5($type), $data, (DAY_IN_SECONDS * 2) );
+			// }
 
 	        if( isset( $data->subscriptions_expiry ) ) {
 	        	update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );

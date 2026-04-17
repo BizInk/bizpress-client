@@ -230,7 +230,7 @@ if (strpos($post_type, 'keydates') === false) {
 			
 
 			if ( 'resources' == $post_type ) {
-				$resource = get_query_var('resource');
+				$resource = get_query_var('resources');
 				$postUrl =  get_permalink($page_id) . $resource.'/'. $post->slug;
 			}
 			else{
@@ -240,7 +240,7 @@ if (strpos($post_type, 'keydates') === false) {
 			if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
 				$page = get_post($page_id);
 				if ( 'resources' == $post_type ) {
-					$resource = get_query_var('resource');
+					$resource = get_query_var('resources');
 					$postUrl = add_query_arg(array('bizpress' => $post->slug,'resource' => $resource,'pagename' => $page->page_name),get_home_url());
 				}
 				else{
