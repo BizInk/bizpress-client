@@ -152,17 +152,8 @@ class Shortcode extends Base {
 				set_transient( "bizpresscontent_".md5($content), $data, (DAY_IN_SECONDS * 2) );
 			}
 
-            $anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-			data-id="'.$data->post->ID.'"
-			data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-			data-single="true"
-			data-title="'.$data->post->post_title.'" 
-			data-slug="'.$data->post->post_name.'" 
-			data-posttype="'.$data->post->post_type.'"
-			data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-			data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
 
-			return apply_filters('the_content',$data->post->post_content). $anyliticsData;
+			return apply_filters('the_content',$data->post->post_content);
         }
         else{
             $curent_page_id = get_the_ID();

@@ -63,7 +63,6 @@ class Front extends Base {
 		//$min = defined( 'CXBPC_DEBUG' ) && CXBPC_DEBUG ? '' : '.min'; // {$min}
 		wp_enqueue_style( $this->slug, plugins_url( "/assets/css/bizpress_front.css", CXBPC ), '', $this->version, 'all' );
 		wp_enqueue_script( $this->slug.'-front', plugins_url( "/assets/js/bizpress_front.js", CXBPC ), array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->slug.'-dataprocess', plugins_url( "/assets/js/dataprocess.js", CXBPC ), array(), $this->version, true );
 		$localized = [
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
@@ -370,20 +369,6 @@ class Front extends Base {
 				update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 			}
 
-			if(BIZPRESS_ANALYTICS == true){
-				$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-				data-id="'.$data->post->ID.'"
-				data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-				data-single="true"
-				data-title="'.$data->post->post_title.'" 
-				data-slug="'.$data->post->post_name.'" 
-				data-posttype="'.$data->post->post_type.'"
-				data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-				data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
-			}
-			else{
-				$anyliticsData = '';
-			}
 			if(!empty($data->post->post_title)){
 				$post->post_title = $data->post->post_title;
 			}
@@ -628,17 +613,6 @@ class Front extends Base {
 					$contentData = !empty($data->post->post_content) ? $data->post->post_content : $contentData;
 
 					$anyliticsData = '';
-					if(BIZPRESS_ANALYTICS == true){
-						$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data" 
-						data-id="'.$data->post->ID.'"
-						data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-						data-single="true"
-						data-title="'.$data->post->post_title.'" 
-						data-slug="'.$data->post->post_name.'" 
-						data-posttype="'.$data->post->post_type.'"
-						data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-						data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
-					}
 					$contentData .= $anyliticsData;
 				}
 				
@@ -696,19 +670,6 @@ class Front extends Base {
 						update_option( '_cxbc_suscription_expiry', $data->subscriptions_expiry );
 					}
 
-					$anyliticsData = '';
-					if(BIZPRESS_ANALYTICS == true){
-						$anyliticsData = '<div style="display:none;" class="bizpress-data" id="bizpress-data" 
-						data-id="'.$data->post->ID.'"
-						data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-						data-single="true"
-						data-title="'.$data->post->post_title.'" 
-						data-slug="'.$data->post->post_name.'" 
-						data-posttype="'.$data->post->post_type.'"
-						data-topics="'. (empty($data->post->topics) == false ? implode(',',$data->post->topics) : "false") .'"
-						data-types="'. (empty($data->post->types) == false ? implode(',',$data->post->types) : "false") . '" ></div>';
-					}
-
 					$buttonData = '';
 					if($data->post->post_type == 'resources'){
 						foreach($data->types as $key => $type){
@@ -722,10 +683,10 @@ class Front extends Base {
 
 					$contentData = $data->post->post_content ? $data->post->post_content : $contentData;
 					if(($pagename == 'payroll-glossary' || $pagename == 'businessterms' || $pagename == 'business-terms') && !empty($content)){
-						$contentData = '<div class="bizpress_card_container"><div class="bizpress_card">'.$contentData.'</div></div>' . $anyliticsData;
+						$contentData = '<div class="bizpress_card_container"><div class="bizpress_card">'.$contentData.'</div></div>';
 					}
 					else{
-						$contentData = $buttonData . $contentData . $anyliticsData;
+						$contentData = $buttonData . $contentData;
 					}
 				}
 			}

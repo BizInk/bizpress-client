@@ -25,12 +25,6 @@ if(!defined('CXBPC')){
 	define( 'CXBPC', __FILE__ );
 }
 
-define( 'BIZPRESS_ANALYTICS', false ); // Disable analytics
-
-if(!defined('BIZPRESS_ANALYTICS')){
-	define( 'BIZPRESS_ANALYTICS', true );
-}
-
 // Plugin Updater
 require 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
