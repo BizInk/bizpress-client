@@ -67,6 +67,7 @@ class Front extends Base {
 			'ajaxurl'	=> admin_url( 'admin-ajax.php' )
 		];
 		wp_localize_script( $this->slug.'-front', 'CXBPC', apply_filters( "{$this->slug}-localized", $localized ) );
+		wp_enqueue_script('bizpress-iframe-resizer','https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.5.9');
 	}
 
 	public function query_vars( $query_vars ) {

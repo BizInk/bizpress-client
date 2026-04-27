@@ -1,21 +1,20 @@
-<?php 
+<?php
 
 extract($args);
 
-if ( empty($response) && empty($args['response']) ) {
-	echo "<p>". __( 'Something went wrong. The data for this page could not be found.', 'bizink-client' ) ."</p>";
-	if(defined('WP_DEBUG') && WP_DEBUG == true){
-		_e('Got a Null for $response in views/topics.php', 'bizink-client' );
+if (empty($response) && empty($args['response'])) {
+	echo "<p>" . __('Something went wrong. The data for this page could not be found.', 'bizink-client') . "</p>";
+	if (defined('WP_DEBUG') && WP_DEBUG == true) {
+		_e('Got a Null for $response in views/topics.php', 'bizink-client');
 	}
 	return;
 }
 
-if(empty($response) == false){
-	if ( isset($response->status) == false || $response->status == 0 ) {
-		if(empty($response->message)){
-			echo "<p>".__('Sorry there was an error. There was an error retreveing the data for this page.','bizink-client')."</p>";
-		}
-		else{
+if (empty($response) == false) {
+	if (isset($response->status) == false || $response->status == 0) {
+		if (empty($response->message)) {
+			echo "<p>" . __('Sorry there was an error. There was an error retreveing the data for this page.', 'bizink-client') . "</p>";
+		} else {
 			echo "<p>{$response->message}</p>";
 		}
 		return;
@@ -26,171 +25,153 @@ $topics 		= $response->topics;
 $posts 			= $response->posts;
 $post_type 		= $response->post_type;
 
-$default_title 	= __( 'Business Resources', 'bizink-client' );
-$default_desc 	= __( '', 'bizink-client' );
+$default_title 	= __('Business Resources', 'bizink-client');
+$default_desc 	= __('', 'bizink-client');
 
 /** Return if [bizpress-content] or [bizink-content] is on page but this page has not be configured in settings */
-if(empty($post_type)){
+if (empty($post_type)) {
 	echo '<p><b>';
 	_e('Sorry this page has not been configured in the BizPress plugin.', 'bizink-client');
 	echo '</b></p>';
 	return;
 }
 $page_id = null;
-if ( 'business-lifecycle' == $post_type || 'business-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'business_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'business_desc' );
-	$page_id = cxbc_get_option( 'bizink-client_basic', 'business_content_page' );
-}
-elseif ( 'xero-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'xero_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'xero_desc' );
-	if(empty($default_title) && $default_title != ""){
+if ('business-lifecycle' == $post_type || 'business-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'business_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'business_desc');
+	$page_id = cxbc_get_option('bizink-client_basic', 'business_content_page');
+} elseif ('xero-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'xero_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'xero_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('Xero Resources', 'bizink-client');
 	}
-	$page_id =  cxbc_get_option( 'bizink-client_basic', 'xero_content_page' );
-}
-elseif ( 'quickbooks-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'quickbooks_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id =  cxbc_get_option('bizink-client_basic', 'xero_content_page');
+} elseif ('quickbooks-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'quickbooks_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'quickbooks_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('QuickBooks Resources', 'bizink-client');
 	}
-	$page_id =  cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
-}
-elseif ( 'sage-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'sage_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'sage_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id =  cxbc_get_option('bizink-client_basic', 'quickbooks_content_page');
+} elseif ('sage-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'sage_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'sage_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('Sage Resources', 'bizink-client');
 	}
-	$page_id =  cxbc_get_option( 'bizink-client_basic', 'sage_content_page' );
-}
-elseif ( 'payroll-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'payroll_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'payroll_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id =  cxbc_get_option('bizink-client_basic', 'sage_content_page');
+} elseif ('payroll-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'payroll_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'payroll_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('Payroll Resources', 'bizink-client');
 	}
-	$page_id = cxbc_get_option( 'bizink-client_basic', 'payroll_content_page' );
-}
-elseif ( 'qbo-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'qbo_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'qbo_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id = cxbc_get_option('bizink-client_basic', 'payroll_content_page');
+} elseif ('qbo-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'qbo_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'qbo_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('QuickBooks Resources', 'bizink-client');
 	}
-	$page_id = cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
-}
-elseif ( 'myob-content' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'myob_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'myob_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id = cxbc_get_option('bizink-client_basic', 'quickbooks_content_page');
+} elseif ('myob-content' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'myob_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'myob_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('MYOB Resources', 'bizink-client');
 	}
-	$page_id = cxbc_get_option( 'bizink-client_basic', 'myob_content_page' );
-}
-elseif (strpos($post_type, 'keydates') !== false) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'keydates_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'keydates_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id = cxbc_get_option('bizink-client_basic', 'myob_content_page');
+} elseif (strpos($post_type, 'keydates') !== false) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'keydates_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'keydates_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('Key Dates', 'bizink-client');
 	}
-	$page_id = cxbc_get_option( 'bizink-client_basic', 'keydates_content_page' );
-}
-elseif( 'resources' == $post_type ) {
-	$default_title 	= cxbc_get_option( 'bizink-client_content', 'resources_title' );
-	$default_desc 	= cxbc_get_option( 'bizink-client_content', 'resources_desc' );
-	if(empty($default_title) && $default_title != ""){
+	$page_id = cxbc_get_option('bizink-client_basic', 'keydates_content_page');
+} elseif ('resources' == $post_type) {
+	$default_title 	= cxbc_get_option('bizink-client_content', 'resources_title');
+	$default_desc 	= cxbc_get_option('bizink-client_content', 'resources_desc');
+	if (empty($default_title) && $default_title != "") {
 		$default_title = __('Resources', 'bizink-client');
 	}
-	$page_id =  cxbc_get_option( 'bizink-client_basic', 'resources_content_page' );
+	$page_id =  cxbc_get_option('bizink-client_basic', 'resources_content_page');
 }
 
 //dropdown after single topics
-if(isset($_GET)){
-	$query_value = $_GET;	
+if (isset($_GET)) {
+	$query_value = $_GET;
 }
 
 if (strpos($post_type, 'keydates') === false && 'resources' != $post_type) {
-	?>
+?>
 	<div class="topic-title">
-		<h2><?php _e('Browse by Topic','bizink-client'); ?> </h2>
+		<h2><?php _e('Browse by Topic', 'bizink-client'); ?> </h2>
 	</div>
 	<div class='cxbc-topics-list'>
 		<?php
 		$topic_coun = 0;
 		global $wp;
-		$current_url = home_url( $wp->request ).'/?'.$_SERVER['QUERY_STRING'];
+		$current_url = home_url($wp->request) . '/?' . $_SERVER['QUERY_STRING'];
 		$selected = '';
 		?>
 		<div class="topic-dropdown">
 			<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-				<option value=''><?php _e('Browse all topics...','bizink-client'); ?></option>
+				<option value=''><?php _e('Browse all topics...', 'bizink-client'); ?></option>
 				<?php
-				foreach ( $topics as $topic ) {	
-					if ( $topic_coun == 0 ) {
+				foreach ($topics as $topic) {
+					if ($topic_coun == 0) {
 						$taxonomy 	= $topic->taxonomy;
 						$first_term = $topic->slug;
 					}
-					$link = add_query_arg( $topic->taxonomy, $topic->slug, get_permalink( get_the_ID() ) );		
+					$link = add_query_arg($topic->taxonomy, $topic->slug, get_permalink(get_the_ID()));
 					$selected = ($current_url == $link) ? 'selected' : '';
 					echo "<option value='{$link}'{$selected}>{$topic->name}</option>";
 				}
 				?>
 			</select>
 		</div>
-	
+
 	</div>
 	<?php
 }
 
 $taxonomy_topics = 'business-article-topics';
-if ( 'business-content' == $post_type ) {
+if ('business-content' == $post_type) {
 	$taxonomy_topics = 'business-article-topics';
-}
-elseif ( 'business-lifecycle' == $post_type ) {
+} elseif ('business-lifecycle' == $post_type) {
 	$taxonomy_topics = 'business-topics';
-}
-elseif ( 'xero-content' == $post_type ) {
+} elseif ('xero-content' == $post_type) {
 	$taxonomy_topics = 'xero-topics';
-}
-elseif ( 'quickbooks-content' == $post_type ) {
+} elseif ('quickbooks-content' == $post_type) {
 	$taxonomy_topics = 'quickbooks-topics';
-}
-elseif ( 'sage-content' == $post_type ) {
+} elseif ('sage-content' == $post_type) {
 	$taxonomy_topics = 'sage-topics';
-}
-elseif ( 'myob-content' == $post_type ) {
+} elseif ('myob-content' == $post_type) {
 	$taxonomy_topics = 'myob-topics';
-}
-elseif ( 'payroll-content' == $post_type ) {
+} elseif ('payroll-content' == $post_type) {
 	$taxonomy_topics = 'payroll-topics';
-}
-elseif ( 'qbo-content' == $post_type ) {
+} elseif ('qbo-content' == $post_type) {
 	$taxonomy_topics = 'qbo-topics';
-}
-elseif ( 'resources' == $post_type ) {
+} elseif ('resources' == $post_type) {
 	$taxonomy_topics = 'resources-topics';
-}
-elseif (strpos($post_type, 'keydates') !== false) {
+} elseif (strpos($post_type, 'keydates') !== false) {
 	$taxonomy_topics = 'keydates-topics';
 }
-$structure = get_option( 'permalink_structure' );
+$structure = get_option('permalink_structure');
 
 if (strpos($post_type, 'keydates') === false) {
 
-	if ( 'resources' == $post_type ) { // Possible remove this when we add topics to resources
+	if ('resources' == $post_type) { // Possible remove this when we add topics to resources
 		$term_name 	= $default_title;
 		$term_desc 	= $default_desc;
-	}
-	else{
-		$term = isset( $_GET[ $taxonomy_topics ] ) ? $_GET[ $taxonomy_topics ] : (isset($first_term) ? $first_term : 'business-topics'); 
+	} else {
+		$term = isset($_GET[$taxonomy_topics]) ? $_GET[$taxonomy_topics] : (isset($first_term) ? $first_term : 'business-topics');
 		$single_term 	= $topics->$term;
-		$term_name 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->name : $default_title;
-		$term_desc 		= isset( $_GET[ $taxonomy_topics ] ) ? $single_term->description : $default_desc;
+		$term_name 		= isset($_GET[$taxonomy_topics]) ? $single_term->name : $default_title;
+		$term_desc 		= isset($_GET[$taxonomy_topics]) ? $single_term->description : $default_desc;
 	}
-	
+
 
 	echo "<div class='cxbc-topics-heading'>";
 	echo "<h2>{$term_name}</h2>";
@@ -199,98 +180,150 @@ if (strpos($post_type, 'keydates') === false) {
 
 	echo "<div class='cxbc-posts-list'>";
 	echo "<div class='cxbc-posts-list-bottom'>";
-	if(empty($posts)){
+	if (empty($posts)) {
 		$post_count = 0;
-	}
-	else{
+	} else {
 		$post_count = count($posts);
 	}
 
 	$pages = ceil($post_count / 12);
 	$item = 0;
 
-	if($post_count > 0):
-		bizink_bizpress_display_pagnation($pages,1);
+	if ($post_count > 0):
+		bizink_bizpress_display_pagnation($pages, 1);
 
-		foreach ( $posts as $post ) {
-			if($item == 0){
+		foreach ($posts as $post) {
+			if ($item == 0) {
 				echo "<div class='cxbc-posts-list-page' data-page='1'>";
-			}
-			elseif($item % 12 == 0){
+			} elseif ($item % 12 == 0) {
 				echo "</div>";
-				echo "<div class='cxbc-posts-list-page' data-page='".(($item/12) + 1)."'>";
-			}
-			elseif($item == $post_count){
+				echo "<div class='cxbc-posts-list-page' data-page='" . (($item / 12) + 1) . "'>";
+			} elseif ($item == $post_count) {
 				echo "</div>";
 			}
 			$item++;
-			if(isset($post->hidden) && $post->hidden){
+			if (isset($post->hidden) && $post->hidden) {
 				continue; // Item is hidden move to next item
 			}
-			
 
-			if ( 'resources' == $post_type ) {
+
+			if ('resources' == $post_type) {
 				$resource = get_query_var('resources');
-				$postUrl =  get_permalink($page_id) . $resource.'/'. $post->slug;
-			}
-			else{
+				$postUrl =  get_permalink($page_id) . $resource . '/' . $post->slug;
+			} else {
 				$postUrl =  get_permalink($page_id) . $post->slug;
 			}
-			
-			if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
+
+			if ((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)) {
 				$page = get_post($page_id);
-				if ( 'resources' == $post_type ) {
+				if ('resources' == $post_type) {
 					$resource = get_query_var('resources');
-					$postUrl = add_query_arg(array('bizpress' => $post->slug,'resource' => $resource,'pagename' => $page->page_name),get_home_url());
-				}
-				else{
-					$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
+					$postUrl = add_query_arg(array('bizpress' => $post->slug, 'resource' => $resource, 'pagename' => $page->page_name), get_home_url());
+				} else {
+					$postUrl = add_query_arg(array('bizpress' => $post->slug, 'pagename' => $page->page_name), get_home_url());
 				}
 			}
-			?>
+	?>
 			<div class="cxbc-single-post cxbc-single-post-item-<?= $item ?> cxbc-single-post-count-<?= $post_count ?>">
 				<a href="<?= $postUrl ?>">
 					<div class="cxbc-single-post-content">
-						<?php 
+						<?php
 						$image = $post->thumbnail;
-						if(empty($image)){
-							$image = plugins_url( 'assets/img/default.png', CXBPC );
+						if (empty($image)) {
+							$image = plugins_url('assets/img/default.png', CXBPC);
 						}
 						?>
 						<img alt="<?= $post->title ?>" class="cxbc-item-thumbnail" src="<?= $image; ?>">
 						<div class="cxbc-post-title">
 							<h4><?= $post->title ?></h4>
 						</div>
-						<div class="learn-more"><?php _e('Learn more','bizink-client'); ?></div>
+						<div class="learn-more"><?php _e('Learn more', 'bizink-client'); ?></div>
 					</div>
 				</a>
 			</div>
-			<?php	
+	<?php
 		}
 		echo "</div>";
-		bizink_bizpress_display_pagnation($pages,1);
+		bizink_bizpress_display_pagnation($pages, 1);
 	else:
-		echo "<p class='cxbc-no-posts'>".__('No posts found for this topic.','bizink-client')."</p>";
+		echo "<p class='cxbc-no-posts'>" . __('No posts found for this topic.', 'bizink-client') . "</p>";
 	endif;
-}
-else{
+} else {
 	?>
 	<div class="bizpress-keydates">
 		<?php
-		if(!empty($posts)){
-			foreach ( $posts as $post ) {
-				?>
+		if (!empty($posts)) {
+			foreach ($posts as $post) {
+		?>
 				<div class="bizpress-keydates-item">
 					<h2 class="bizpress-keydates-title"><?php echo $post->title; ?></h2>
 					<div class="bizpress-keydates-content">
-						<?php if(isset($post->content)): echo $post->content; endif; ?>
+						<iframe id="<?php echo $post->slug . '-iframe'; ?>">
+							<!doctype html>
+							<html lang="en">
+
+							<head>
+								<script async src="https://cdn.jsdelivr.net/npm/@iframe-resizer/child@5.5.9"></script>
+								<meta charset="utf-8">
+								<meta name="viewport" content="width=device-width, initial-scale=1">
+								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+								<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+								<style>
+									body {
+										padding: 30px;
+										font-family: Arial, sans-serif;
+										background: #f8f9fa;
+									}
+
+									h1 {
+										margin-bottom: 5px;
+									}
+
+									.subtitle {
+										color: #6c757d;
+										margin-bottom: 30px;
+										font-size: 0.95rem;
+									}
+
+									table {
+										margin-bottom: 10px;
+									}
+
+									th {
+										font-weight: normal;
+										font-size: 0.9rem;
+									}
+
+									.mt-4 {
+										margin-top: 1.5rem !important;
+									}
+
+									.text-muted {
+										color: #6c757d !important;
+									}
+								</style>
+							</head>
+
+							<body>
+								<?php if (isset($post->content)): echo $post->content;
+								endif; ?>
+							</body>
+
+							</html>
+						</iframe>
+						<script>
+							iframeResize({
+								license: 'GPLv3',
+								log: 'collapsed',
+							}, '#<?php echo $post->slug . '-iframe'; ?>')
+						</script>
 					</div>
-				<?php
+			<?php
 			}
 		}
-		?>
-	</div>
-	<?php
-}
+			?>
+				</div>
+			<?php
+		}
 
-$dataTopic = isset($_GET[$taxonomy_topics]) ? trim($_GET[$taxonomy_topics]) : "false";
+		$dataTopic = isset($_GET[$taxonomy_topics]) ? trim($_GET[$taxonomy_topics]) : "false";
