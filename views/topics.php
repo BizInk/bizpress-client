@@ -307,12 +307,3 @@ else{
 }
 
 $dataTopic = isset($_GET[$taxonomy_topics]) ? trim($_GET[$taxonomy_topics]) : "false";
-if( BIZPRESS_ANALYTICS == true ){
-	echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-	data-siteid="'.(bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false").'"
-	data-title="'.$default_title.'" 
-	data-url="'. get_permalink( get_the_ID() ) .'" 
-	data-posttype="'.$post_type.'"
-	data-topics="'.$dataTopic.'"
-	data-types="'. $taxonomy_topics . '" ></div>';
-}
