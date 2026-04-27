@@ -274,36 +274,23 @@ if (strpos($post_type, 'keydates') === false) {
 	endif;
 }
 else{
-	echo "<div class='cxbc-topics-heading' style='text-align:left'>";
-		echo "<h2>".__('Due Dates','bizpress-client')."</h2>";
-		echo "<p>Key lodgement and payment dates for this financial year are: </p>";
-	echo "</div>";
-
-	echo "<div class='cxbc-posts-list'>";
-		echo "<div class='cxbc-posts-list-top'>";
-			echo "<ul>";
-			$post_count = 1;
-			if(!empty($posts)){
-				foreach ( $posts as $post ) {
-					$postUrl =  get_permalink($page_id) . $post->slug;
-									
-					if((defined('BIZINK_NOCONFLICTURL') && BIZINK_NOCONFLICTURL == true) || empty($structure)){
-						$page = get_post($page_id);
-						$postUrl = add_query_arg(array('bizpress' => $post->slug,'pagename' => $page->page_name),get_home_url());
-					}
-
-					echo "<li class='cxbc-keydates-post-count-{$post_count}'>";
-					echo "<a href='{$postUrl}'>{$post->title}</a>";
-					echo "</li>";
-				}
+	?>
+	<div class="bizpress-keydates">
+		<?php
+		if(!empty($posts)){
+			foreach ( $posts as $post ) {
+				?>
+				<div class="bizpress-keydates-item">
+					<h2 class="bizpress-keydates-title"><?php echo $post->title; ?></h2>
+					<div class="bizpress-keydates-content">
+						<?php if(isset($post->content)): echo $post->content; endif; ?>
+					</div>
+				<?php
 			}
-			else{
-				_e('No posts found for this topic.','bizink-client');
-			}
-			
-			echo "</ul>";
-		echo "</div>";
-	echo "</div>";
+		}
+		?>
+	</div>
+	<?php
 }
 
 $dataTopic = isset($_GET[$taxonomy_topics]) ? trim($_GET[$taxonomy_topics]) : "false";
