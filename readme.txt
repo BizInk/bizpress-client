@@ -26,6 +26,7 @@ Display business content on your website that is automatically updated by the Bi
 
 = 1.9.6 =
 * Remove Analytics
+* Keydates One Page
 
 = 1.9.5 =
 * Fix Filters

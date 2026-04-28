@@ -36,12 +36,7 @@ class Front extends Base {
 		$this->ncrypt   	= ncrypt();
 	}
 
-	public function bizpress_anylitics_head(){
-		$id = bizpress_anylitics_get_site_id();
-		if($id){
-			echo '<meta title="bizpresssiteid" content="'.$id.'" />';
-		}
-	}
+
 
 	public function add_admin_bar( $admin_bar ) {
 		if( !current_user_can( 'manage_options' ) ) return;
@@ -386,7 +381,7 @@ class Front extends Base {
 			}
 			
 			if(!empty($post) && !empty($post->post_content)){
-				$post->post_content =  apply_filters('the_content',$buttonData . $data->post->post_content). $anyliticsData;
+				$post->post_content =  apply_filters('the_content',$buttonData . $data->post->post_content);
 			}
 			
 			$post->post_type = 'page';
@@ -612,9 +607,6 @@ class Front extends Base {
 					}
 
 					$contentData = !empty($data->post->post_content) ? $data->post->post_content : $contentData;
-
-					$anyliticsData = '';
-					$contentData .= $anyliticsData;
 				}
 				
 			}

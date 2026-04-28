@@ -113,11 +113,6 @@ final class Plugin {
 
 
 			/**
-			 * Anylitics
-			 */
-			$front->action('wp_head','bizpress_anylitics_head');
-
-			/**
 			 * Shortcode hooks
 			 *
 			 * To enable a shortcode, use $shortcode->register()

@@ -258,21 +258,19 @@ if (strpos($post_type, 'keydates') === false) {
 				<div class="bizpress-keydates-item">
 					<h2 class="bizpress-keydates-title"><?php echo $post->title; ?></h2>
 					<div class="bizpress-keydates-content">
-						<iframe id="<?php echo $post->slug . '-iframe'; ?>">
-							<!doctype html>
+						<iframe id="<?php echo $post->slug . '-iframe'; ?>" width="680" height="500" frameborder="0" srcdoc='
 							<html lang="en">
 
 							<head>
-								<script async src="https://cdn.jsdelivr.net/npm/@iframe-resizer/child@5.5.9"></script>
+								<script async src="<?php echo plugins_url("/assets/js/iframe-resizer.child.js",CXBPC); ?>"></script>
 								<meta charset="utf-8">
 								<meta name="viewport" content="width=device-width, initial-scale=1">
 								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-								<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+								<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 								<style>
 									body {
 										padding: 30px;
 										font-family: Arial, sans-serif;
-										background: #f8f9fa;
 									}
 
 									h1 {
@@ -302,14 +300,19 @@ if (strpos($post_type, 'keydates') === false) {
 										color: #6c757d !important;
 									}
 								</style>
+								<script>
+									window.iframeResizer = {
+										license: "GPLv3"
+									}
+								</script>
 							</head>
 
 							<body>
-								<?php if (isset($post->content)): echo $post->content;
-								endif; ?>
+								<p>Test</p>
+								<?php echo addslashes($post->content); ?>
 							</body>
 
-							</html>
+							</html>'>
 						</iframe>
 						<script>
 							iframeResize({

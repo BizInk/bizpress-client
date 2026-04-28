@@ -129,13 +129,3 @@ foreach ($alphabates as $key => $word) {
         ?>
     </div>
 </div>
-<?php
-
-echo '<div style="display:none;" class="bizpress-data" id="bizpress-data"
-data-siteid="' . (bizpress_anylitics_get_site_id() ? bizpress_anylitics_get_site_id() : "false") . '"
-data-title="' . get_the_title(get_the_ID()) . '" 
-data-url="' . get_permalink(get_the_ID()) . '" 
-data-posttype="' . $post_type . '"
-data-topics="false"
-data-types="false" ></div>';
-?>
