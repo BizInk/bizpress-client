@@ -308,7 +308,6 @@ if (strpos($post_type, 'keydates') === false) {
 							</head>
 
 							<body>
-								<p>Test</p>
 								<?php echo addslashes($post->content); ?>
 							</body>
 
