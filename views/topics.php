@@ -260,7 +260,6 @@ if (strpos($post_type, 'keydates') === false) {
 					<div class="bizpress-keydates-content">
 						<iframe id="<?php echo $post->slug . '-iframe'; ?>" width="680" height="500" frameborder="0" srcdoc='
 							<html lang="en">
-
 							<head>
 								<script async src="<?php echo plugins_url("/assets/js/iframe-resizer.child.js",CXBPC); ?>"></script>
 								<meta charset="utf-8">
@@ -272,30 +271,24 @@ if (strpos($post_type, 'keydates') === false) {
 										padding: 30px;
 										font-family: Arial, sans-serif;
 									}
-
 									h1 {
 										margin-bottom: 5px;
 									}
-
 									.subtitle {
 										color: #6c757d;
 										margin-bottom: 30px;
 										font-size: 0.95rem;
 									}
-
 									table {
 										margin-bottom: 10px;
 									}
-
 									th {
 										font-weight: normal;
 										font-size: 0.9rem;
 									}
-
 									.mt-4 {
 										margin-top: 1.5rem !important;
 									}
-
 									.text-muted {
 										color: #6c757d !important;
 									}
@@ -306,17 +299,14 @@ if (strpos($post_type, 'keydates') === false) {
 									}
 								</script>
 							</head>
-
 							<body>
-								<?php echo addslashes($post->content); ?>
+								<?php if($post->html): echo $post->html; else: echo $post->content; endif; ?>
 							</body>
-
 							</html>'>
 						</iframe>
 						<script>
 							iframeResize({
-								license: 'GPLv3',
-								log: 'collapsed',
+								license: 'GPLv3'
 							}, '#<?php echo $post->slug . '-iframe'; ?>')
 						</script>
 					</div>
