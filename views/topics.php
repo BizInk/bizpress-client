@@ -258,7 +258,7 @@ if (strpos($post_type, 'keydates') === false) {
 				<div class="bizpress-keydates-item">
 					<h2 class="bizpress-keydates-title"><?php echo $post->title; ?></h2>
 					<div class="bizpress-keydates-content">
-						<iframe id="<?php echo $post->slug . '-iframe'; ?>" width="680" height="500" frameborder="0" srcdoc='
+						<iframe id="<?php echo $post->slug . '-iframe'; ?>" class="bizpress_keydates_iframe" width="680" height="500" style="width:100%;" frameborder="0" srcdoc='
 							<html lang="en">
 							<head>
 								<script async src="<?php echo plugins_url("/assets/js/iframe-resizer.child.js",CXBPC); ?>"></script>
@@ -310,6 +310,7 @@ if (strpos($post_type, 'keydates') === false) {
 							}, '#<?php echo $post->slug . '-iframe'; ?>')
 						</script>
 					</div>
+				</div>
 			<?php
 			}
 		}
