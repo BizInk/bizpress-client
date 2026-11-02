@@ -5,8 +5,8 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 2.0.1
- * Requires PHP: 8.1
+ * Version: 2.0.2
+ * Requires PHP: 8.2
  * Requires at least: 6.0
  * Text Domain: bizink-client
  * Domain Path: /languages

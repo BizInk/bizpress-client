@@ -2,9 +2,9 @@
 Contributors: Bizink,Jayden Major
 Tags: Bizink, BizPress, business content, marketing
 Requires at least: 6.0
-Tested up to: 6.9.4
-Stable tag: 2.0.1
-Requires PHP: 8.1
+Tested up to: 7.1.4
+Stable tag: 2.0.2
+Requires PHP: 8.2
 
 Display business content on your website that is automatically updated by the Bizink team.
 
@@ -19,10 +19,11 @@ Display business content on your website that is automatically updated by the Bi
 - BizPress Business Resources
 - BizPress Payroll
 - BizPress Luca
-- BizPress Resources - WIP
-- BizPress XPM (Forms) - WIP
 
 == Changelog ==
+
+= 2.0.2 =
+* Support Form
 
 = 2.0.1 =
 * PHP Supported Version

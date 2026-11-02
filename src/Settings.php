@@ -397,29 +397,18 @@ class Settings extends Base {
 							'id' => 'support_form',
 							'label' => __( 'Contact Our Team', 'bizink-client' ),
 							'type' => 'admin_html',
-							'html' => '<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
-							<script>
-							  var supportData = '.json_encode($supportData).';
-							  //console.log("Support Data",supportData);
-							  hbspt.forms.create({
-								region: "na1",
-								portalId: "5917474",
-								formId: "eeade17d-948d-4c0f-94a0-d5393b7598e8",
-								onFormReady: function($form) {
-									$form.find(\'input[name="company"]\').val(supportData["siteTitle"]).change();
-									$form.find(\'input[name="email"]\').val(supportData["user"]["data"]["user_email"]).change();
-								},							
-								onFormSubmit: function($form) {
-									$form.find(\'input[name="bizpress_version"]\').val(supportData["pluginVersion"]).change();
-									$form.find(\'input[name="bizpress_home_url"]\').val(supportData["homeUrl"]).change();
-									$form.find(\'input[name="bizpress_url"]\').val(supportData["siteUrl"]).change();
-									$form.find(\'input[name="bizpress_wordpress_version"]\').val(supportData["wpVersion"]).change();
-									$form.find(\'input[name="bizpress_language"]\').val(supportData["wpLang"]).change();
-									$form.find(\'input[name="bizpress_sitename"]\').val(supportData["siteTitle"]).change();
-									$form.find(\'input[name="bizpress_website_plugins"]\').val(supportData["plugins"]).change();
-								} 
-							  });
-							</script>'
+							'html' => '
+							<div
+								id="bizink-support"
+								data-endpoint="https://knowing-oyster-284.convex.site/site-ticket"
+								data-site-domain="'.$supportData['homeUrl'].'"
+								data-firm="'.$supportData['siteTitle'].'"
+								data-site-url="'.$supportData['homeUrl'].'"
+								data-source="wordpress-embed"
+								data-wp-version="'.$supportData['wpVersion'].'"
+								data-bizink-core-version="0.33.2"
+							></div>
+							<script src="https://admin.bizinkonline.com/bizink-support-form.js" defer></script>'
 						]
 					]
 				],
